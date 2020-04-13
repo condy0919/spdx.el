@@ -6,15 +6,6 @@
 
 Put `license.el` in your Emacs system. Add the following to your `.emacs`:
 
-```elisp
-(require 'license)
-(define-key prog-mode-map (kbd "C-c C-s l") #'tempo-template-license)
-```
-
-Or manual run:
-
-    M-x tempo-template-license
-
 Or using [straight.el](https://github.com/raxod502/straight.el) with
 [use-package](https://github.com/jwiegley/use-package):
 
@@ -28,6 +19,15 @@ Or using [straight.el](https://github.com/raxod502/straight.el) with
   (license-copyright-holder 'auto)
   (license-project-detection 'projectile))
 ```
+
+```elisp
+(require 'license)
+(define-key prog-mode-map (kbd "C-c i l") #'license-insert)
+```
+
+Or manual run:
+
+    M-x license-insert
 
 Then, `license.el` will ask user to select a license. It's done by
 `completing-read'.
