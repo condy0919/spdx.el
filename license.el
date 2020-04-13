@@ -31,14 +31,30 @@
 
 ;; ```elisp
 ;; (require 'license)
-;; (define-key prog-mode-map (kbd "C-c C-s l") #'tempo-template-license)
+;; (define-key prog-mode-map (kbd "C-c i l") #'license-insert)
 ;; ```
+
+;; Or using [straight.el](https://github.com/raxod502/straight.el) with
+;; [use-package](https://github.com/jwiegley/use-package):
+
+;; ``` emacs-lisp
+;; (use-package license
+;;   :ensure t
+;;   :straight (:host github :repo "condy0919/license.el")
+;;   :bind (:map prog-mode-map
+;;          ("C-c i l" . license-insert))
+;;   :custom
+;;   (license-copyright-holder 'auto)
+;;   (license-project-detection 'projectile))
+;; ```
+
+;; Then you can press `C-c i l` to trigger `license-insert`
 
 ;; Or manual run:
 
-;;     M-x tempo-template-license
+;;     M-x license-insert
 
-;; Then, `license.el` will ask user to select a license. It's done by
+;; Then, `license.el` will ask you to select a license. It's done by
 ;; `completing-read'.
 
 ;; After that, the copyright and license header will be written. An example
