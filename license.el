@@ -490,10 +490,8 @@ nil means not to use project information."
   "SPDX License list.")
 
 (defun license--user-name ()
-  "Try to get the `user-full-name`. Otherwise nil is returned."
-  (if (not (string= "" (user-full-name)))
-      (user-full-name)
-    nil))
+  "Try to get the `user-full-name`."
+  user-full-name)
 
 (defun license--project-name ()
   "Try to get the project name. Otherwise nil is returned."
