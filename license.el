@@ -519,6 +519,7 @@ nil means not to use project information."
 ;;;###autoload
 (defun license-insert ()
   "Insert licenseiand header."
+  (interactive)
   (tempo-template-license))
 
 (provide 'license)

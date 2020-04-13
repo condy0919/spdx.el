@@ -22,6 +22,8 @@ Or using [straight.el](https://github.com/raxod502/straight.el) with
 (use-package license
   :ensure t
   :straight (:host github :repo "condy0919/license.el")
+  :bind (:map prog-mode-map
+         ("C-c i l" . license-insert))
   :custom
   (license-copyright-holder 'auto)
   (license-project-detection 'projectile))
