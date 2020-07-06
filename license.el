@@ -501,10 +501,10 @@ nil means not to use project information."
                 ('projectile (projectile-project-name))
                 ;; FIXME: any better way?
                 ('project (directory-file-name
-			   (let ((proj (project-current)))
-			     (if (stringp proj)
-				 proj
-			       (cdr proj)))))
+                           (let ((proj (project-current)))
+                             (if (stringp proj)
+                                 proj
+                               (cdr proj)))))
                 (_ nil))))
     (when name
       (concat name " Authors"))))
