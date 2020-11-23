@@ -509,14 +509,14 @@ nil means not to use project information."
   (pcase (license--project-detect)
     ;; FIXME: any better way?
     ('ffip
-     (directory-file-name (ffip-project-root)))
+     (directory-file-name (funcall (symbol-function 'ffip-project-root))))
     ('projectile
-     (projectile-project-name))
+     (funcall (symbol-function 'projectile-project-name)))
     ;; FIXME: any better way?
-    ('project (let ((proj (project-current)))
-                (and proj
-                     (directory-file-name
-                      (if (stringp proj) proj (cdr proj))))))
+    ('project
+     (let ((proj (funcall (symbol-function 'project-current))))
+       (and proj (directory-file-name
+                  (if (stringp proj) proj (cdr proj))))))
     (_ nil)))
 
 (defun license-copyright-format ()
