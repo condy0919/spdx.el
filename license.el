@@ -1,7 +1,7 @@
 ;;; license.el --- Insert SPDX license header -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2020 Zhiwei Chen
-
+;; SPDX-License-Identifier: GPL-3.0-or-later
 ;; Author: Zhiwei Chen <condy0919@gmail.com>
 ;; Keywords: license, tools
 ;; URL: https://github.com/condy0919/license.el
