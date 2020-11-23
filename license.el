@@ -89,12 +89,12 @@ The priority of auto is `project' > `user'."
   :group 'license)
 
 ;; Stole from `doom-modeline`
-(defcustom license-project-detection t
+(defcustom license-project-detection 'auto
   "How to detect the project root.
 
 The default priority is `ffip' > `projectile' > 'project'.
 nil means not to use project information."
-  :type '(choice (const :tag "Auto" t)
+  :type '(choice (const :tag "Auto" auto)
                  (const :tag "Find File in Project" ffip)
                  (const :tag "Projectile" projectile)
                  (const :tag "Built-in Project" project)
@@ -496,7 +496,7 @@ nil means not to use project information."
            (append (when (fboundp 'ffip-get-project-root-directory) '(ffip))
                    (when (fboundp 'projectile-project-root) '(projectile))
                    (when (fboundp 'project-current) '(project)))))
-      (cond ((equal t license-project-detection)
+      (cond ((equal 'auto license-project-detection)
              (car loaded))
             ((member license-project-detection loaded)
              license-project-detection)
