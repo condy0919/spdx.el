@@ -89,16 +89,13 @@ The priority of auto is `project' > `user'."
   :group 'license)
 
 ;; Stole from `doom-modeline`
-(defcustom license-project-detection
-  (cond ((fboundp 'ffip-get-project-root-directory) 'ffip)
-        ((fboundp 'projectile-project-root) 'projectile)
-        ((fboundp 'project-current) 'project)
-        (t nil))
+(defcustom license-project-detection t
   "How to detect the project root.
 
 The default priority is `ffip' > `projectile' > 'project'.
 nil means not to use project information."
-  :type '(choice (const :tag "Find File in Project" ffip)
+  :type '(choice (const :tag "Auto" t)
+                 (const :tag "Find File in Project" ffip)
                  (const :tag "Projectile" projectile)
                  (const :tag "Built-in Project" project)
                  (const :tag "Disable" nil))
@@ -493,30 +490,48 @@ nil means not to use project information."
   "Try to get the `user-full-name`."
   user-full-name)
 
+(defun license--project-detect ()
+  (when license-project-detection
+    (let ((loaded
+           (append (when (fboundp 'ffip-get-project-root-directory) '(ffip))
+                   (when (fboundp 'projectile-project-root) '(projectile))
+                   (when (fboundp 'project-current) '(project)))))
+      (cond ((equal t license-project-detection)
+             (car loaded))
+            ((member license-project-detection loaded)
+             license-project-detection)
+            (t
+             (error "license-project-detection method %S not loaded"
+                    license-project-detection))))))
+
 (defun license--project-name ()
   "Try to get the project name. Otherwise nil is returned."
-  (let ((name (pcase license-project-detection
-                ;; FIXME: any better way?
-                ('ffip (directory-file-name (ffip-project-root)))
-                ('projectile (projectile-project-name))
-                ;; FIXME: any better way?
-                ('project (let ((proj (project-current)))
-                            (and proj
-                                 (directory-file-name
-                                  (if (stringp proj) proj (cdr proj))))))
-                (_ nil))))
-    (when name
-      (concat name " Authors"))))
+  (pcase (license--project-detect)
+    ;; FIXME: any better way?
+    ('ffip
+     (directory-file-name (ffip-project-root)))
+    ('projectile
+     (projectile-project-name))
+    ;; FIXME: any better way?
+    ('project (let ((proj (project-current)))
+                (and proj
+                     (directory-file-name
+                      (if (stringp proj) proj (cdr proj))))))
+    (_ nil)))
 
 (defun license-copyright-format ()
   "Copyright format."
   (format "Copyright (C) %s  %s"
           (format-time-string "%Y")
-          (pcase license-copyright-holder
-            ('auto (let ((proj (license--project-name)))
-                     (if proj proj (license--user-name))))
-            ('user (license--user-name))
-            ('project (license--project-name)))))
+          (let* ((user (license--user-name))
+                 (proj (license--project-name))
+                 (proj-authors (when proj (concat proj " Authors"))))
+            (pcase license-copyright-holder
+              ('auto (or proj-authors user))
+              ('user user)
+              ('project proj)
+              (_ (error "Unknown license-copyright-holder: %S"
+                        license-copyright-holder))))))
 
 (defun license-license-format ()
   "License format."
