@@ -489,10 +489,11 @@ nil means not to use project information."
   "SPDX License list.")
 
 (defun spdx--user-name ()
-  "Try to get the `user-full-name`."
+  "Try to get the `variable,user-full-name'."
   user-full-name)
 
 (defun spdx--project-detect ()
+  "Try to get the project name."
   (when spdx-project-detection
     (let ((loaded
            (append (when (fboundp 'ffip-get-project-root-directory) '(ffip))
@@ -503,7 +504,7 @@ nil means not to use project information."
             ((member spdx-project-detection loaded)
              spdx-project-detection)
             (t
-             (error "spdx-project-detection method %S not loaded"
+             (error "Unknown method: spdx-project-detection method %S not loaded"
                     spdx-project-detection))))))
 
 (defun spdx--project-name ()
@@ -538,6 +539,9 @@ nil means not to use project information."
   (concat "SPDX-License-Identifier: "
           (completing-read "License: " spdx-spdx-identifiers)))
 
+(defvar spdx-tempo-tags nil
+  "Tempo tags for SPDX license.")
+
 (tempo-define-template "spdx"
   '(comment-start
     (spdx-copyright-format)
@@ -547,13 +551,19 @@ nil means not to use project information."
     comment-end > n>
     )
   "spdx"
-  "Insert a SPDX license.")
+  "Insert a SPDX license."
+  'spdx-tempo-tags)
 
 ;;;###autoload
 (defun spdx-insert ()
-  "Insert licenseiand header."
+  "Insert SPDX license header."
   (interactive)
   (tempo-template-spdx))
+
+;;;###autoload
+(defun spdx-tempo-setup ()
+  "Setup tempo template for SPDX license header."
+  (tempo-use-tag-list 'spdx-tempo-tags))
 
 (provide 'spdx)
 ;;; spdx.el ends here
