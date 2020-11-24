@@ -1,10 +1,10 @@
-;;; license.el --- Insert SPDX license header -*- lexical-binding: t -*-
+;;; spdx.el --- Insert SPDX license header -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2020 Zhiwei Chen
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 ;; Author: Zhiwei Chen <condy0919@gmail.com>
 ;; Keywords: license, tools
-;; URL: https://github.com/condy0919/license.el
+;; URL: https://github.com/condy0919/spdx.el
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "24.1"))
 
@@ -23,75 +23,75 @@
 
 ;;; Commentary:
 
-;; # license.el
+;; # spdx.el
 
-;; `license.el` provides SPDX license header insertion.
+;; `spdx.el` provides SPDX license header insertion.
 
 ;; ## Installation
 
-;; Put `license.el` in your Emacs system. Add the following to your `.emacs`:
+;; Put `spdx.el` in your Emacs system. Add the following to your `.emacs`:
 
 ;; ```elisp
-;; (require 'license)
-;; (define-key prog-mode-map (kbd "C-c i l") #'license-insert)
+;; (require 'spdx)
+;; (define-key prog-mode-map (kbd "C-c i l") #'spdx-insert)
 ;; ```
 
 ;; Or using [straight.el](https://github.com/raxod502/straight.el) with
 ;; [use-package](https://github.com/jwiegley/use-package):
 
 ;; ``` emacs-lisp
-;; (use-package license
+;; (use-package spdx
 ;;   :ensure t
-;;   :straight (:host github :repo "condy0919/license.el")
+;;   :straight (:host github :repo "condy0919/spdx.el")
 ;;   :bind (:map prog-mode-map
-;;          ("C-c i l" . license-insert))
+;;          ("C-c i l" . spdx-insert))
 ;;   :custom
-;;   (license-copyright-holder 'auto)
-;;   (license-project-detection 'projectile))
+;;   (spdx-copyright-holder 'auto)
+;;   (spdx-project-detection 'auto))
 ;; ```
 
-;; Then you can press `C-c i l` to trigger `license-insert`
+;; Then you can press `C-c i l` to trigger `spdx-insert`
 
 ;; Or manual run:
 
-;;     M-x license-insert
+;;     M-x spdx-insert
 
-;; Then, `license.el` will ask you to select a license. It's done by
+;; Then, `spdx.el` will ask you to select a license. It's done by
 ;; `completing-read'.
 
 ;; After that, the copyright and license header will be written. An example
 ;; follows.
 
-;; `;Copyright (C) 2020  license.el Authors`
+;; `;Copyright (C) 2020  spdx.el Authors`
 ;; `;SPDX-License-Identifier: AGPL-1.0-only`
 
 ;; ## Customization
 
-;; - `license-copyright-holder'
-;; - `license-project-detection'
+;; - `spdx-copyright-holder'
+;; - `spdx-project-detection'
 
 ;;; Code:
 
 (require 'tempo)
 (require 'newcomment)
 
-(defgroup license nil
+(defgroup spdx nil
   "SPDX license header inserter."
-  :prefix "license-"
+  :prefix "spdx-"
   :group 'tools
-  :link '(url-link "https://github.com/condy0919/license.el"))
+  :link '(url-link "https://github.com/condy0919/spdx.el"))
 
-(defcustom license-copyright-holder 'auto
+(defcustom spdx-copyright-holder 'auto
   "The copyright holder.
 
 The priority of auto is `project' > `user'."
   :type '(choice (const auto)
                  (const user)
                  (const project))
-  :group 'license)
+  :group 'spdx)
 
 ;; Stole from `doom-modeline`
-(defcustom license-project-detection 'auto
+(defcustom spdx-project-detection 'auto
   "How to detect the project root.
 
 The default priority is `ffip' > `projectile' > 'project'.
@@ -101,9 +101,9 @@ nil means not to use project information."
                  (const :tag "Projectile" projectile)
                  (const :tag "Built-in Project" project)
                  (const :tag "Disable" nil))
-  :group 'license)
+  :group 'spdx)
 
-(defconst license-spdx-identifiers
+(defconst spdx-spdx-identifiers
   ;; from https://spdx.org/licenses/
   '(0BSD
     AAL
@@ -488,73 +488,72 @@ nil means not to use project information."
     ZPL-2.1)
   "SPDX License list.")
 
-(defun license--user-name ()
+(defun spdx--user-name ()
   "Try to get the `user-full-name`."
   user-full-name)
 
-(defun license--project-detect ()
-  (when license-project-detection
+(defun spdx--project-detect ()
+  (when spdx-project-detection
     (let ((loaded
            (append (when (fboundp 'ffip-get-project-root-directory) '(ffip))
                    (when (fboundp 'projectile-project-root) '(projectile))
                    (when (fboundp 'project-current) '(project)))))
-      (cond ((equal 'auto license-project-detection)
+      (cond ((equal 'auto spdx-project-detection)
              (car loaded))
-            ((member license-project-detection loaded)
-             license-project-detection)
+            ((member spdx-project-detection loaded)
+             spdx-project-detection)
             (t
-             (error "license-project-detection method %S not loaded"
-                    license-project-detection))))))
+             (error "spdx-project-detection method %S not loaded"
+                    spdx-project-detection))))))
 
-(defun license--project-name ()
+(defun spdx--project-name ()
   "Try to get the project name. Otherwise nil is returned."
-  (pcase (license--project-detect)
-    ;; FIXME: any better way?
+  (pcase (spdx--project-detect)
     ('ffip
      (directory-file-name (funcall (symbol-function 'ffip-project-root))))
     ('projectile
      (funcall (symbol-function 'projectile-project-name)))
-    ;; FIXME: any better way?
     ('project
      (let ((proj (funcall (symbol-function 'project-current))))
        (and proj (directory-file-name
                   (if (stringp proj) proj (cdr proj))))))
     (_ nil)))
 
-(defun license-copyright-format ()
+(defun spdx-copyright-format ()
   "Copyright format."
   (format "Copyright (C) %s  %s"
           (format-time-string "%Y")
-          (let* ((user (license--user-name))
-                 (proj (license--project-name))
+          (let* ((user (spdx--user-name))
+                 (proj (spdx--project-name))
                  (proj-authors (when proj (concat proj " Authors"))))
-            (pcase license-copyright-holder
+            (pcase spdx-copyright-holder
               ('auto (or proj-authors user))
               ('user user)
               ('project proj)
-              (_ (error "Unknown license-copyright-holder: %S"
-                        license-copyright-holder))))))
+              (_ (error "Unknown spdx-copyright-holder: %S"
+                        spdx-copyright-holder))))))
 
-(defun license-license-format ()
+(defun spdx-license-format ()
   "License format."
   (concat "SPDX-License-Identifier: "
-          (completing-read "License: " license-spdx-identifiers)))
+          (completing-read "License: " spdx-spdx-identifiers)))
 
-(tempo-define-template "license"
+(tempo-define-template "spdx"
   '(comment-start
-    (license-copyright-format)
+    (spdx-copyright-format)
     comment-end > n>
     comment-start
-    (license-license-format)
-    comment-end > n>)
-  'license
+    (spdx-license-format)
+    comment-end > n>
+    )
+  "spdx"
   "Insert a SPDX license.")
 
 ;;;###autoload
-(defun license-insert ()
+(defun spdx-insert ()
   "Insert licenseiand header."
   (interactive)
-  (tempo-template-license))
+  (tempo-template-spdx))
 
-(provide 'license)
-;;; license.el ends here
+(provide 'spdx)
+;;; spdx.el ends here
