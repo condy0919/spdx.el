@@ -548,8 +548,7 @@ nil means not to use project information."
     comment-end > n>
     comment-start
     (spdx-license-format)
-    comment-end > n>
-    )
+    comment-end > n>)
   "spdx"
   "Insert a SPDX license."
   'spdx-tempo-tags)
