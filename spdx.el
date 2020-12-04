@@ -36,8 +36,8 @@
 ;; (define-key prog-mode-map (kbd "C-c i l") #'spdx-insert)
 ;; ```
 
-;; Or using [straight.el](https://github.com/raxod502/straight.el) with
-;; [use-package](https://github.com/jwiegley/use-package):
+;; Or Use [use-package](https://github.com/jwiegley/use-package) with
+;; [straight.el](https://github.com/raxod502/straight.el)
 
 ;; ``` emacs-lisp
 ;; (use-package spdx
@@ -126,6 +126,7 @@ nil means not to use project information."
     AML
     AMPAS
     ANTLR-PD
+    ANTLR-PD-fallback
     Apache-1.0
     Apache-1.1
     Apache-2.0
@@ -149,9 +150,8 @@ nil means not to use project information."
     Borceux
     BSD-1-Clause
     BSD-2-Clause
-    BSD-2-Clause-FreeBSD
-    BSD-2-Clause-NetBSD
     BSD-2-Clause-Patent
+    BSD-2-Clause-Views
     BSD-3-Clause
     BSD-3-Clause-Attribution
     BSD-3-Clause-Clear
@@ -165,14 +165,19 @@ nil means not to use project information."
     BSD-Protection
     BSD-Source-Code
     BSL-1.0
+    BUSL-1.1
     bzip2-1.0.5
     bzip2-1.0.6
+    CAL-1.0
+    CAL-1.0-Combined-Work-Exception
     Caldera
     CATOSL-1.1
     CC-BY-1.0
     CC-BY-2.0
     CC-BY-2.5
     CC-BY-3.0
+    CC-BY-3.0-AT
+    CC-BY-3.0-US
     CC-BY-4.0
     CC-BY-NC-1.0
     CC-BY-NC-2.0
@@ -183,6 +188,7 @@ nil means not to use project information."
     CC-BY-NC-ND-2.0
     CC-BY-NC-ND-2.5
     CC-BY-NC-ND-3.0
+    CC-BY-NC-ND-3.0-IGO
     CC-BY-NC-ND-4.0
     CC-BY-NC-SA-1.0
     CC-BY-NC-SA-2.0
@@ -196,8 +202,10 @@ nil means not to use project information."
     CC-BY-ND-4.0
     CC-BY-SA-1.0
     CC-BY-SA-2.0
+    CC-BY-SA-2.0-UK
     CC-BY-SA-2.5
     CC-BY-SA-3.0
+    CC-BY-SA-3.0-AT
     CC-BY-SA-4.0
     CC-PDDC
     CC0-1.0
@@ -213,6 +221,9 @@ nil means not to use project information."
     CECILL-C
     CERN-OHL-1.1
     CERN-OHL-1.2
+    CERN-OHL-P-2.0
+    CERN-OHL-S-2.0
+    CERN-OHL-W-2.0
     ClArtistic
     CNRI-Jython
     CNRI-Python
@@ -240,6 +251,7 @@ nil means not to use project information."
     EFL-2.0
     eGenix
     Entessa
+    EPICS
     EPL-1.0
     EPL-2.0
     ErlPL-1.1
@@ -256,16 +268,29 @@ nil means not to use project information."
     FSFUL
     FSFULLR
     FTL
+    GFDL-1.1-invariants-only
+    GFDL-1.1-invariants-or-later
+    GFDL-1.1-no-invariants-only
+    GFDL-1.1-no-invariants-or-later
     GFDL-1.1-only
     GFDL-1.1-or-later
+    GFDL-1.2-invariants-only
+    GFDL-1.2-invariants-or-later
+    GFDL-1.2-no-invariants-only
+    GFDL-1.2-no-invariants-or-later
     GFDL-1.2-only
     GFDL-1.2-or-later
+    GFDL-1.3-invariants-only
+    GFDL-1.3-invariants-or-later
+    GFDL-1.3-no-invariants-only
+    GFDL-1.3-no-invariants-or-later
     GFDL-1.3-only
     GFDL-1.3-or-later
     Giftware
     GL2PS
     Glide
     Glulxe
+    GLWTPL
     gnuplot
     GPL-1.0-only
     GPL-1.0-or-later
@@ -275,8 +300,10 @@ nil means not to use project information."
     GPL-3.0-or-later
     gSOAP-1.3b
     HaskellReport
+    Hippocratic-2.1
     HPND
     HPND-sell-variant
+    HTMLTIDY
     IBM-pibs
     ICU
     IJG
@@ -327,6 +354,7 @@ nil means not to use project information."
     MIT-CMU
     MIT-enna
     MIT-feh
+    MIT-open-group
     MITNFA
     Motosoto
     mpich2
@@ -338,16 +366,20 @@ nil means not to use project information."
     MS-RL
     MTLL
     MulanPSL-1.0
+    MulanPSL-2.0
     Multics
     Mup
     NASA-1.3
     Naumen
     NBPL-1.0
+    NCGL-UK-2.0
     NCSA
     Net-SNMP
     NetCDF
     Newsletr
     NGPL
+    NIST-PD
+    NIST-PD-fallback
     NLOD-1.0
     NLPL
     Nokia
@@ -359,6 +391,7 @@ nil means not to use project information."
     NRL
     NTP
     NTP-0
+    O-UDA-1.0
     OCCT-PL
     OCLC-2.0
     ODbL-1.0
@@ -369,6 +402,7 @@ nil means not to use project information."
     OFL-1.1
     OFL-1.1-no-RFN
     OFL-1.1-RFN
+    OGC-1.0
     OGL-Canada-2.0
     OGL-UK-1.0
     OGL-UK-2.0
@@ -400,10 +434,13 @@ nil means not to use project information."
     OSL-2.1
     OSL-3.0
     Parity-6.0.0
+    Parity-7.0.0
     PDDL-1.0
     PHP-3.0
     PHP-3.01
     Plexus
+    PolyForm-Noncommercial-1.0.0
+    PolyForm-Small-Business-1.0.0
     PostgreSQL
     PSF-2.0
     psfrag
