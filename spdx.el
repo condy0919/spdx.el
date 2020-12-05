@@ -590,6 +590,9 @@ nil means not to use project information."
   "Insert a SPDX license."
   'spdx-tempo-tags)
 
+;; Silence undefined warning
+(declare-function tempo-template-spdx "spdx" (&optional arg))
+
 ;;;###autoload
 (defun spdx-insert ()
   "Insert SPDX license header."
