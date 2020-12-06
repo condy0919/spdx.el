@@ -1,3 +1,5 @@
+![Check for license list version](https://github.com/condy0919/spdx.el/workflows/Check%20for%20license%20list%20version/badge.svg)
+
 # spdx.el
 
 `spdx.el` provides SPDX license header insertion.
