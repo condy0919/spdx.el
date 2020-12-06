@@ -103,8 +103,9 @@ nil means not to use project information."
                  (const :tag "Disable" nil))
   :group 'spdx)
 
+;; From https://spdx.org/licenses/
+;; 2020-11-25
 (defconst spdx-spdx-identifiers
-  ;; from https://spdx.org/licenses/
   '(0BSD
     AAL
     Abstyles
