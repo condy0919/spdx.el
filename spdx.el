@@ -62,8 +62,8 @@
 ;; After that, the copyright and license header will be written. An example
 ;; follows.
 
-;; `;Copyright (C) 2020  spdx.el Authors`
-;; `;SPDX-License-Identifier: AGPL-1.0-only`
+;; `;; Copyright (C) 2020  spdx.el Authors`
+;; `;; SPDX-License-Identifier: AGPL-1.0-only`
 
 ;; ## Customization
 
@@ -576,16 +576,27 @@ nil means not to use project information."
   (concat "SPDX-License-Identifier: "
           (completing-read "License: " spdx-spdx-identifiers)))
 
+(defun spdx-comment-start ()
+  "Construct a comment start with padding."
+  (let ((add (comment-add nil)))
+    (comment-padright comment-start add)))
+
+(defun spdx-comment-end ()
+  "Construct a comment end with padding."
+  (let ((add (comment-add nil)))
+    (unless (string= "" comment-end)
+      (comment-padleft comment-end add))))
+
 (defvar spdx-tempo-tags nil
   "Tempo tags for SPDX license.")
 
 (tempo-define-template "spdx"
-  '(comment-start
+  '((spdx-comment-start)
     (spdx-copyright-format)
-    comment-end > n>
-    comment-start
+    (spdx-comment-end) > n>
+    (spdx-comment-start)
     (spdx-license-format)
-    comment-end > n>)
+    (spdx-comment-end) > n>)
   "spdx"
   "Insert a SPDX license."
   'spdx-tempo-tags)

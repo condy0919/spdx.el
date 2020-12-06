@@ -38,8 +38,8 @@ After that, the copyright and license header will be written. An example
 follows.
 
 ``` emacs-lisp
-;Copyright (C) 2020  spdx.el Authors
-;SPDX-License-Identifier: MIT
+;; Copyright (C) 2020  spdx.el Authors
+;; SPDX-License-Identifier: MIT
 ```
 
 If you use [tempo](https://www.emacswiki.org/emacs/TempoMode), add `spdx-tempo-setup` to the mode specific hook. Type `spdx` then <kbd>M-x</kbd>` tempo-expand-if-complete`, you will get the same result as above.
