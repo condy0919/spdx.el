@@ -72,5 +72,9 @@ Let <kbd>M-/</kbd> rule the world.
 
 ## Customization
 
-- `spdx-copyright-holder`
-- `spdx-project-detection`
+- `spdx-copyright-holder` (`'auto` by default)
+- `spdx-project-detection` (`'auto` by default)
+
+## Contribution
+
+If you found the `spdx-spdx-identifiers` is out of date, don't hesitate to raise a PR.
