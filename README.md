@@ -2,7 +2,7 @@
 
 # spdx.el
 
-`spdx.el` provides SPDX license header insertion.
+`spdx.el` provides SPDX license header and copyright insertion.
 
 ## Installation
 
@@ -10,7 +10,7 @@ Put `spdx.el` in your Emacs system. Add the following to your `.emacs`:
 
 ```elisp
 (require 'spdx)
-(define-key prog-mode-map (kbd "C-c i l") #'spdx-insert)
+(define-key prog-mode-map (kbd "C-c i l") #'spdx-insert-spdx)
 ```
 
 Or use [use-package](https://github.com/jwiegley/use-package) with
@@ -21,17 +21,17 @@ Or use [use-package](https://github.com/jwiegley/use-package) with
   :ensure t
   :straight (:host github :repo "condy0919/spdx.el")
   :bind (:map prog-mode-map
-         ("C-c i l" . spdx-insert))
+         ("C-c i l" . spdx-insert-spdx))
   :custom
   (spdx-copyright-holder 'auto)
   (spdx-project-detection 'auto))
 ```
 
-Then you can press `C-c i l` to trigger `spdx-insert`
+Then you can press `C-c i l` to trigger `spdx-insert-spdx`
 
 Or manual run:
 
-    M-x spdx-insert
+    M-x spdx-insert-spdx
 
 Then, `spdx.el` will ask you to select a license. It's done by
 `completing-read`.
@@ -40,7 +40,6 @@ After that, the copyright and license header will be written. An example
 follows.
 
 ``` emacs-lisp
-;; Copyright (C) 2020  spdx.el Authors
 ;; SPDX-License-Identifier: MIT
 ```
 
@@ -71,6 +70,12 @@ It's recommanded to combine `tempo-expand-if-complete` with `hippie-expand`:
 ```
 
 Let <kbd>M-/</kbd> rule the world.
+
+## Available functions
+
+- `spdx-insert-spdx` inserts a SPDX license header.
+- `spdx-insert-copyright` inserts a copyright header.
+- `spdx-insert-spdx-copyright`inserts a SPDX license and copyright header.
 
 ## Customization
 

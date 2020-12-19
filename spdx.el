@@ -1,4 +1,4 @@
-;;; spdx.el --- Insert SPDX license header -*- lexical-binding: t -*-
+;;; spdx.el --- Insert SPDX license and copyright headers -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2020 Zhiwei Chen
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -25,7 +25,7 @@
 
 ;; # spdx.el
 
-;; `spdx.el` provides SPDX license header insertion.
+;; `spdx.el` provides SPDX license header and copyright insertion.
 
 ;; ## Installation
 
@@ -33,7 +33,7 @@
 
 ;; ```elisp
 ;; (require 'spdx)
-;; (define-key prog-mode-map (kbd "C-c i l") #'spdx-insert)
+;; (define-key prog-mode-map (kbd "C-c i l") #'spdx-insert-spdx)
 ;; ```
 
 ;; Or Use [use-package](https://github.com/jwiegley/use-package) with
@@ -44,25 +44,23 @@
 ;;   :ensure t
 ;;   :straight (:host github :repo "condy0919/spdx.el")
 ;;   :bind (:map prog-mode-map
-;;          ("C-c i l" . spdx-insert))
+;;          ("C-c i l" . spdx-insert-spdx))
 ;;   :custom
 ;;   (spdx-copyright-holder 'auto)
 ;;   (spdx-project-detection 'auto))
 ;; ```
 
-;; Then you can press `C-c i l` to trigger `spdx-insert`
+;; Then you can press `C-c i l` to trigger `spdx-insert-spdx`
 
 ;; Or manual run:
 
-;;     M-x spdx-insert
+;;     M-x spdx-insert-spdx
 
 ;; Then, `spdx.el` will ask you to select a license. It's done by
 ;; `completing-read'.
 
-;; After that, the copyright and license header will be written. An example
-;; follows.
+;; After that, the license header will be written. An example follows.
 
-;; `;; Copyright (C) 2020  spdx.el Authors`
 ;; `;; SPDX-License-Identifier: AGPL-1.0-only`
 
 ;; ## Customization
@@ -593,23 +591,53 @@ nil means not to use project information."
 
 (tempo-define-template "spdx"
   '((spdx-comment-start)
+    (spdx-license-format)
+    (spdx-comment-end) > n>)
+  "spdx"
+  "Insert a SPDX license header."
+  'spdx-tempo-tags)
+
+(tempo-define-template "copyright"
+  '((spdx-comment-start)
+    (spdx-copyright-format)
+    (spdx-comment-end) > n>)
+  "cpy"
+  "Insert a copyright header."
+  'spdx-tempo-tags)
+
+(tempo-define-template "spdx-copyright"
+  '((spdx-comment-start)
     (spdx-copyright-format)
     (spdx-comment-end) > n>
     (spdx-comment-start)
     (spdx-license-format)
     (spdx-comment-end) > n>)
-  "spdx"
-  "Insert a SPDX license."
+  "spdxcpy"
+  "Insert a SPDX license and copyright header."
   'spdx-tempo-tags)
 
 ;; Silence undefined warning
 (declare-function tempo-template-spdx "spdx" (&optional arg))
+(declare-function tempo-template-copyright "spdx" (&optional arg))
+(declare-function tempo-template-spdx-copyright "spdx" (&optional arg))
 
 ;;;###autoload
-(defun spdx-insert ()
-  "Insert SPDX license header."
+(defun spdx-insert-spdx ()
+  "Insert a SPDX license header."
   (interactive)
   (tempo-template-spdx))
+
+;;;###autoload
+(defun spdx-insert-copyright ()
+  "Insert a copyright header."
+  (interactive)
+  (tempo-template-copyright))
+
+;;;###autoload
+(defun spdx-insert-spdx-copyright ()
+  "Insert a SPDX license and copyright header."
+  (interactive)
+  (tempo-template-spdx-copyright))
 
 ;;;###autoload
 (defun spdx-tempo-setup ()
