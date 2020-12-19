@@ -13,8 +13,7 @@ Put `spdx.el` in your Emacs system. Add the following to your `.emacs`:
 (define-key prog-mode-map (kbd "C-c i l") #'spdx-insert-spdx)
 ```
 
-Or use [use-package](https://github.com/jwiegley/use-package) with
-[straight.el](https://github.com/raxod502/straight.el):
+Or use [use-package][use-package] with [straight.el][straight.el]:
 
 ``` emacs-lisp
 (use-package spdx
@@ -40,7 +39,9 @@ After that, the license header will be written. An example follows.
 ;; SPDX-License-Identifier: MIT
 ```
 
-If you use [tempo](https://www.emacswiki.org/emacs/TempoMode), add `spdx-tempo-setup` to the mode specific hook. Type `spdx` then <kbd>M-x</kbd>` tempo-expand-if-complete`, you will get the same result as above.
+If you use [tempo][tempo], add `spdx-tempo-setup` to the mode specific hook.
+Type `spdx` then <kbd>M-x</kbd>` tempo-expand-if-complete`, you will get the
+same result as above.
 
 It's recommanded to combine `tempo-expand-if-complete` with `hippie-expand`:
 
@@ -79,6 +80,64 @@ Let <kbd>M-/</kbd> rule the world.
 - `spdx-copyright-holder` (`'auto` by default)
 - `spdx-project-detection` (`'auto` by default)
 
+## Other projects
+
+### lice-el
+
+[lice-el][lice-el] provides license template management and file header insertion.
+
+The content of license is inserted while `spdx.el` only inserts two lines.
+
+``` emacs-lisp
+;; Copyright (C)  spdx.el Authors
+;; SPDX-License-Identifier: MIT
+```
+
+If you use `lice-el`, you may also need to hide the massive headers. Take a look
+at the builtin [elide-head][elide-head] package.
+
+### license-snippets
+
+[license-snippets][license-snippets] is a license snippet collection of
+[yasnippet][yasnippet].
+
+`spdx.el` uses the builtin completion system [tempo][tempo] without dependencies
+of third party libraries.
+
+### license-template
+
+[license-template][license-template] creates LICENSE file using GitHub API. It's
+NOT used to insert license header.
+
+### copyright
+
+Emacs has a builtin [copyright][copyright] package providing copyright header
+insertion. However, the copyright `elisp-mode` has only one leading semicolon.
+
+``` emacs-lisp
+;Copyright (C) 2020 by Me
+
+;; M-x copyright
+```
+
+`spdx.el` inserts with `;;` with one space following.
+
+``` emacs-lisp
+;; Copyright (C) 2020  spdx.el Authors
+
+;; M-x spdx-insert-copyright
+```
+
 ## Contribution
 
 If you found the `spdx-spdx-identifiers` is out of date, don't hesitate to raise a PR.
+
+[lice-el]: https://github.com/buzztaiki/lice-el
+[tempo]: https://www.emacswiki.org/emacs/TempoMode
+[yasnippet]: https://github.com/joaotavora/yasnippet
+[straight.el]: https://github.com/raxod502/straight.el
+[use-package]: https://github.com/jwiegley/use-package
+[license-snippets]: https://github.com/sei40kr/license-snippets
+[license-template]: https://github.com/jcs-elpa/license-templates
+[elide-head]: https://github.com/emacs-mirror/emacs/blob/master/lisp/elide-head.el
+[copyright]: https://github.com/emacs-mirror/emacs/blob/master/lisp/emacs-lisp/copyright.el
