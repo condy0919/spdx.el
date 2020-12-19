@@ -29,15 +29,12 @@ Or use [use-package](https://github.com/jwiegley/use-package) with
 
 Then you can press `C-c i l` to trigger `spdx-insert-spdx`
 
-Or manual run:
-
-    M-x spdx-insert-spdx
+Or manually run <kbd>M-x spdx-insert-spdx</kbd>
 
 Then, `spdx.el` will ask you to select a license. It's done by
 `completing-read`.
 
-After that, the copyright and license header will be written. An example
-follows.
+After that, the license header will be written. An example follows.
 
 ``` emacs-lisp
 ;; SPDX-License-Identifier: MIT
