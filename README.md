@@ -1,10 +1,13 @@
-![Check for license list version](https://github.com/condy0919/spdx.el/workflows/Check%20for%20license%20list%20version/badge.svg)
-
 # spdx.el
+
+![Latest](https://github.com/condy0919/spdx.el/workflows/Check%20for%20license%20list%20version/badge.svg)
+[![](https://melpa.org/packages/spdx-badge.svg)](https://melpa.org/#/spdx)
 
 `spdx.el` provides SPDX license header and copyright insertion.
 
 ## Installation
+
+Please install `spdx` from [melpa](https://melpa.org/#/spdx).
 
 Put `spdx.el` in your Emacs system. Add the following to your `.emacs`:
 
