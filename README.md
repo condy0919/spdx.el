@@ -29,12 +29,13 @@ Or use [use-package][use-package] with [straight.el][straight.el]:
   (spdx-project-detection 'auto))
 ```
 
-Then you can press `C-c i l` to trigger `spdx-insert-spdx`
+## Usage
+
+you can press `C-c i l` to trigger `spdx-insert-spdx`
 
 Or manually run <kbd>M-x spdx-insert-spdx</kbd>
 
-Then, `spdx.el` will ask you to select a license. It's done by
-`completing-read`.
+Then, `spdx.el` will ask you to select a license. It's done by `completing-read`.
 
 After that, the license header will be written. An example follows.
 
@@ -77,6 +78,14 @@ Let <kbd>M-/</kbd> rule the world.
 - `spdx-insert-spdx` inserts a SPDX license header.
 - `spdx-insert-copyright` inserts a copyright header.
 - `spdx-insert-spdx-copyright`inserts a SPDX license and copyright header.
+
+## Available tempo snippets
+
+The following tempo snippets can be expanded via <kbd>M-x tempo-expand-if-complete</kbd>. Make sure `spdx-tempo-setup` is called to access these tempo snippets.
+
+- `spdx` expands to a SPDX license header.
+- `cpy` expands to a copyright header.
+- `spdxcpy` expands to a SPDX license and copyright header.
 
 ## Customization
 
@@ -134,6 +143,11 @@ insertion. However, the copyright `elisp-mode` has only one leading semicolon.
 ## Contribution
 
 If you found the `spdx-spdx-identifiers` is out of date, don't hesitate to raise a PR.
+
+## FAQ
+
+1. `spdx-insert-spdx-copyright` failed to work in `text-mode`.
+   `spdx` requires `comment-start` and `comment-end` non-nil. `text-mode` hasn't defined comment syntax, so the result is expected.
 
 [lice-el]: https://github.com/buzztaiki/lice-el
 [tempo]: https://www.emacswiki.org/emacs/TempoMode
