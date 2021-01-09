@@ -573,7 +573,7 @@ nil means not to use project information."
 (defun spdx-license-format ()
   "License format."
   (concat "SPDX-License-Identifier: "
-          (completing-read "License: " spdx-spdx-identifiers)))
+          (completing-read "License: " spdx-spdx-identifiers nil t)))
 
 (defun spdx-comment-start ()
   "Construct a comment start with padding."
