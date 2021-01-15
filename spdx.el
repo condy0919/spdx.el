@@ -621,22 +621,30 @@ nil means not to use project information."
 (declare-function tempo-template-copyright "spdx" (&optional arg))
 (declare-function tempo-template-spdx-copyright "spdx" (&optional arg))
 
+(defun spdx--ensure-comment-syntax-defined ()
+  "Ensure that current buffer has comment syntax defined."
+  (unless comment-start
+    (user-error "No comment syntax defined, spdx.el won't work")))
+
 ;;;###autoload
 (defun spdx-insert-spdx ()
   "Insert a SPDX license header."
   (interactive)
+  (spdx--ensure-comment-syntax-defined)
   (tempo-template-spdx))
 
 ;;;###autoload
 (defun spdx-insert-copyright ()
   "Insert a copyright header."
   (interactive)
+  (spdx--ensure-comment-syntax-defined)
   (tempo-template-copyright))
 
 ;;;###autoload
 (defun spdx-insert-spdx-copyright ()
   "Insert a SPDX license and copyright header."
   (interactive)
+  (spdx--ensure-comment-syntax-defined)
   (tempo-template-spdx-copyright))
 
 ;;;###autoload
