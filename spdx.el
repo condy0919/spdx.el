@@ -114,7 +114,10 @@ string (trimming whitespace). Otherwise return nil."
          (with-temp-buffer
            (let ((status (apply #'call-process command
                                 nil (current-buffer) nil args)))
-             (and (equal 0 status) (string-trim (buffer-string))))))))
+             (and (equal 0 status)
+                  (let ((output (string-trim (buffer-string))))
+                    (and (not (string-blank-p output))
+                         output))))))))
 
 (defun spdx--guess-user-name-from-git ()
   "Get local or global user name from Git configuration."
