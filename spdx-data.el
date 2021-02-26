@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2021-02-14")
+(defconst spdx-data-release-date "2021-02-23")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -324,6 +324,7 @@
     "OFL-1.1-RFN"
     "OFL-1.1-no-RFN"
     "OGC-1.0"
+    "OGDL-Taiwan-1.0"
     "OGL-Canada-2.0"
     "OGL-UK-1.0"
     "OGL-UK-2.0"
