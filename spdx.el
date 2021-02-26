@@ -70,8 +70,9 @@
 
 ;;; Code:
 
-(require 'tempo)
 (require 'newcomment)
+(require 'subr-x)
+(require 'tempo)
 
 (require 'spdx-data)
 
