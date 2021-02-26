@@ -117,7 +117,7 @@ string (trimming whitespace). Otherwise return nil."
              (and (equal 0 status) (string-trim (buffer-string))))))))
 
 (defun spdx--guess-user-name-from-git ()
-  "Get local or global user name from Git cofiguration."
+  "Get local or global user name from Git configuration."
   (spdx--command-stdout-or-nil "git" "config" "user.name"))
 
 (defun spdx--guess-user-name ()
