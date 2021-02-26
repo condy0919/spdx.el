@@ -103,12 +103,15 @@ nil means not to use project information."
                  (const :tag "Disable" nil))
   :group 'spdx)
 
-(defun spdx--user-name ()
-  "Try to get the `variable,user-full-name'."
+(defun spdx--guess-user-name ()
+  "Guess a user name for the current buffer."
   user-full-name)
 
-(defun spdx--project-detect ()
-  "Try to get the project name."
+(defun spdx--detect-project-type ()
+  "Detect project type for current buffer.
+
+Returns one of the symbols 'ffip, 'projectile, 'project, or nil
+if we can't detect any of those."
   (when spdx-project-detection
     (let ((loaded
            (append (when (fboundp 'ffip-get-project-root-directory) '(ffip))
@@ -122,9 +125,11 @@ nil means not to use project information."
              (error "Unknown method: spdx-project-detection method %S not loaded"
                     spdx-project-detection))))))
 
-(defun spdx--project-name ()
-  "Try to get the project name. Otherwise nil is returned."
-  (pcase (spdx--project-detect)
+(defun spdx--guess-project-name ()
+  "Guess a project name for the current buffer.
+
+Returns a string, or nil if we can't make a good guess."
+  (pcase (spdx--detect-project-type)
     ('ffip
      (directory-file-name (funcall (symbol-function 'ffip-project-root))))
     ('projectile
@@ -135,19 +140,50 @@ nil means not to use project information."
                   (if (stringp proj) proj (cdr proj))))))
     (_ nil)))
 
+(defun spdx-get-default-copyright-sign ()
+  "Get the copyright sign to use for the current buffer.
+
+ASCII, Unicode, or none."
+  (let ((ascii "(C)") (unicode (string #x00A9)))
+    ascii))
+
+(defun spdx-get-default-copyright-years ()
+  "Get the copyright year(s) for the current buffer."
+  (format-time-string "%Y"))
+
+(defun spdx-get-default-copyright-holder ()
+  "Get the copyright holder for the current buffer."
+  (let* ((user (spdx--guess-user-name))
+         (proj (spdx--guess-project-name))
+         (proj-authors (when proj (concat proj " Authors"))))
+    (pcase spdx-copyright-holder
+      ('auto (or proj-authors user))
+      ('user user)
+      ('project proj)
+      (_ (error "Unknown spdx-copyright-holder: %S"
+                spdx-copyright-holder)))))
+
+(defun spdx-make-default-copyright ()
+  "Build a default SPDX Copyright line that can be edited by the user."
+  (format "%s %s %s"
+          (spdx-get-default-copyright-sign)
+          (spdx-get-default-copyright-years)
+          (spdx-get-default-copyright-holder)))
+
+(defun spdx-get-existing-copyright ()
+  "Get existing SPDX Copyright line in current buffer as string.
+
+Returns nil if no existing Copyright line is found."
+  nil)
+
 (defun spdx-copyright-format ()
-  "Copyright format."
-  (format "Copyright (C) %s  %s"
-          (format-time-string "%Y")
-          (let* ((user (spdx--user-name))
-                 (proj (spdx--project-name))
-                 (proj-authors (when proj (concat proj " Authors"))))
-            (pcase spdx-copyright-holder
-              ('auto (or proj-authors user))
-              ('user user)
-              ('project proj)
-              (_ (error "Unknown spdx-copyright-holder: %S"
-                        spdx-copyright-holder))))))
+  "Prompt for SPDX Copyright line, with a guess for the default line."
+  (let ((prefix "Copyright "))
+    (concat prefix
+            (read-from-minibuffer
+             prefix
+             (or (spdx-get-existing-copyright)
+                 (spdx-make-default-copyright))))))
 
 (defun spdx-license-format ()
   "License format."
