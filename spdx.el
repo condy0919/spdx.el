@@ -281,4 +281,5 @@ Returns nil if no existing Copyright line is found."
   (tempo-use-tag-list 'spdx-tempo-tags))
 
 (provide 'spdx)
+
 ;;; spdx.el ends here
