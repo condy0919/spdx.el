@@ -103,9 +103,27 @@ nil means not to use project information."
                  (const :tag "Disable" nil))
   :group 'spdx)
 
+(defun spdx--command-stdout-or-nil (command &rest args)
+  "Internal helper to run an external program.
+
+If COMMAND exists, run it with ARGS. If the program is
+successful, return everything it wrote to standard output as a
+string (trimming whitespace). Otherwise return nil."
+  (let ((command (executable-find command)))
+    (and command
+         (with-temp-buffer
+           (let ((status (apply #'call-process command
+                                nil (current-buffer) nil args)))
+             (and (equal 0 status) (string-trim (buffer-string))))))))
+
+(defun spdx--guess-user-name-from-git ()
+  "Get local or global user name from Git cofiguration."
+  (spdx--command-stdout-or-nil "git" "config" "user.name"))
+
 (defun spdx--guess-user-name ()
   "Guess a user name for the current buffer."
-  user-full-name)
+  (or (spdx--guess-user-name-from-git)
+      user-full-name))
 
 (defun spdx--detect-project-type ()
   "Detect project type for current buffer.
