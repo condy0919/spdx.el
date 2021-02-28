@@ -13,7 +13,9 @@
            (license-ids (mapcar (lambda (license)
                                   (cdr (assoc 'licenseId license)))
                                 licenses)))
-      (list release-date license-ids))))
+      (list release-date (sort license-ids (lambda (a b)
+                                             (string< (downcase a)
+                                                      (downcase b))))))))
 
 (defun spdx-update ()
   (cl-destructuring-bind (release-date license-ids)
