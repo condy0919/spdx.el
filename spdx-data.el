@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2021-02-28")
+(defconst spdx-data-release-date "2021-03-05")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -68,6 +68,7 @@
     "BSD-3-Clause-Attribution"
     "BSD-3-Clause-Clear"
     "BSD-3-Clause-LBNL"
+    "BSD-3-Clause-Modification"
     "BSD-3-Clause-No-Nuclear-License"
     "BSD-3-Clause-No-Nuclear-License-2014"
     "BSD-3-Clause-No-Nuclear-Warranty"
@@ -307,6 +308,7 @@
     "MulanPSL-2.0"
     "Multics"
     "Mup"
+    "NAIST-2003"
     "NASA-1.3"
     "Naumen"
     "NBPL-1.0"
