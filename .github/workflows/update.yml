@@ -13,6 +13,16 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Install Emacs
+      uses: purcell/setup-emacs@master
+      with:
+        version: 27.1
+
+    - name: Setup Git
+      run: |
+        git config --global user.email "condy0919@gmail.com"
+        git config --global user.name "condy"
+
     - name: Check license list version
       run: |
         remote=$(curl --location --fail --silent --show-error "https://raw.githubusercontent.com/spdx/license-list-data/master/json/licenses.json" | jq .releaseDate)
