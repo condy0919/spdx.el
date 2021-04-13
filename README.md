@@ -90,6 +90,7 @@ The following tempo snippets can be expanded via <kbd>M-x tempo-expand-if-comple
 ## Customization
 
 - `spdx-copyright-holder` (`'auto` by default)
+- `spdx-copyright-sign` (`'ascii` by default)
 - `spdx-project-detection` (`'auto` by default)
 
 ## Other projects

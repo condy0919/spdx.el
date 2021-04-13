@@ -52,7 +52,7 @@
 
 ;; Then you can press `C-c i l` to trigger `spdx-insert-spdx`
 
-;; Or manual run:
+;; Or manually run:
 
 ;;     M-x spdx-insert-spdx
 
@@ -66,6 +66,7 @@
 ;; ## Customization
 
 ;; - `spdx-copyright-holder'
+;; - `spdx-copyright-sign'
 ;; - `spdx-project-detection'
 
 ;;; Code:
@@ -89,6 +90,13 @@ The priority of auto is `project' > `user'."
   :type '(choice (const auto)
                  (const user)
                  (const project))
+  :group 'spdx)
+
+(defcustom spdx-copyright-sign 'ascii
+  "The type of copyright sign."
+  :type '(choice (const ascii)
+                 (const unicode)
+                 (const none))
   :group 'spdx)
 
 ;; Stole from `doom-modeline`
@@ -166,8 +174,12 @@ Returns a string, or nil if we can't make a good guess."
   "Get the copyright sign to use for the current buffer.
 
 ASCII, Unicode, or none."
-  (let ((ascii "(C)") (unicode (string #x00A9)))
-    ascii))
+  (let ((ascii "(C)")
+        (unicode (string #x00A9)))
+    (pcase spdx-copyright-sign
+      ('ascii ascii)
+      ('unicode unicode)
+      (_ ""))))
 
 (defun spdx-get-default-copyright-years ()
   "Get the copyright year(s) for the current buffer."
