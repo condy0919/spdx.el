@@ -10,15 +10,29 @@
     (let* ((json (json-read))
            (release-date (cdr (assoc 'releaseDate json)))
            (licenses (cdr (assoc 'licenses json)))
-           (license-ids (mapcar (lambda (license)
-                                  (cdr (assoc 'licenseId license)))
-                                licenses)))
-      (list release-date (sort license-ids (lambda (a b)
-                                             (string< (downcase a)
-                                                      (downcase b))))))))
+           (license-ids '())
+           (deprecated-ids '()))
+      (mapc (lambda (license)
+              (let ((license-id (cdr (assoc 'licenseId license)))
+                    (deprecated-p
+                     (eql t (cdr (assoc 'isDeprecatedLicenseId license)))))
+                (if deprecated-p
+                    (push license-id deprecated-ids)
+                  (push license-id license-ids))))
+            licenses)
+      (cl-flet ((string-ci< (a b) (string< (downcase a) (downcase b))))
+        (list release-date
+              (sort license-ids #'string-ci<)
+              (sort deprecated-ids #'string-ci<))))))
+
+(defun spdx-update--insert-list (name xs)
+  (insert (format "(defconst %S\n" name)
+          "  '(")
+  (dolist (x xs) (insert (format "\n    %S" x)))
+  (insert "))\n"))
 
 (defun spdx-update ()
-  (cl-destructuring-bind (release-date license-ids)
+  (cl-destructuring-bind (release-date license-ids deprecated-ids)
       (spdx-update--get-license-ids)
     (with-temp-buffer
       (insert
@@ -35,13 +49,12 @@
        ";;; Code:" "\n"
        "\n"
        (format "(defconst spdx-data-release-date %S)\n" release-date)
-       "\n"
-       "(defconst spdx-data-license-identifiers" "\n"
-       "  '(\n")
-      (dolist (license-id (butlast license-ids))
-        (insert (format "    %S\n" license-id)))
-      (let ((license-id (car (last license-ids))))
-        (insert (format "    %S))\n" license-id)))
+       "\n")
+      (spdx-update--insert-list 'spdx-data-license-identifiers
+                                license-ids)
+      (insert "\n")
+      (spdx-update--insert-list 'spdx-data-deprecated-license-identifiers
+                                deprecated-ids)
       (insert "\n"
               "(provide 'spdx-data)" "\n"
               "\n"
