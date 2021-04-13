@@ -148,7 +148,9 @@ If you found the `spdx-spdx-identifiers` is out of date, don't hesitate to raise
 ## FAQ
 
 1. `spdx-insert-spdx-copyright` failed to work in `text-mode`.
-   `spdx` requires `comment-start` and `comment-end` non-nil. `text-mode` hasn't defined comment syntax, so the result is expected.
+
+   Now, it works. Even though `text-mode` hasn't defined comment syntax, `spdx.el` will ask
+   user to define it.
 
 [lice-el]: https://github.com/buzztaiki/lice-el
 [tempo]: https://www.emacswiki.org/emacs/TempoMode
