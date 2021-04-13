@@ -287,6 +287,12 @@ Returns nil if no existing Copyright line is found."
   (tempo-template-spdx))
 
 ;;;###autoload
+(defun spdx-insert-spdx-only ()
+  "Insert a SPDX license without comments."
+  (interactive)
+  (insert (spdx-license-format)))
+
+;;;###autoload
 (defun spdx-insert-copyright ()
   "Insert a copyright header."
   (interactive)

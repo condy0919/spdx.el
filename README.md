@@ -76,6 +76,7 @@ Let <kbd>M-/</kbd> rule the world.
 ## Available functions
 
 - `spdx-insert-spdx` inserts a SPDX license header.
+- `spdx-insert-spdx-only` inserts a SPDX license header without comments.
 - `spdx-insert-copyright` inserts a copyright header.
 - `spdx-insert-spdx-copyright`inserts a SPDX license and copyright header.
 
