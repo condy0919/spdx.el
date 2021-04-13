@@ -92,6 +92,7 @@ The following tempo snippets can be expanded via <kbd>M-x tempo-expand-if-comple
 - `spdx-copyright-holder` (`'auto` by default)
 - `spdx-copyright-sign` (`'ascii` by default)
 - `spdx-project-detection` (`'auto` by default)
+- `spdx-ignore-deprecated` (`nil` by default)
 
 ## Other projects
 

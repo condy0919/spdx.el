@@ -1,6 +1,6 @@
 ;;; spdx.el --- Insert SPDX license and copyright headers -*- lexical-binding: t -*-
 
-;; Copyright (C) 2020 Zhiwei Chen
+;; Copyright (C) 2020, 2021 Zhiwei Chen
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 ;; Author: Zhiwei Chen <condy0919@gmail.com>
 ;; Keywords: license, tools
@@ -68,6 +68,7 @@
 ;; - `spdx-copyright-holder'
 ;; - `spdx-copyright-sign'
 ;; - `spdx-project-detection'
+;; - `spdx-ignore-deprecated'
 
 ;;; Code:
 
@@ -110,6 +111,11 @@ nil means not to use project information."
                  (const :tag "Projectile" projectile)
                  (const :tag "Built-in Project" project)
                  (const :tag "Disable" nil))
+  :group 'spdx)
+
+(defcustom spdx-ignore-deprecated nil
+  "Whether to ignore the deprecated licenses."
+  :type 'boolean
   :group 'spdx)
 
 (defun spdx--command-stdout-or-nil (command &rest args)
@@ -221,8 +227,11 @@ Returns nil if no existing Copyright line is found."
 
 (defun spdx-license-format ()
   "License format."
-  (concat "SPDX-License-Identifier: "
-          (completing-read "License: " spdx-data-license-identifiers nil t)))
+  (let ((identifiers (append spdx-data-license-identifiers
+                             (when (not spdx-ignore-deprecated)
+                               spdx-data-deprecated-license-identifiers))))
+    (concat "SPDX-License-Identifier: "
+            (completing-read "License: " identifiers nil t))))
 
 (defun spdx-comment-start ()
   "Construct a comment start with padding."
