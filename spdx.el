@@ -225,13 +225,16 @@ Returns nil if no existing Copyright line is found."
              (or (spdx-get-existing-copyright)
                  (spdx-make-default-copyright))))))
 
-(defun spdx-license-format ()
-  "License format."
+(defun spdx-identifier-only ()
+  "License identifier."
   (let ((identifiers (append spdx-data-license-identifiers
                              (when (not spdx-ignore-deprecated)
                                spdx-data-deprecated-license-identifiers))))
-    (concat "SPDX-License-Identifier: "
-            (completing-read "License: " identifiers nil t))))
+    (completing-read "License: " identifiers nil t)))
+
+(defun spdx-license-format ()
+  "License format."
+  (concat "SPDX-License-Identifier: " (spdx-identifier-only)))
 
 (defun spdx-comment-start ()
   "Construct a comment start with padding."
@@ -291,6 +294,12 @@ Returns nil if no existing Copyright line is found."
   "Insert a SPDX license without comments."
   (interactive)
   (insert (spdx-license-format)))
+
+;;;###autoload
+(defun spdx-insert-spdx-identifier-only ()
+  "Insert a SPDX license identifier only."
+  (interactive)
+  (insert (spdx-identifier-only)))
 
 ;;;###autoload
 (defun spdx-insert-copyright ()
