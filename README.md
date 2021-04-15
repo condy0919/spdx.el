@@ -77,6 +77,7 @@ Let <kbd>M-/</kbd> rule the world.
 
 - `spdx-insert-spdx` inserts a SPDX license header.
 - `spdx-insert-spdx-only` inserts a SPDX license header without comments.
+- `spdx-insert-spdx-identifier-only` inserts a SPDX identifier only.
 - `spdx-insert-copyright` inserts a copyright header.
 - `spdx-insert-spdx-copyright`inserts a SPDX license and copyright header.
 
@@ -85,6 +86,8 @@ Let <kbd>M-/</kbd> rule the world.
 The following tempo snippets can be expanded via <kbd>M-x tempo-expand-if-complete</kbd>. Make sure `spdx-tempo-setup` is called to access these tempo snippets.
 
 - `spdx` expands to a SPDX license header.
+- `spdxo` expands to a SPDX license header without comments.
+- `spdxi` expands to a SPDX identifier only.
 - `cpy` expands to a copyright header.
 - `spdxcpy` expands to a SPDX license and copyright header.
 

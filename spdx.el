@@ -255,6 +255,18 @@ Returns nil if no existing Copyright line is found."
   "Insert a SPDX license header."
   'spdx-tempo-tags)
 
+(tempo-define-template "spdx-only"
+  '((spdx-license-format) >)
+  "spdxo"
+  "Insert a SPDX license header with comments."
+  'spdx-tempo-tags)
+
+(tempo-define-template "spdx-identifier-only"
+  '((spdx-identifier-only) >)
+  "spdxi"
+  "Insert a SPDX identifier only."
+  'spdx-tempo-tags)
+
 (tempo-define-template "copyright"
   '((spdx-comment-start)
     (spdx-copyright-format)
@@ -276,6 +288,8 @@ Returns nil if no existing Copyright line is found."
 
 ;; Silence undefined warning
 (declare-function tempo-template-spdx "spdx" (&optional arg))
+(declare-function tempo-template-spdx-only "spdx" (&optional arg))
+(declare-function tempo-template-spdx-identifier-only "spdx" (&optional arg))
 (declare-function tempo-template-copyright "spdx" (&optional arg))
 (declare-function tempo-template-spdx-copyright "spdx" (&optional arg))
 
@@ -290,13 +304,13 @@ Returns nil if no existing Copyright line is found."
 (defun spdx-insert-spdx-only ()
   "Insert a SPDX license without comments."
   (interactive)
-  (insert (spdx-license-format)))
+  (tempo-template-spdx-only))
 
 ;;;###autoload
 (defun spdx-insert-spdx-identifier-only ()
   "Insert a SPDX license identifier only."
   (interactive)
-  (insert (spdx-identifier-only)))
+  (tempo-template-spdx-identifier-only))
 
 ;;;###autoload
 (defun spdx-insert-copyright ()
