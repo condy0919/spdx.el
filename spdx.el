@@ -180,12 +180,10 @@ Returns a string, or nil if we can't make a good guess."
   "Get the copyright sign to use for the current buffer.
 
 ASCII, Unicode, or none."
-  (let ((ascii "(C)")
-        (unicode (string #x00A9)))
-    (pcase spdx-copyright-sign
-      ('ascii ascii)
-      ('unicode unicode)
-      (_ ""))))
+  (pcase spdx-copyright-sign
+    ('ascii "(C) ")
+    ('unicode (concat (string #x00A9) " "))
+    (_ "")))
 
 (defun spdx-get-default-copyright-years ()
   "Get the copyright year(s) for the current buffer."
@@ -205,9 +203,8 @@ ASCII, Unicode, or none."
 
 (defun spdx-make-default-copyright ()
   "Build a default SPDX Copyright line that can be edited by the user."
-  (format "%s %s %s"
-          (spdx-get-default-copyright-sign)
-          (spdx-get-default-copyright-years)
+  (concat (spdx-get-default-copyright-sign)
+          (spdx-get-default-copyright-years) " "
           (spdx-get-default-copyright-holder)))
 
 (defun spdx-get-existing-copyright ()
