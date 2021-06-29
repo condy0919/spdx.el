@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2021-04-12")
+(defconst spdx-data-release-date "2021-06-29")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -65,6 +65,7 @@
     "BSD-3-Clause-Clear"
     "BSD-3-Clause-LBNL"
     "BSD-3-Clause-Modification"
+    "BSD-3-Clause-No-Military-License"
     "BSD-3-Clause-No-Nuclear-License"
     "BSD-3-Clause-No-Nuclear-License-2014"
     "BSD-3-Clause-No-Nuclear-Warranty"
@@ -86,6 +87,7 @@
     "CC-BY-1.0"
     "CC-BY-2.0"
     "CC-BY-2.5"
+    "CC-BY-2.5-AU"
     "CC-BY-3.0"
     "CC-BY-3.0-AT"
     "CC-BY-3.0-US"
@@ -123,6 +125,7 @@
     "CC0-1.0"
     "CDDL-1.0"
     "CDDL-1.1"
+    "CDL-1.0"
     "CDLA-Permissive-1.0"
     "CDLA-Sharing-1.0"
     "CECILL-1.0"
