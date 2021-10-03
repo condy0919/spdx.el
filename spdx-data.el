@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2021-08-08")
+(defconst spdx-data-release-date "2021-09-16")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -430,6 +430,7 @@
     "Unicode-TOU"
     "Unlicense"
     "UPL-1.0"
+    "Verbatim-man-pages"
     "Vim"
     "VOSTROM"
     "VSL-1.0"
