@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2021-09-16")
+(defconst spdx-data-release-date "2021-11-19")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -154,6 +154,8 @@
     "CNRI-Jython"
     "CNRI-Python"
     "CNRI-Python-GPL-Compatible"
+    "COIL-1.0"
+    "Community-Spec-1.0"
     "Condor-1.1"
     "copyleft-next-0.3.0"
     "copyleft-next-0.3.1"
@@ -189,6 +191,7 @@
     "EUPL-1.2"
     "Eurosym"
     "Fair"
+    "FDK-AAC"
     "Frameworx-1.0"
     "FreeBSD-DOC"
     "FreeImage"
@@ -267,6 +270,7 @@
     "LiLiQ-P-1.1"
     "LiLiQ-R-1.1"
     "LiLiQ-Rplus-1.1"
+    "Linux-man-pages-copyleft"
     "Linux-OpenIB"
     "LPL-1.0"
     "LPL-1.02"
@@ -393,6 +397,7 @@
     "SAX-PD"
     "Saxpath"
     "SCEA"
+    "SchemeReport"
     "Sendmail"
     "Sendmail-8.23"
     "SGI-B-1.0"
@@ -430,7 +435,6 @@
     "Unicode-TOU"
     "Unlicense"
     "UPL-1.0"
-    "Verbatim-man-pages"
     "Vim"
     "VOSTROM"
     "VSL-1.0"
