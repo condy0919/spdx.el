@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2021-11-19")
+(defconst spdx-data-release-date "2022-01-10")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -40,6 +40,7 @@
     "Apache-2.0"
     "APAFML"
     "APL-1.0"
+    "App-s2p"
     "APSL-1.0"
     "APSL-1.1"
     "APSL-1.2"
@@ -169,6 +170,7 @@
     "curl"
     "D-FSL-1.0"
     "diffmark"
+    "DL-DE-BY-2.0"
     "DOC"
     "Dotseqn"
     "DRL-1.0"
@@ -179,6 +181,7 @@
     "EFL-1.0"
     "EFL-2.0"
     "eGenix"
+    "Elastic-2.0"
     "Entessa"
     "EPICS"
     "EPL-1.0"
