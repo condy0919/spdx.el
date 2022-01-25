@@ -32,5 +32,7 @@ jobs:
           echo "Starting update"
           ./admin/spdx-update.sh
           echo "Update done"
+          git push origin master
+          echo "Push to GitHub done"
           exit 0
         fi
