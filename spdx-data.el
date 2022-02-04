@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-01-10")
+(defconst spdx-data-release-date "2022-02-03")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -252,6 +252,7 @@
     "IPA"
     "IPL-1.0"
     "ISC"
+    "Jam"
     "JasPer-2.0"
     "JPNIC"
     "JSON"
