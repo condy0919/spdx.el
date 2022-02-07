@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-02-03")
+(defconst spdx-data-release-date "2022-02-06")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -78,7 +78,6 @@
     "BSD-Source-Code"
     "BSL-1.0"
     "BUSL-1.1"
-    "bzip2-1.0.5"
     "bzip2-1.0.6"
     "C-UDA-1.0"
     "CAL-1.0"
@@ -449,6 +448,7 @@
     "Wsuipa"
     "WTFPL"
     "X11"
+    "X11-distribute-modifications-variant"
     "Xerox"
     "XFree86-1.1"
     "xinetd"
@@ -473,6 +473,7 @@
     "AGPL-3.0"
     "BSD-2-Clause-FreeBSD"
     "BSD-2-Clause-NetBSD"
+    "bzip2-1.0.5"
     "eCos-2.0"
     "GFDL-1.1"
     "GFDL-1.2"
