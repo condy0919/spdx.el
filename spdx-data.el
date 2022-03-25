@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-03-17")
+(defconst spdx-data-release-date "2022-03-24")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -257,6 +257,7 @@
     "JasPer-2.0"
     "JPNIC"
     "JSON"
+    "KiCad-libraries-exception"
     "LAL-1.2"
     "LAL-1.3"
     "Latex2e"
