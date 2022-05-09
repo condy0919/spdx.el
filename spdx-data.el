@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-04-28")
+(defconst spdx-data-release-date "2022-05-08")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -54,6 +54,7 @@
     "Bahyph"
     "Barr"
     "Beerware"
+    "Bitstream-Vera"
     "BitTorrent-1.0"
     "BitTorrent-1.1"
     "blessing"
