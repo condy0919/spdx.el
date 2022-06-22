@@ -16,7 +16,7 @@ jobs:
     - name: Install Emacs
       uses: purcell/setup-emacs@master
       with:
-        version: 27.1
+        version: 28.1
 
     - name: Setup Git
       run: |
