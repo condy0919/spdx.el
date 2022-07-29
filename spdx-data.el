@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-07-14")
+(defconst spdx-data-release-date "2022-07-28")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -304,6 +304,7 @@
     "MPL-2.0"
     "MPL-2.0-no-copyleft-exception"
     "mplus"
+    "MS-LPL"
     "MS-PL"
     "MS-RL"
     "MTLL"
