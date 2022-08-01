@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-07-28")
+(defconst spdx-data-release-date "2022-07-31")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -322,6 +322,7 @@
     "NetCDF"
     "Newsletr"
     "NGPL"
+    "NICTA-1.0"
     "NIST-PD"
     "NIST-PD-fallback"
     "NLOD-1.0"
