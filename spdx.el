@@ -104,7 +104,7 @@ The priority of auto is `project' > `user'."
 (defcustom spdx-project-detection 'auto
   "How to detect the project root.
 
-The default priority is `ffip' > `projectile' > 'project'.
+The default priority is \='ffip' > \='projectile' > \='project'.
 nil means not to use project information."
   :type '(choice (const :tag "Auto" auto)
                  (const :tag "Find File in Project" ffip)
@@ -146,8 +146,8 @@ string (trimming whitespace). Otherwise return nil."
 (defun spdx--detect-project-type ()
   "Detect project type for current buffer.
 
-Returns one of the symbols 'ffip, 'projectile, 'project, or nil
-if we can't detect any of those."
+Returns one of the symbols \='ffip, \='projectile, \='project, or
+nil if we can't detect any of those."
   (when spdx-project-detection
     (let ((loaded
            (append (when (fboundp 'ffip-get-project-root-directory) '(ffip))
