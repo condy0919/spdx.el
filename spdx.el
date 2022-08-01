@@ -1,6 +1,6 @@
 ;;; spdx.el --- Insert SPDX license and copyright headers -*- lexical-binding: t -*-
 
-;; Copyright (C) 2020, 2021 Zhiwei Chen
+;; Copyright (C) 2020, 2021, 2022 Zhiwei Chen
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 ;; Author: Zhiwei Chen <condy0919@gmail.com>
 ;; Keywords: license, tools
