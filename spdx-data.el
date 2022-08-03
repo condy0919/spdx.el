@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-07-31")
+(defconst spdx-data-release-date "2022-08-02")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -94,6 +94,7 @@
     "CC-BY-3.0"
     "CC-BY-3.0-AT"
     "CC-BY-3.0-DE"
+    "CC-BY-3.0-IGO"
     "CC-BY-3.0-NL"
     "CC-BY-3.0-US"
     "CC-BY-4.0"
@@ -285,6 +286,8 @@
     "LPPL-1.2"
     "LPPL-1.3a"
     "LPPL-1.3c"
+    "LZMA-SDK-9.11-to-9.20"
+    "LZMA-SDK-9.22"
     "MakeIndex"
     "Minpack"
     "MirOS"
