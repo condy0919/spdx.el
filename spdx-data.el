@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-08-02")
+(defconst spdx-data-release-date "2022-08-12")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -301,6 +301,7 @@
     "MIT-open-group"
     "MITNFA"
     "Motosoto"
+    "mpi-permissive"
     "mpich2"
     "MPL-1.0"
     "MPL-1.1"
@@ -397,6 +398,7 @@
     "psfrag"
     "psutils"
     "Python-2.0"
+    "Python-2.0.1"
     "Qhull"
     "QPL-1.0"
     "Rdisc"
