@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-09-17")
+(defconst spdx-data-release-date "2022-09-18")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -154,6 +154,7 @@
     "CERN-OHL-P-2.0"
     "CERN-OHL-S-2.0"
     "CERN-OHL-W-2.0"
+    "checkmk"
     "ClArtistic"
     "CNRI-Jython"
     "CNRI-Python"
