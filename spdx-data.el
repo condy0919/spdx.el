@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-10-13")
+(defconst spdx-data-release-date "2022-10-26")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -205,6 +205,7 @@
     "FSFAP"
     "FSFUL"
     "FSFULLR"
+    "FSFULLRWD"
     "FTL"
     "GD"
     "GFDL-1.1-invariants-only"
