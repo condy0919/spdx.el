@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-11-16")
+(defconst spdx-data-release-date "2022-11-21")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -261,6 +261,7 @@
     "JasPer-2.0"
     "JPNIC"
     "JSON"
+    "Knuth-CTAN"
     "LAL-1.2"
     "LAL-1.3"
     "Latex2e"
@@ -276,6 +277,7 @@
     "libpng-2.0"
     "libselinux-1.0"
     "libtiff"
+    "libutil-David-Nugent"
     "LiLiQ-P-1.1"
     "LiLiQ-R-1.1"
     "LiLiQ-Rplus-1.1"
