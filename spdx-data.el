@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-11-30")
+(defconst spdx-data-release-date "2022-12-06")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -440,6 +440,7 @@
     "SSPL-1.0"
     "SugarCRM-1.1.3"
     "SWL"
+    "Symlinks"
     "TAPR-OHL-1.0"
     "TCL"
     "TCP-wrappers"
