@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-12-08")
+(defconst spdx-data-release-date "2022-12-14")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -283,6 +283,7 @@
     "LiLiQ-Rplus-1.1"
     "Linux-man-pages-copyleft"
     "Linux-OpenIB"
+    "LOOP"
     "LPL-1.0"
     "LPL-1.02"
     "LPPL-1.0"
