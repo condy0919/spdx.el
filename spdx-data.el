@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-12-15")
+(defconst spdx-data-release-date "2022-12-22")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -54,6 +54,7 @@
     "Bahyph"
     "Barr"
     "Beerware"
+    "Bitstream-Charter"
     "Bitstream-Vera"
     "BitTorrent-1.0"
     "BitTorrent-1.1"
@@ -238,6 +239,7 @@
     "GPL-2.0-or-later"
     "GPL-3.0-only"
     "GPL-3.0-or-later"
+    "Graphics-Gems"
     "gSOAP-1.3b"
     "HaskellReport"
     "Hippocratic-2.1"
@@ -247,6 +249,7 @@
     "IBM-pibs"
     "ICU"
     "IJG"
+    "IJG-short"
     "ImageMagick"
     "iMatix"
     "Imlib2"
@@ -304,6 +307,7 @@
     "MIT-feh"
     "MIT-Modern-Variant"
     "MIT-open-group"
+    "MIT-Wu"
     "MITNFA"
     "Motosoto"
     "mpi-permissive"
@@ -448,6 +452,7 @@
     "TMate"
     "TORQUE-1.1"
     "TOSL"
+    "TTWL"
     "TU-Berlin-1.0"
     "TU-Berlin-2.0"
     "UCL-1.0"
