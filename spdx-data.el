@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2022-12-22")
+(defconst spdx-data-release-date "2022-12-23")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -452,6 +452,7 @@
     "TMate"
     "TORQUE-1.1"
     "TOSL"
+    "TPDL"
     "TTWL"
     "TU-Berlin-1.0"
     "TU-Berlin-2.0"
