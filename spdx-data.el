@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-01-26")
+(defconst spdx-data-release-date "2023-02-11")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -156,6 +156,7 @@
     "CERN-OHL-P-2.0"
     "CERN-OHL-S-2.0"
     "CERN-OHL-W-2.0"
+    "CFITSIO"
     "checkmk"
     "ClArtistic"
     "CNRI-Jython"
@@ -470,6 +471,7 @@
     "W3C"
     "W3C-19980720"
     "W3C-20150513"
+    "w3m"
     "Watcom-1.0"
     "Wsuipa"
     "WTFPL"
