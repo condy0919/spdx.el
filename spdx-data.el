@@ -9,13 +9,14 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-02-12")
+(defconst spdx-data-release-date "2023-02-13")
 
 (defconst spdx-data-license-identifiers
   '(
     "0BSD"
     "AAL"
     "Abstyles"
+    "AdaCore-doc"
     "Adobe-2006"
     "Adobe-Glyph"
     "ADSL"
@@ -469,6 +470,7 @@
     "TORQUE-1.1"
     "TOSL"
     "TPDL"
+    "TPL-1.0"
     "TTWL"
     "TU-Berlin-1.0"
     "TU-Berlin-2.0"
