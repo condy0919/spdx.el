@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-02-13")
+(defconst spdx-data-release-date "2023-02-14")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -62,6 +62,7 @@
     "blessing"
     "BlueOak-1.0.0"
     "Borceux"
+    "Brian-Gladman-3-Clause"
     "BSD-1-Clause"
     "BSD-2-Clause"
     "BSD-2-Clause-Patent"
@@ -82,6 +83,7 @@
     "BSD-4.3RENO"
     "BSD-4.3TAHOE"
     "BSD-Advertising-Acknowledgement"
+    "BSD-Attribution-HPND-disclaimer"
     "BSD-Protection"
     "BSD-Source-Code"
     "BSL-1.0"
@@ -163,6 +165,7 @@
     "CFITSIO"
     "checkmk"
     "ClArtistic"
+    "Clips"
     "CMU-Mach"
     "CNRI-Jython"
     "CNRI-Python"
@@ -253,6 +256,7 @@
     "HP-1986"
     "HPND"
     "HPND-export-US"
+    "HPND-Markus-Kuhn"
     "HPND-sell-variant"
     "HPND-sell-variant-MIT-disclaimer"
     "HTMLTIDY"
