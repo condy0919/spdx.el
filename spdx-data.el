@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-02-14")
+(defconst spdx-data-release-date "2023-02-15")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -262,6 +262,7 @@
     "HTMLTIDY"
     "IBM-pibs"
     "ICU"
+    "IEC-Code-Components-EULA"
     "IJG"
     "IJG-short"
     "ImageMagick"
@@ -429,6 +430,7 @@
     "Python-2.0.1"
     "Qhull"
     "QPL-1.0"
+    "QPL-1.0-INRIA-2004"
     "Rdisc"
     "RHeCos-1.1"
     "RPL-1.1"
