@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-02-16")
+(defconst spdx-data-release-date "2023-02-17")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -175,6 +175,7 @@
     "Condor-1.1"
     "copyleft-next-0.3.0"
     "copyleft-next-0.3.1"
+    "Cornell-Lossless-JPEG"
     "CPAL-1.0"
     "CPL-1.0"
     "CPOL-1.02"
