@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-04-04")
+(defconst spdx-data-release-date "2023-04-13")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -324,6 +324,7 @@
     "MIT-CMU"
     "MIT-enna"
     "MIT-feh"
+    "MIT-Festival"
     "MIT-Modern-Variant"
     "MIT-open-group"
     "MIT-Wu"
@@ -357,6 +358,7 @@
     "NICTA-1.0"
     "NIST-PD"
     "NIST-PD-fallback"
+    "NIST-Software"
     "NLOD-1.0"
     "NLOD-2.0"
     "NLPL"
@@ -486,6 +488,7 @@
     "Unicode-DFS-2015"
     "Unicode-DFS-2016"
     "Unicode-TOU"
+    "UnixCrypt"
     "Unlicense"
     "UPL-1.0"
     "Vim"
