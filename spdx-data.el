@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-04-16")
+(defconst spdx-data-release-date "2023-04-18")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -286,6 +286,7 @@
     "LAL-1.2"
     "LAL-1.3"
     "Latex2e"
+    "Latex2e-translated-notice"
     "Leptonica"
     "LGPL-2.0-only"
     "LGPL-2.0-or-later"
