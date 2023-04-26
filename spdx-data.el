@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-04-18")
+(defconst spdx-data-release-date "2023-04-26")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -142,6 +142,7 @@
     "CC-BY-SA-3.0"
     "CC-BY-SA-3.0-AT"
     "CC-BY-SA-3.0-DE"
+    "CC-BY-SA-3.0-IGO"
     "CC-BY-SA-4.0"
     "CC-PDDC"
     "CC0-1.0"
@@ -317,6 +318,7 @@
     "LZMA-SDK-9.22"
     "MakeIndex"
     "Martin-Birgmeier"
+    "metamail"
     "Minpack"
     "MirOS"
     "MIT"
@@ -407,6 +409,7 @@
     "OLDAP-2.6"
     "OLDAP-2.7"
     "OLDAP-2.8"
+    "OLFL-1.3"
     "OML"
     "OpenPBS-2.3"
     "OpenSSL"
@@ -452,6 +455,7 @@
     "SGI-B-1.0"
     "SGI-B-1.1"
     "SGI-B-2.0"
+    "SGP4"
     "SHL-0.5"
     "SHL-0.51"
     "SimPL-2.0"
