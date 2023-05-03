@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-04-27")
+(defconst spdx-data-release-date "2023-05-03")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -51,6 +51,7 @@
     "Artistic-1.0-cl8"
     "Artistic-1.0-Perl"
     "Artistic-2.0"
+    "ASWF-Digital-Assets-1.0"
     "Baekmuk"
     "Bahyph"
     "Barr"
