@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-05-03")
+(defconst spdx-data-release-date "2023-05-09")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -505,6 +505,7 @@
     "W3C-20150513"
     "w3m"
     "Watcom-1.0"
+    "Widget-Workshop"
     "Wsuipa"
     "WTFPL"
     "X11"
