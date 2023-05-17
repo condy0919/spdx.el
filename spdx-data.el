@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-05-09")
+(defconst spdx-data-release-date "2023-05-16")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -481,6 +481,7 @@
     "TAPR-OHL-1.0"
     "TCL"
     "TCP-wrappers"
+    "TermReadKey"
     "TMate"
     "TORQUE-1.1"
     "TOSL"
@@ -510,7 +511,9 @@
     "WTFPL"
     "X11"
     "X11-distribute-modifications-variant"
+    "Xdebug-1.03"
     "Xerox"
+    "Xfig"
     "XFree86-1.1"
     "xinetd"
     "xlock"
