@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-06-09")
+(defconst spdx-data-release-date "2023-06-11")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -183,7 +183,6 @@
     "CPL-1.0"
     "CPOL-1.02"
     "Crossword"
-    "cryptsetup-OpenSSL-exception"
     "CrystalStacker"
     "CUA-OPL-1.0"
     "Cube"
@@ -301,7 +300,6 @@
     "LGPLLR"
     "Libpng"
     "libpng-2.0"
-    "libpri-OpenH323-exception"
     "libselinux-1.0"
     "libtiff"
     "libutil-David-Nugent"
