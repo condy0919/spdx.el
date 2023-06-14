@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-06-11")
+(defconst spdx-data-release-date "2023-06-14")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -194,6 +194,7 @@
     "Dotseqn"
     "DRL-1.0"
     "DSDP"
+    "dtoa"
     "dvipdfm"
     "ECL-1.0"
     "ECL-2.0"
@@ -306,8 +307,10 @@
     "LiLiQ-P-1.1"
     "LiLiQ-R-1.1"
     "LiLiQ-Rplus-1.1"
+    "Linux-man-pages-1-para"
     "Linux-man-pages-copyleft"
-    "Linux-man-pages-one-para"
+    "Linux-man-pages-copyleft-2-para"
+    "Linux-man-pages-copyleft-var"
     "Linux-OpenIB"
     "LOOP"
     "LPL-1.0"
@@ -417,6 +420,7 @@
     "OpenPBS-2.3"
     "OpenSSL"
     "OPL-1.0"
+    "OPL-UK-3.0"
     "OPUBL-1.0"
     "OSET-PL-2.1"
     "OSL-1.0"
