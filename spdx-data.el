@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-06-14")
+(defconst spdx-data-release-date "2023-06-18")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -63,6 +63,7 @@
     "BitTorrent-1.1"
     "blessing"
     "BlueOak-1.0.0"
+    "Boehm-GC"
     "Borceux"
     "Brian-Gladman-3-Clause"
     "BSD-1-Clause"
@@ -274,6 +275,7 @@
     "iMatix"
     "Imlib2"
     "Info-ZIP"
+    "Inner-Net-2.0"
     "Intel"
     "Intel-ACPI"
     "Interbase-1.0"
