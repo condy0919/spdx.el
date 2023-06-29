@@ -100,6 +100,13 @@ The priority of auto is `project' > `user'."
                  (const none))
   :group 'spdx)
 
+(defcustom spdx-copyright-name "Copyright "
+  "The name of copyright.
+
+Another reasonable name could be \"SPDX-FileCopyrightText: \"."
+  :type 'string
+  :group 'spdx)
+
 ;; Stole from `doom-modeline`
 (defcustom spdx-project-detection 'auto
   "How to detect the project root.
@@ -215,7 +222,7 @@ Returns nil if no existing Copyright line is found."
 
 (defun spdx-copyright-format ()
   "Prompt for SPDX Copyright line, with a guess for the default line."
-  (let ((prefix "Copyright "))
+  (let ((prefix spdx-copyright-name))
     (concat prefix
             (read-from-minibuffer
              prefix
