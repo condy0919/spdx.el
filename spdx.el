@@ -100,10 +100,10 @@ The priority of auto is `project' > `user'."
                  (const none))
   :group 'spdx)
 
-(defcustom spdx-copyright-name "Copyright "
-  "The name of copyright.
+(defcustom spdx-copyright-prefix "Copyright "
+  "The prefix of copyright.
 
-Another reasonable name could be \"SPDX-FileCopyrightText: \"."
+Another reasonable prefix could be \"SPDX-FileCopyrightText: \"."
   :type 'string
   :group 'spdx)
 
