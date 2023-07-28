@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-07-02")
+(defconst spdx-data-release-date "2023-07-27")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -167,6 +167,7 @@
     "CERN-OHL-S-2.0"
     "CERN-OHL-W-2.0"
     "CFITSIO"
+    "check-cvs"
     "checkmk"
     "ClArtistic"
     "Clips"
@@ -470,6 +471,7 @@
     "SimPL-2.0"
     "SISSL"
     "SISSL-1.2"
+    "SL"
     "Sleepycat"
     "SMLNJ"
     "SMPPL"
@@ -531,6 +533,7 @@
     "YPL-1.0"
     "YPL-1.1"
     "Zed"
+    "Zeeff"
     "Zend-2.0"
     "Zimbra-1.3"
     "Zimbra-1.4"
