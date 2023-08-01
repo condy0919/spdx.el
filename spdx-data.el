@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-07-27")
+(defconst spdx-data-release-date "2023-07-31")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -261,6 +261,7 @@
     "HaskellReport"
     "Hippocratic-2.1"
     "HP-1986"
+    "HP-1989"
     "HPND"
     "HPND-export-US"
     "HPND-Markus-Kuhn"
@@ -477,6 +478,7 @@
     "SMPPL"
     "SNIA"
     "snprintf"
+    "Soundex"
     "Spencer-86"
     "Spencer-94"
     "Spencer-99"
