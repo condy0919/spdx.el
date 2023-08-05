@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-07-31")
+(defconst spdx-data-release-date "2023-08-04")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -494,6 +494,7 @@
     "TCL"
     "TCP-wrappers"
     "TermReadKey"
+    "Texinfo-exception"
     "TMate"
     "TORQUE-1.1"
     "TOSL"
