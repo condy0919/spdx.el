@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-08-04")
+(defconst spdx-data-release-date "2023-08-24")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -340,6 +340,7 @@
     "MIT-Festival"
     "MIT-Modern-Variant"
     "MIT-open-group"
+    "MIT-testregex"
     "MIT-Wu"
     "MITNFA"
     "Motosoto"
@@ -457,6 +458,7 @@
     "RSA-MD"
     "RSCPL"
     "Ruby"
+    "SANE-exception"
     "SAX-PD"
     "Saxpath"
     "SCEA"
@@ -486,6 +488,7 @@
     "SSH-OpenSSH"
     "SSH-short"
     "SSPL-1.0"
+    "stunnel-exception"
     "SugarCRM-1.1.3"
     "SunPro"
     "SWL"
@@ -501,6 +504,7 @@
     "TPDL"
     "TPL-1.0"
     "TTWL"
+    "TTYP0"
     "TU-Berlin-1.0"
     "TU-Berlin-2.0"
     "UCAR"
