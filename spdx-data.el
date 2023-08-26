@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-08-24")
+(defconst spdx-data-release-date "2023-08-25")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -249,6 +249,7 @@
     "Glide"
     "Glulxe"
     "GLWTPL"
+    "GNU-compiler-exception"
     "gnuplot"
     "GPL-1.0-only"
     "GPL-1.0-or-later"
