@@ -222,7 +222,7 @@ Returns nil if no existing Copyright line is found."
 
 (defun spdx-copyright-format ()
   "Prompt for SPDX Copyright line, with a guess for the default line."
-  (let ((prefix spdx-copyright-name))
+  (let ((prefix spdx-copyright-prefix))
     (concat prefix
             (read-from-minibuffer
              prefix
