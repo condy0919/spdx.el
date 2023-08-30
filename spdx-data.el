@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-08-25")
+(defconst spdx-data-release-date "2023-08-29")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -344,6 +344,7 @@
     "MIT-testregex"
     "MIT-Wu"
     "MITNFA"
+    "MMIXware"
     "Motosoto"
     "mpi-permissive"
     "mpich2"
@@ -516,6 +517,7 @@
     "UnixCrypt"
     "Unlicense"
     "UPL-1.0"
+    "URT-RLE"
     "Vim"
     "VOSTROM"
     "VSL-1.0"
