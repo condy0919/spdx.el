@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-06")
+(defconst spdx-data-release-date "2023-09-09")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -347,6 +347,7 @@
     "MITNFA"
     "MMIXware"
     "Motosoto"
+    "MPEG-Software-Simulation"
     "mpi-permissive"
     "mpich2"
     "MPL-1.0"
