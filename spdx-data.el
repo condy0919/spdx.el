@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-09")
+(defconst spdx-data-release-date "2023-09-10")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -443,6 +443,7 @@
     "PHP-3.0"
     "PHP-3.01"
     "Plexus"
+    "pnmstitch"
     "PolyForm-Noncommercial-1.0.0"
     "PolyForm-Small-Business-1.0.0"
     "PostgreSQL"
