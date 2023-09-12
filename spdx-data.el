@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-10")
+(defconst spdx-data-release-date "2023-09-11")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -218,6 +218,7 @@
     "Eurosym"
     "Fair"
     "FDK-AAC"
+    "Ferguson-Twofish"
     "Frameworx-1.0"
     "FreeBSD-DOC"
     "FreeImage"
@@ -347,7 +348,7 @@
     "MITNFA"
     "MMIXware"
     "Motosoto"
-    "MPEG-Software-Simulation"
+    "MPEG-SSG"
     "mpi-permissive"
     "mpich2"
     "MPL-1.0"
