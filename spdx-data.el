@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-11")
+(defconst spdx-data-release-date "2023-09-12")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -80,6 +80,7 @@
     "BSD-3-Clause-No-Nuclear-License-2014"
     "BSD-3-Clause-No-Nuclear-Warranty"
     "BSD-3-Clause-Open-MPI"
+    "BSD-3-Clause-Sun"
     "BSD-4-Clause"
     "BSD-4-Clause-Shortened"
     "BSD-4-Clause-UC"
@@ -89,6 +90,7 @@
     "BSD-Attribution-HPND-disclaimer"
     "BSD-Protection"
     "BSD-Source-Code"
+    "BSD-Systemics"
     "BSL-1.0"
     "BUSL-1.1"
     "bzip2-1.0.6"
@@ -217,6 +219,7 @@
     "EUPL-1.2"
     "Eurosym"
     "Fair"
+    "FBM"
     "FDK-AAC"
     "Ferguson-Twofish"
     "Frameworx-1.0"
