@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-18")
+(defconst spdx-data-release-date "2023-09-19")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -88,6 +88,7 @@
     "BSD-4.3TAHOE"
     "BSD-Advertising-Acknowledgement"
     "BSD-Attribution-HPND-disclaimer"
+    "BSD-Inferno-Nettverk"
     "BSD-Protection"
     "BSD-Source-Code"
     "BSD-Systemics"
@@ -494,6 +495,7 @@
     "Spencer-94"
     "Spencer-99"
     "SPL-1.0"
+    "ssh-keyscan"
     "SSH-OpenSSH"
     "SSH-short"
     "SSPL-1.0"
@@ -501,6 +503,7 @@
     "SugarCRM-1.1.3"
     "SunPro"
     "SWL"
+    "swrule"
     "Symlinks"
     "TAPR-OHL-1.0"
     "TCL"
