@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-19")
+(defconst spdx-data-release-date "2023-09-21")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -187,6 +187,7 @@
     "CPAL-1.0"
     "CPL-1.0"
     "CPOL-1.02"
+    "Cronyx"
     "Crossword"
     "CrystalStacker"
     "CUA-OPL-1.0"
@@ -272,6 +273,8 @@
     "HPND"
     "HPND-export-US"
     "HPND-Markus-Kuhn"
+    "HPND-Pbmplus"
+    "HPND-sell-regexpr"
     "HPND-sell-variant"
     "HPND-sell-variant-MIT-disclaimer"
     "HTMLTIDY"
@@ -331,6 +334,7 @@
     "LPPL-1.2"
     "LPPL-1.3a"
     "LPPL-1.3c"
+    "Lucida-Bitmap-Fonts"
     "LZMA-SDK-9.11-to-9.20"
     "LZMA-SDK-9.22"
     "MakeIndex"
