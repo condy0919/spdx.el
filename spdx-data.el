@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-21")
+(defconst spdx-data-release-date "2023-09-24")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -232,6 +232,8 @@
     "FSFULLR"
     "FSFULLRWD"
     "FTL"
+    "Furuseth"
+    "fwlw"
     "GD"
     "GFDL-1.1-invariants-only"
     "GFDL-1.1-invariants-or-later"
@@ -271,6 +273,7 @@
     "HP-1986"
     "HP-1989"
     "HPND"
+    "HPND-DEC"
     "HPND-export-US"
     "HPND-Markus-Kuhn"
     "HPND-Pbmplus"
@@ -299,6 +302,7 @@
     "JPL-image"
     "JPNIC"
     "JSON"
+    "Kastrup"
     "Kazlib"
     "Knuth-CTAN"
     "LAL-1.2"
@@ -337,6 +341,7 @@
     "Lucida-Bitmap-Fonts"
     "LZMA-SDK-9.11-to-9.20"
     "LZMA-SDK-9.22"
+    "magaz"
     "MakeIndex"
     "Martin-Birgmeier"
     "metamail"
@@ -525,6 +530,7 @@
     "TU-Berlin-2.0"
     "UCAR"
     "UCL-1.0"
+    "ulem"
     "Unicode-DFS-2015"
     "Unicode-DFS-2016"
     "Unicode-TOU"
