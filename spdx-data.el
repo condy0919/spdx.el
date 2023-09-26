@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-24")
+(defconst spdx-data-release-date "2023-09-25")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -280,6 +280,7 @@
     "HPND-sell-regexpr"
     "HPND-sell-variant"
     "HPND-sell-variant-MIT-disclaimer"
+    "HPND-UC"
     "HTMLTIDY"
     "IBM-pibs"
     "ICU"
@@ -344,6 +345,7 @@
     "magaz"
     "MakeIndex"
     "Martin-Birgmeier"
+    "McPhee-slideshow"
     "metamail"
     "Minpack"
     "MirOS"
@@ -487,6 +489,7 @@
     "SGI-B-1.0"
     "SGI-B-1.1"
     "SGI-B-2.0"
+    "SGI-OpenGL"
     "SGP4"
     "SHL-0.5"
     "SHL-0.51"
