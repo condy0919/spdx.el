@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-27")
+(defconst spdx-data-release-date "2023-09-28")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -19,6 +19,7 @@
     "AdaCore-doc"
     "Adobe-2006"
     "Adobe-Glyph"
+    "Adobe-Utopia"
     "ADSL"
     "AFL-1.1"
     "AFL-1.2"
