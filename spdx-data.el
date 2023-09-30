@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-28")
+(defconst spdx-data-release-date "2023-09-29")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -341,6 +341,7 @@
     "LPPL-1.2"
     "LPPL-1.3a"
     "LPPL-1.3c"
+    "lsof"
     "Lucida-Bitmap-Fonts"
     "LZMA-SDK-9.11-to-9.20"
     "LZMA-SDK-9.22"
