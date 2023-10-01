@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-29")
+(defconst spdx-data-release-date "2023-09-30")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -74,6 +74,7 @@
     "BSD-3-Clause"
     "BSD-3-Clause-Attribution"
     "BSD-3-Clause-Clear"
+    "BSD-3-Clause-HP"
     "BSD-3-Clause-LBNL"
     "BSD-3-Clause-Modification"
     "BSD-3-Clause-No-Military-License"
@@ -275,6 +276,7 @@
     "HP-1989"
     "HPND"
     "HPND-DEC"
+    "HPND-doc-sell"
     "HPND-export-US"
     "HPND-export-US-modify"
     "HPND-Markus-Kuhn"
@@ -456,6 +458,7 @@
     "OSL-2.0"
     "OSL-2.1"
     "OSL-3.0"
+    "PADL"
     "Parity-6.0.0"
     "Parity-7.0.0"
     "PDDL-1.0"
@@ -471,6 +474,7 @@
     "psutils"
     "Python-2.0"
     "Python-2.0.1"
+    "python-ldap"
     "Qhull"
     "QPL-1.0"
     "QPL-1.0-INRIA-2004"
