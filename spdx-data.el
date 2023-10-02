@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-09-30")
+(defconst spdx-data-release-date "2023-10-01")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -276,6 +276,7 @@
     "HP-1989"
     "HPND"
     "HPND-DEC"
+    "HPND-doc"
     "HPND-doc-sell"
     "HPND-export-US"
     "HPND-export-US-modify"
