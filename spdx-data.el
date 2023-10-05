@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-10-01")
+(defconst spdx-data-release-date "2023-10-04")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -74,6 +74,7 @@
     "BSD-3-Clause"
     "BSD-3-Clause-Attribution"
     "BSD-3-Clause-Clear"
+    "BSD-3-Clause-flex"
     "BSD-3-Clause-HP"
     "BSD-3-Clause-LBNL"
     "BSD-3-Clause-Modification"
@@ -260,7 +261,6 @@
     "Glide"
     "Glulxe"
     "GLWTPL"
-    "GNU-compiler-exception"
     "gnuplot"
     "GPL-1.0-only"
     "GPL-1.0-or-later"
@@ -487,7 +487,6 @@
     "RSA-MD"
     "RSCPL"
     "Ruby"
-    "SANE-exception"
     "SAX-PD"
     "Saxpath"
     "SCEA"
@@ -519,7 +518,6 @@
     "SSH-OpenSSH"
     "SSH-short"
     "SSPL-1.0"
-    "stunnel-exception"
     "SugarCRM-1.1.3"
     "SunPro"
     "SWL"
@@ -529,7 +527,6 @@
     "TCL"
     "TCP-wrappers"
     "TermReadKey"
-    "Texinfo-exception"
     "TMate"
     "TORQUE-1.1"
     "TOSL"
