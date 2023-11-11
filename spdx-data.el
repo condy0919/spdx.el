@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-11-09")
+(defconst spdx-data-release-date "2023-11-10")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -18,6 +18,7 @@
     "Abstyles"
     "AdaCore-doc"
     "Adobe-2006"
+    "Adobe-Display-PostScript"
     "Adobe-Glyph"
     "Adobe-Utopia"
     "ADSL"
@@ -34,6 +35,7 @@
     "Aladdin"
     "AMDPLPA"
     "AML"
+    "AML-glslang"
     "AMPAS"
     "ANTLR-PD"
     "ANTLR-PD-fallback"
@@ -197,12 +199,14 @@
     "Cube"
     "curl"
     "D-FSL-1.0"
+    "DEC-3-Clause"
     "diffmark"
     "DL-DE-BY-2.0"
     "DL-DE-ZERO-2.0"
     "DOC"
     "Dotseqn"
     "DRL-1.0"
+    "DRL-1.1"
     "DSDP"
     "dtoa"
     "dvipdfm"
@@ -237,6 +241,7 @@
     "FTL"
     "Furuseth"
     "fwlw"
+    "GCR-docs"
     "GD"
     "GFDL-1.1-invariants-only"
     "GFDL-1.1-invariants-or-later"
@@ -271,6 +276,7 @@
     "Graphics-Gems"
     "gSOAP-1.3b"
     "HaskellReport"
+    "hdparm"
     "Hippocratic-2.1"
     "HP-1986"
     "HP-1989"
@@ -282,6 +288,7 @@
     "HPND-export-US-modify"
     "HPND-Markus-Kuhn"
     "HPND-Pbmplus"
+    "HPND-sell-MIT-disclaimer-xserver"
     "HPND-sell-regexpr"
     "HPND-sell-variant"
     "HPND-sell-variant-MIT-disclaimer"
@@ -465,6 +472,7 @@
     "PDDL-1.0"
     "PHP-3.0"
     "PHP-3.01"
+    "Pixar"
     "Plexus"
     "pnmstitch"
     "PolyForm-Noncommercial-1.0.0"
