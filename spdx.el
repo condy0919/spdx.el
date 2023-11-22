@@ -179,8 +179,8 @@ Returns a string, or nil if we can't make a good guess."
      (funcall (symbol-function 'projectile-project-name)))
     ('project
      (let ((proj (funcall (symbol-function 'project-current))))
-       (and proj (directory-file-name
-                  (if (stringp proj) proj (cdr proj))))))
+       (and proj (funcall (symbol-function 'project-name)
+                          proj))))
     (_ nil)))
 
 (defun spdx-get-default-copyright-sign ()
