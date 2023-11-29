@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-11-10")
+(defconst spdx-data-release-date "2023-11-28")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -487,6 +487,7 @@
     "Qhull"
     "QPL-1.0"
     "QPL-1.0-INRIA-2004"
+    "radvd"
     "Rdisc"
     "RHeCos-1.1"
     "RPL-1.1"
@@ -496,6 +497,7 @@
     "RSCPL"
     "Ruby"
     "SAX-PD"
+    "SAX-PD-2.0"
     "Saxpath"
     "SCEA"
     "SchemeReport"
