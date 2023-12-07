@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-11-28")
+(defconst spdx-data-release-date "2023-12-06")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -574,6 +574,7 @@
     "Xfig"
     "XFree86-1.1"
     "xinetd"
+    "xkeyboard-config-Zinoviev"
     "xlock"
     "Xnet"
     "xpp"
