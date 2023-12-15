@@ -9,7 +9,7 @@
 ;;
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-12-06")
+(defconst spdx-data-release-date "2023-12-14")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -235,6 +235,7 @@
     "FreeBSD-DOC"
     "FreeImage"
     "FSFAP"
+    "FSFAP-no-warranty-disclaimer"
     "FSFUL"
     "FSFULLR"
     "FSFULLRWD"
