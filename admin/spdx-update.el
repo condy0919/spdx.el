@@ -38,14 +38,14 @@
       (insert
        ";;; spdx-data.el --- SPDX license database"
        " -*- lexical-binding: t -*-" "\n"
-       ";;" "\n"
+       "\n"
        ";; Copyright 2020 SPDX" "\n"
        ";; SPDX-License-Identifier: MIT" "\n"
-       ";;" "\n"
+       "\n"
        ";;; Commentary:" "\n"
-       ";;" "\n"
+       "\n"
        ";; Automatically converted from licenses.json." "\n"
-       ";;" "\n"
+       "\n"
        ";;; Code:" "\n"
        "\n"
        (format "(defconst spdx-data-release-date %S)\n" release-date)
