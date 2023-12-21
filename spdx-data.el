@@ -1,15 +1,15 @@
 ;;; spdx-data.el --- SPDX license database -*- lexical-binding: t -*-
-;;
+
 ;; Copyright 2020 SPDX
 ;; SPDX-License-Identifier: MIT
-;;
+
 ;;; Commentary:
-;;
+
 ;; Automatically converted from licenses.json.
-;;
+
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-12-14")
+(defconst spdx-data-release-date "2023-12-20")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -287,6 +287,7 @@
     "HPND-doc-sell"
     "HPND-export-US"
     "HPND-export-US-modify"
+    "HPND-Kevlin-Henney"
     "HPND-Markus-Kuhn"
     "HPND-Pbmplus"
     "HPND-sell-MIT-disclaimer-xserver"
