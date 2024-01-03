@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2023-12-20")
+(defconst spdx-data-release-date "2024-01-02")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -312,6 +312,7 @@
     "IPA"
     "IPL-1.0"
     "ISC"
+    "ISC-Veillard"
     "Jam"
     "JasPer-2.0"
     "JPL-image"
@@ -358,6 +359,7 @@
     "LZMA-SDK-9.11-to-9.20"
     "LZMA-SDK-9.22"
     "magaz"
+    "mailprio"
     "MakeIndex"
     "Martin-Birgmeier"
     "McPhee-slideshow"
@@ -551,6 +553,7 @@
     "UCAR"
     "UCL-1.0"
     "ulem"
+    "Unicode-3.0"
     "Unicode-DFS-2015"
     "Unicode-DFS-2016"
     "Unicode-TOU"
