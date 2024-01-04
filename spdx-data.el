@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-01-02")
+(defconst spdx-data-release-date "2024-01-03")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -97,6 +97,7 @@
     "BSD-Protection"
     "BSD-Source-Code"
     "BSD-Systemics"
+    "BSD-Systemics-W3Works"
     "BSL-1.0"
     "BUSL-1.1"
     "bzip2-1.0.6"
