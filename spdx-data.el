@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-01-17")
+(defconst spdx-data-release-date "2024-01-18")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -95,6 +95,7 @@
     "BSD-Attribution-HPND-disclaimer"
     "BSD-Inferno-Nettverk"
     "BSD-Protection"
+    "BSD-Source-beginning-file"
     "BSD-Source-Code"
     "BSD-Systemics"
     "BSD-Systemics-W3Works"
@@ -351,6 +352,7 @@
     "Linux-man-pages-copyleft-var"
     "Linux-OpenIB"
     "LOOP"
+    "LPD-document"
     "LPL-1.0"
     "LPL-1.02"
     "LPPL-1.0"
@@ -545,6 +547,7 @@
     "TCL"
     "TCP-wrappers"
     "TermReadKey"
+    "TGPPL-1.0"
     "TMate"
     "TORQUE-1.1"
     "TOSL"
