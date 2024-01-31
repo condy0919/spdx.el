@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-01-25")
+(defconst spdx-data-release-date "2024-01-30")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -74,6 +74,7 @@
     "BSD-2-Clause-Patent"
     "BSD-2-Clause-Views"
     "BSD-3-Clause"
+    "BSD-3-Clause-acpica"
     "BSD-3-Clause-Attribution"
     "BSD-3-Clause-Clear"
     "BSD-3-Clause-flex"
