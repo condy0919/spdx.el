@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-01-31")
+(defconst spdx-data-release-date "2024-02-01")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -468,6 +468,7 @@
     "OML"
     "OpenPBS-2.3"
     "OpenSSL"
+    "OpenSSL-standalone"
     "OPL-1.0"
     "OPL-UK-3.0"
     "OPUBL-1.0"
@@ -538,6 +539,7 @@
     "ssh-keyscan"
     "SSH-OpenSSH"
     "SSH-short"
+    "SSLeay-standalone"
     "SSPL-1.0"
     "SugarCRM-1.1.3"
     "SunPro"
