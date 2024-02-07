@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-02-04")
+(defconst spdx-data-release-date "2024-02-07")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -543,6 +543,7 @@
     "SSLeay-standalone"
     "SSPL-1.0"
     "SugarCRM-1.1.3"
+    "Sun-PPP"
     "SunPro"
     "SWL"
     "swrule"
