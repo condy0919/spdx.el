@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-02-07")
+(defconst spdx-data-release-date "2024-02-08")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -59,6 +59,7 @@
     "Baekmuk"
     "Bahyph"
     "Barr"
+    "bcrypt-Solar-Designer"
     "Beerware"
     "Bitstream-Charter"
     "Bitstream-Vera"
@@ -68,6 +69,7 @@
     "BlueOak-1.0.0"
     "Boehm-GC"
     "Borceux"
+    "Brian-Gladman-2-Clause"
     "Brian-Gladman-3-Clause"
     "BSD-1-Clause"
     "BSD-2-Clause"
@@ -186,6 +188,7 @@
     "ClArtistic"
     "Clips"
     "CMU-Mach"
+    "CMU-Mach-nodoc"
     "CNRI-Jython"
     "CNRI-Python"
     "CNRI-Python-GPL-Compatible"
@@ -282,6 +285,7 @@
     "GPL-3.0-or-later"
     "Graphics-Gems"
     "gSOAP-1.3b"
+    "gtkbook"
     "HaskellReport"
     "hdparm"
     "Hippocratic-2.1"
@@ -293,6 +297,8 @@
     "HPND-doc-sell"
     "HPND-export-US"
     "HPND-export-US-modify"
+    "HPND-Fenneberg-Livingston"
+    "HPND-INRIA-IMAG"
     "HPND-Kevlin-Henney"
     "HPND-Markus-Kuhn"
     "HPND-MIT-disclaimer"
@@ -366,6 +372,8 @@
     "Lucida-Bitmap-Fonts"
     "LZMA-SDK-9.11-to-9.20"
     "LZMA-SDK-9.22"
+    "Mackerras-3-Clause"
+    "Mackerras-3-Clause-acknowledgment"
     "magaz"
     "mailprio"
     "MakeIndex"
@@ -470,6 +478,7 @@
     "OpenPBS-2.3"
     "OpenSSL"
     "OpenSSL-standalone"
+    "OpenVision"
     "OPL-1.0"
     "OPL-UK-3.0"
     "OPUBL-1.0"
@@ -532,6 +541,7 @@
     "SMPPL"
     "SNIA"
     "snprintf"
+    "softSurfer"
     "Soundex"
     "Spencer-86"
     "Spencer-94"
@@ -565,6 +575,7 @@
     "UCAR"
     "UCL-1.0"
     "ulem"
+    "UMich-Merit"
     "Unicode-3.0"
     "Unicode-DFS-2015"
     "Unicode-DFS-2016"
