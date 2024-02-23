@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-02-20")
+(defconst spdx-data-release-date "2024-02-22")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -389,6 +389,7 @@
     "MIT-enna"
     "MIT-feh"
     "MIT-Festival"
+    "MIT-Khronos-old"
     "MIT-Modern-Variant"
     "MIT-open-group"
     "MIT-testregex"
