@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-03-15")
+(defconst spdx-data-release-date "2024-03-25")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -609,6 +609,7 @@
     "Xnet"
     "xpp"
     "XSkat"
+    "xzoom"
     "YPL-1.0"
     "YPL-1.1"
     "Zed"
