@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-03-25")
+(defconst spdx-data-release-date "2024-03-26")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -33,6 +33,7 @@
     "AGPL-3.0-only"
     "AGPL-3.0-or-later"
     "Aladdin"
+    "AMD-newlib"
     "AMDPLPA"
     "AML"
     "AML-glslang"
@@ -440,6 +441,7 @@
     "NTP"
     "NTP-0"
     "O-UDA-1.0"
+    "OAR"
     "OCCT-PL"
     "OCLC-2.0"
     "ODbL-1.0"
