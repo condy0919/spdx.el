@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-04-04")
+(defconst spdx-data-release-date "2024-04-11")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -75,6 +75,7 @@
     "BSD-1-Clause"
     "BSD-2-Clause"
     "BSD-2-Clause-Darwin"
+    "BSD-2-clause-first-lines"
     "BSD-2-Clause-Patent"
     "BSD-2-Clause-Views"
     "BSD-3-Clause"
