@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-04-11")
+(defconst spdx-data-release-date "2024-04-14")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -499,6 +499,7 @@
     "PHP-3.0"
     "PHP-3.01"
     "Pixar"
+    "pkgconf"
     "Plexus"
     "pnmstitch"
     "PolyForm-Noncommercial-1.0.0"
@@ -558,6 +559,7 @@
     "SSPL-1.0"
     "SugarCRM-1.1.3"
     "Sun-PPP"
+    "Sun-PPP-2000"
     "SunPro"
     "SWL"
     "swrule"
