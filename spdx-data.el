@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-04-15")
+(defconst spdx-data-release-date "2024-04-17")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -310,6 +310,7 @@
     "HPND-sell-variant"
     "HPND-sell-variant-MIT-disclaimer"
     "HPND-UC"
+    "HPND-UC-export-US"
     "HTMLTIDY"
     "IBM-pibs"
     "ICU"
@@ -420,6 +421,7 @@
     "Naumen"
     "NBPL-1.0"
     "NCGL-UK-2.0"
+    "NCL"
     "NCSA"
     "Net-SNMP"
     "NetCDF"
