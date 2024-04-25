@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-04-17")
+(defconst spdx-data-release-date "2024-04-24")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -113,6 +113,7 @@
     "CAL-1.0-Combined-Work-Exception"
     "Caldera"
     "Caldera-no-preamble"
+    "Catharon"
     "CATOSL-1.1"
     "CC-BY-1.0"
     "CC-BY-2.0"
