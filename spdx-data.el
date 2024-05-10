@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-04-24")
+(defconst spdx-data-release-date "2024-05-09")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -210,6 +210,7 @@
     "CUA-OPL-1.0"
     "Cube"
     "curl"
+    "cve-tou"
     "D-FSL-1.0"
     "DEC-3-Clause"
     "diffmark"
@@ -310,6 +311,7 @@
     "HPND-sell-regexpr"
     "HPND-sell-variant"
     "HPND-sell-variant-MIT-disclaimer"
+    "HPND-sell-variant-MIT-disclaimer-rev"
     "HPND-UC"
     "HPND-UC-export-US"
     "HTMLTIDY"
@@ -508,6 +510,7 @@
     "PolyForm-Noncommercial-1.0.0"
     "PolyForm-Small-Business-1.0.0"
     "PostgreSQL"
+    "PPL"
     "PSF-2.0"
     "psfrag"
     "psutils"
