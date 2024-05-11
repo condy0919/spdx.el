@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-05-09")
+(defconst spdx-data-release-date "2024-05-10")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -40,6 +40,7 @@
     "AMPAS"
     "ANTLR-PD"
     "ANTLR-PD-fallback"
+    "any-OSI"
     "Apache-1.0"
     "Apache-1.1"
     "Apache-2.0"
