@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-05-15")
+(defconst spdx-data-release-date "2024-05-16")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -425,6 +425,7 @@
     "NASA-1.3"
     "Naumen"
     "NBPL-1.0"
+    "NCBI-PD"
     "NCGL-UK-2.0"
     "NCL"
     "NCSA"
