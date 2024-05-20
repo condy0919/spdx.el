@@ -9,11 +9,12 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-05-18")
+(defconst spdx-data-release-date "2024-05-19")
 
 (defconst spdx-data-license-identifiers
   '(
     "0BSD"
+    "3D-Slicer-1.0"
     "AAL"
     "Abstyles"
     "AdaCore-doc"
