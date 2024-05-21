@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-05-19")
+(defconst spdx-data-release-date "2024-05-20")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -304,6 +304,7 @@
     "HPND-export-US"
     "HPND-export-US-acknowledgement"
     "HPND-export-US-modify"
+    "HPND-export2-US"
     "HPND-Fenneberg-Livingston"
     "HPND-INRIA-IMAG"
     "HPND-Intel"
