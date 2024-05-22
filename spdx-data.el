@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-05-20")
+(defconst spdx-data-release-date "2024-05-21")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -292,6 +292,7 @@
     "Graphics-Gems"
     "gSOAP-1.3b"
     "gtkbook"
+    "Gutmann"
     "HaskellReport"
     "hdparm"
     "Hippocratic-2.1"
@@ -310,6 +311,7 @@
     "HPND-Intel"
     "HPND-Kevlin-Henney"
     "HPND-Markus-Kuhn"
+    "HPND-merchantability-variant"
     "HPND-MIT-disclaimer"
     "HPND-Pbmplus"
     "HPND-sell-MIT-disclaimer-xserver"
