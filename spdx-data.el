@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-06-28")
+(defconst spdx-data-release-date "2024-07-24")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -295,6 +295,7 @@
     "Gutmann"
     "HaskellReport"
     "hdparm"
+    "HIDAPI"
     "Hippocratic-2.1"
     "HP-1986"
     "HP-1989"
@@ -537,6 +538,7 @@
     "RSA-MD"
     "RSCPL"
     "Ruby"
+    "Ruby-pty"
     "SAX-PD"
     "SAX-PD-2.0"
     "Saxpath"
@@ -618,6 +620,7 @@
     "WTFPL"
     "X11"
     "X11-distribute-modifications-variant"
+    "X11-swapped"
     "Xdebug-1.03"
     "Xerox"
     "Xfig"
