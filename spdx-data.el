@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-07-29")
+(defconst spdx-data-release-date "2024-08-06")
 
 (defconst spdx-data-license-identifiers
   '(
