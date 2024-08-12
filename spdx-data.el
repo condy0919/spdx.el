@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-08-10")
+(defconst spdx-data-release-date "2024-08-11")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -436,7 +436,6 @@
     "NCGL-UK-2.0"
     "NCL"
     "NCSA"
-    "Net-SNMP"
     "NetCDF"
     "Newsletr"
     "NGPL"
@@ -676,6 +675,7 @@
     "LGPL-2.1+"
     "LGPL-3.0"
     "LGPL-3.0+"
+    "Net-SNMP"
     "Nunit"
     "StandardML-NJ"
     "wxWindows"))
