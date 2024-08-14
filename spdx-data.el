@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-08-11")
+(defconst spdx-data-release-date "2024-08-13")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -219,6 +219,8 @@
     "DL-DE-BY-2.0"
     "DL-DE-ZERO-2.0"
     "DOC"
+    "DocBook-Schema"
+    "DocBook-XML"
     "Dotseqn"
     "DRL-1.0"
     "DRL-1.1"
