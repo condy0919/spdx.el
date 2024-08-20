@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-08-14")
+(defconst spdx-data-release-date "2024-08-19")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -597,6 +597,7 @@
     "TTYP0"
     "TU-Berlin-1.0"
     "TU-Berlin-2.0"
+    "Ubuntu-font-1.0"
     "UCAR"
     "UCL-1.0"
     "ulem"
