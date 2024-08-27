@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-08-19")
+(defconst spdx-data-release-date "2024-08-26")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -593,6 +593,7 @@
     "TOSL"
     "TPDL"
     "TPL-1.0"
+    "TrustedQSL"
     "TTWL"
     "TTYP0"
     "TU-Berlin-1.0"
