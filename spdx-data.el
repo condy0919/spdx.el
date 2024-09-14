@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-08-27")
+(defconst spdx-data-release-date "2024-09-13")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -71,6 +71,7 @@
     "blessing"
     "BlueOak-1.0.0"
     "Boehm-GC"
+    "Boehm-GC-without-fee"
     "Borceux"
     "Brian-Gladman-2-Clause"
     "Brian-Gladman-3-Clause"
