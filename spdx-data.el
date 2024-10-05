@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-09-23")
+(defconst spdx-data-release-date "2024-10-04")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -551,6 +551,7 @@
     "SchemeReport"
     "Sendmail"
     "Sendmail-8.23"
+    "Sendmail-Open-Source-1.1"
     "SGI-B-1.0"
     "SGI-B-1.1"
     "SGI-B-2.0"
