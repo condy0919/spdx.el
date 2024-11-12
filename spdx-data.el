@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-11-05")
+(defconst spdx-data-release-date "2024-11-11")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -171,6 +171,7 @@
     "CC-BY-SA-3.0-IGO"
     "CC-BY-SA-4.0"
     "CC-PDDC"
+    "CC-SA-1.0"
     "CC0-1.0"
     "CDDL-1.0"
     "CDDL-1.1"
