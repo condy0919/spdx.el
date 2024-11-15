@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-11-11")
+(defconst spdx-data-release-date "2024-11-14")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -171,6 +171,7 @@
     "CC-BY-SA-3.0-IGO"
     "CC-BY-SA-4.0"
     "CC-PDDC"
+    "CC-PDM-1.0"
     "CC-SA-1.0"
     "CC0-1.0"
     "CDDL-1.0"
@@ -340,6 +341,7 @@
     "Imlib2"
     "Info-ZIP"
     "Inner-Net-2.0"
+    "InnoSetup"
     "Intel"
     "Intel-ACPI"
     "Interbase-1.0"
@@ -566,6 +568,7 @@
     "SISSL-1.2"
     "SL"
     "Sleepycat"
+    "SMAIL-GPL"
     "SMLNJ"
     "SMPPL"
     "SNIA"
