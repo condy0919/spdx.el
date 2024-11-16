@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-11-14")
+(defconst spdx-data-release-date "2024-11-15")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -266,6 +266,7 @@
     "fwlw"
     "GCR-docs"
     "GD"
+    "generic-xts"
     "GFDL-1.1-invariants-only"
     "GFDL-1.1-invariants-or-later"
     "GFDL-1.1-no-invariants-only"
@@ -631,6 +632,7 @@
     "Widget-Workshop"
     "Wsuipa"
     "WTFPL"
+    "wwl"
     "X11"
     "X11-distribute-modifications-variant"
     "X11-swapped"
