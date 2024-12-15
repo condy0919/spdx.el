@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2024-11-16")
+(defconst spdx-data-release-date "2024-12-14")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -405,6 +405,7 @@
     "McPhee-slideshow"
     "metamail"
     "Minpack"
+    "MIPS"
     "MirOS"
     "MIT"
     "MIT-0"
@@ -597,6 +598,7 @@
     "TCP-wrappers"
     "TermReadKey"
     "TGPPL-1.0"
+    "ThirdEye"
     "threeparttable"
     "TMate"
     "TORQUE-1.1"
