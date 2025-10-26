@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2025-10-09T00:00:00Z")
+(defconst spdx-data-release-date "2025-10-25T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -252,6 +252,7 @@
     "EPL-2.0"
     "ErlPL-1.1"
     "ESA-PL-permissive-2.4"
+    "ESA-PL-strong-copyleft-2.4"
     "ESA-PL-weak-copyleft-2.4"
     "etalab-2.0"
     "EUDatagrid"
@@ -348,6 +349,7 @@
     "HPND-UC"
     "HPND-UC-export-US"
     "HTMLTIDY"
+    "hyphen-bulgarian"
     "IBM-pibs"
     "ICU"
     "IEC-Code-Components-EULA"
@@ -473,6 +475,7 @@
     "NICTA-1.0"
     "NIST-PD"
     "NIST-PD-fallback"
+    "NIST-PD-TNT"
     "NIST-Software"
     "NLOD-1.0"
     "NLOD-2.0"
@@ -538,6 +541,7 @@
     "OSL-2.0"
     "OSL-2.1"
     "OSL-3.0"
+    "OSSP"
     "PADL"
     "Parity-6.0.0"
     "Parity-7.0.0"
@@ -583,6 +587,7 @@
     "SGI-B-1.1"
     "SGI-B-2.0"
     "SGI-OpenGL"
+    "SGMLUG-PM"
     "SGP4"
     "SHL-0.5"
     "SHL-0.51"
