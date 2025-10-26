@@ -1,6 +1,5 @@
 name: "Check for license list version"
 on:
-  push:
   schedule:
     - cron: '0 0 * * *'
 
@@ -29,7 +28,7 @@ jobs:
     - name: Check license list version
       run: |
         remote=$(curl --location --fail --silent --show-error "https://raw.githubusercontent.com/spdx/license-list-data/master/json/licenses.json" | jq .releaseDate)
-        local=$(grep -Po '[0-9]{4}-[0-9]{2}-[0-9]{2}' spdx-data.el)
+        local=$(grep -Po '"[0-9]{4}-[0-9]{2}-[0-9]{2}T00:00:00Z"' spdx-data.el)
         if [[ "$remote" != "$local" ]]; then
           echo "Remote date $remote does not match local date $local"
           echo "Starting update"
