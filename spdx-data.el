@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2025-10-28T00:00:00Z")
+(defconst spdx-data-release-date "2025-11-13T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -439,6 +439,7 @@
     "MIT-Khronos-old"
     "MIT-Modern-Variant"
     "MIT-open-group"
+    "MIT-STK"
     "MIT-testregex"
     "MIT-Wu"
     "MITNFA"
@@ -669,6 +670,7 @@
     "wwl"
     "X11"
     "X11-distribute-modifications-variant"
+    "X11-no-permit-persons"
     "X11-swapped"
     "Xdebug-1.03"
     "Xerox"
