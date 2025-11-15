@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2025-11-13T00:00:00Z")
+(defconst spdx-data-release-date "2025-11-14T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -116,6 +116,7 @@
     "BSD-Systemics"
     "BSD-Systemics-W3Works"
     "BSL-1.0"
+    "Buddy"
     "BUSL-1.1"
     "bzip2-1.0.6"
     "C-UDA-1.0"
