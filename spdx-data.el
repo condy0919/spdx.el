@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2025-11-19T00:00:00Z")
+(defconst spdx-data-release-date "2025-11-21T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -626,6 +626,7 @@
     "TAPR-OHL-1.0"
     "TCL"
     "TCP-wrappers"
+    "TekHVC"
     "TermReadKey"
     "TGPPL-1.0"
     "ThirdEye"
