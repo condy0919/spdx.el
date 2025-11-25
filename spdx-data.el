@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2025-11-21T00:00:00Z")
+(defconst spdx-data-release-date "2025-11-24T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -35,6 +35,7 @@
     "AGPL-3.0-only"
     "AGPL-3.0-or-later"
     "Aladdin"
+    "ALGLIB-Documentation"
     "AMD-newlib"
     "AMDPLPA"
     "AML"
@@ -369,6 +370,7 @@
     "IPL-1.0"
     "ISC"
     "ISC-Veillard"
+    "ISO-permission"
     "Jam"
     "JasPer-2.0"
     "jove"
