@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2025-12-03T00:00:00Z")
+(defconst spdx-data-release-date "2026-01-16T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -345,6 +345,7 @@
     "HPND-sell-MIT-disclaimer-xserver"
     "HPND-sell-regexpr"
     "HPND-sell-variant"
+    "HPND-sell-variant-critical-systems"
     "HPND-sell-variant-MIT-disclaimer"
     "HPND-sell-variant-MIT-disclaimer-rev"
     "HPND-SMC"
@@ -656,6 +657,7 @@
     "Unlicense"
     "Unlicense-libtelnet"
     "Unlicense-libwhirlpool"
+    "UnRAR"
     "UPL-1.0"
     "URT-RLE"
     "Vim"
