@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2026-01-16T00:00:00Z")
+(defconst spdx-data-release-date "2026-01-22T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -125,6 +125,7 @@
     "CAL-1.0-Combined-Work-Exception"
     "Caldera"
     "Caldera-no-preamble"
+    "CAPEC-tou"
     "Catharon"
     "CATOSL-1.1"
     "CC-BY-1.0"
@@ -448,6 +449,7 @@
     "MIT-Wu"
     "MITNFA"
     "MMIXware"
+    "MMPL-1.0.1"
     "Motosoto"
     "MPEG-SSG"
     "mpi-permissive"
@@ -533,6 +535,7 @@
     "OLDAP-2.8"
     "OLFL-1.3"
     "OML"
+    "OpenMDW-1.0"
     "OpenPBS-2.3"
     "OpenSSL"
     "OpenSSL-standalone"
@@ -548,6 +551,7 @@
     "OSL-3.0"
     "OSSP"
     "PADL"
+    "ParaType-Free-Font-1.3"
     "Parity-6.0.0"
     "Parity-7.0.0"
     "PDDL-1.0"
