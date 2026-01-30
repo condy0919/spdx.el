@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2026-01-22T00:00:00Z")
+(defconst spdx-data-release-date "2026-01-29T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -665,6 +665,7 @@
     "UPL-1.0"
     "URT-RLE"
     "Vim"
+    "Vixie-Cron"
     "VOSTROM"
     "VSL-1.0"
     "W3C"
