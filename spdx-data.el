@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2026-07-13T00:00:00Z")
+(defconst spdx-data-release-date "2026-07-15T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -64,6 +64,7 @@
     "Aspell-RU"
     "ASWF-Digital-Assets-1.0"
     "ASWF-Digital-Assets-1.1"
+    "atc-game"
     "Baekmuk"
     "Bahyph"
     "Barr"
@@ -147,6 +148,7 @@
     "CC-BY-NC-2.5"
     "CC-BY-NC-3.0"
     "CC-BY-NC-3.0-DE"
+    "CC-BY-NC-3.0-IGO"
     "CC-BY-NC-4.0"
     "CC-BY-NC-ND-1.0"
     "CC-BY-NC-ND-2.0"
