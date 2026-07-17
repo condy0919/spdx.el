@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2026-07-15T00:00:00Z")
+(defconst spdx-data-release-date "2026-07-16T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -121,6 +121,7 @@
     "BSD-Systemics-W3Works"
     "BSL-1.0"
     "Buddy"
+    "Bugroff"
     "BUSL-1.1"
     "bzip2-1.0.6"
     "C-UDA-1.0"
@@ -367,6 +368,7 @@
     "iMatix"
     "Imlib2"
     "Info-ZIP"
+    "Informatica"
     "Inner-Net-2.0"
     "InnoSetup"
     "Intel"
