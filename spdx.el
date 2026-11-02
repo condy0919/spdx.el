@@ -112,6 +112,8 @@ Another reasonable prefix could be \"SPDX-FileCopyrightText: \"."
   "How to detect the project root.
 
 The default priority is \='ffip' > \='projectile' > \='project'.
+In auto mode, try each available backend until it returns a non-empty
+project name.  Backend errors are not suppressed.
 nil means not to use project information."
   :type '(choice (const :tag "Auto" auto)
                  (const :tag "Find File in Project" ffip)
@@ -150,20 +152,17 @@ string (trimming whitespace). Otherwise return nil."
   (or (spdx--guess-user-name-from-git)
       user-full-name))
 
-(defun spdx--detect-project-type ()
-  "Detect project type for current buffer.
-
-Returns one of the symbols \='ffip, \='projectile, \='project, or
-nil if we can't detect any of those."
+(defun spdx--project-backends ()
+  "Return the configured available project backends in priority order."
   (when spdx-project-detection
     (let ((loaded
            (append (when (fboundp 'ffip-get-project-root-directory) '(ffip))
-                   (when (fboundp 'projectile-project-root) '(projectile))
+                   (when (fboundp 'projectile-project-name) '(projectile))
                    (when (fboundp 'project-current) '(project)))))
       (cond ((equal 'auto spdx-project-detection)
-             (car loaded))
+             loaded)
             ((member spdx-project-detection loaded)
-             spdx-project-detection)
+             (list spdx-project-detection))
             (t
              (error "Unknown method: spdx-project-detection method %S not loaded"
                     spdx-project-detection))))))
@@ -172,11 +171,9 @@ nil if we can't detect any of those."
 (declare-function projectile-project-name "ext:projectile" ())
 (declare-function project-name "project" (project))
 
-(defun spdx--guess-project-name ()
-  "Guess a project name for the current buffer.
-
-Returns a string, or nil if we can't make a good guess."
-  (pcase (spdx--detect-project-type)
+(defun spdx--project-name (backend)
+  "Get the current project name from BACKEND."
+  (pcase backend
     ('ffip
      (let ((root (ffip-get-project-root-directory)))
        (when root
@@ -187,6 +184,15 @@ Returns a string, or nil if we can't make a good guess."
      (let ((proj (project-current)))
        (and proj (project-name proj))))
     (_ nil)))
+
+(defun spdx--guess-project-name ()
+  "Return the first non-blank project name from the configured backends.
+Return nil if none finds a project.  Errors and quits propagate to the caller."
+  (catch 'project-name
+    (dolist (backend (spdx--project-backends))
+      (let ((name (spdx--project-name backend)))
+        (when (and name (not (string-blank-p name)))
+          (throw 'project-name name))))))
 
 (defun spdx-get-default-copyright-sign ()
   "Get the copyright sign to use for the current buffer.
