@@ -83,28 +83,52 @@ Let <kbd>M-/</kbd> rule the world.
 - `spdx-insert-copyright` inserts a copyright header.
 - `spdx-insert-spdx-copyright` inserts a SPDX license and copyright header.
 
-`spdx-insert-spdx`, `spdx-insert-spdx-only`,
-`spdx-insert-spdx-identifier-only`, and `spdx-insert-spdx-copyright` accept an
-optional license identifier when called from Lisp. Supplying it skips the
-license prompt:
+When called from Lisp, these commands accept optional arguments in this order:
+
+| Command                            | Optional arguments                  |
+|------------------------------------|-------------------------------------|
+| `spdx-insert-spdx`                 | `license`, `no-prompt`              |
+| `spdx-insert-spdx-only`            | `license`, `no-prompt`              |
+| `spdx-insert-spdx-identifier-only` | `license`, `no-prompt`              |
+| `spdx-insert-copyright`            | `copyright`, `no-prompt`            |
+| `spdx-insert-spdx-copyright`       | `license`, `copyright`, `no-prompt` |
+
+Supplying a license skips the license prompt. Supplying copyright text skips
+the copyright prompt and default-value lookup:
 
 ```emacs-lisp
 (spdx-insert-spdx "MIT")
-(spdx-insert-spdx-only "Apache-2.0")
-(spdx-insert-spdx-identifier-only "MIT")
-(spdx-insert-spdx-copyright "MIT")
+(spdx-insert-copyright "(C) 2026 Alice")
+(spdx-insert-spdx-copyright "MIT" "(C) 2026 Alice")
 ```
 
-Omitting the argument or passing `nil` prompts for a license as usual.
-Interactive commands and Tempo snippets retain their existing prompts.
-
-The argument must be a non-empty string matching an available SPDX identifier.
+A license must be a non-empty string matching an available SPDX identifier.
 Deprecated identifiers are rejected when `spdx-ignore-deprecated` is non-nil.
-Invalid arguments signal an error before prompting or inserting text.
+Copyright text must be a non-blank, single-line string without the prefix;
+`spdx-copyright-prefix` is added automatically. Invalid arguments signal an
+error before prompting or inserting text.
 
-`spdx-insert-spdx-copyright` still prompts for copyright information when a
-license is supplied. Commands that insert comments also ask for a comment
-syntax if the current mode has none, for example in `text-mode`.
+Omitting an argument or passing `nil` retains the corresponding prompt unless
+`no-prompt` is non-nil. For example, `(spdx-insert-spdx-copyright "MIT")` still
+asks for copyright information. Interactive commands and Tempo snippets retain
+their existing prompts, including asking for comment syntax when the mode has
+none.
+
+Pass non-nil `no-prompt` to prohibit prompts:
+
+```emacs-lisp
+(spdx-insert-spdx-copyright "MIT" "(C) 2026 Alice" t)
+(spdx-insert-spdx-only "MIT" t)
+```
+
+In this mode, every required license or copyright argument must be supplied.
+Commands that insert comments also require an existing comment syntax. Missing
+inputs or comment syntax signal an error before insertion; defaults are not
+chosen automatically.
+
+`spdx-identifier-only`, `spdx-license-format`, and `spdx-copyright-format`
+accept the corresponding optional value and `no-prompt`, and return strings
+without inserting them.
 
 ## Available tempo snippets
 
@@ -120,8 +144,18 @@ The following tempo snippets can be expanded via <kbd>M-x tempo-expand-if-comple
 
 - `spdx-copyright-holder` (`'auto` by default)
 - `spdx-copyright-sign` (`'ascii` by default)
+- `spdx-copyright-prefix` (`"Copyright "` by default)
 - `spdx-project-detection` (`'auto` by default)
 - `spdx-ignore-deprecated` (`nil` by default)
+
+With `spdx-project-detection` set to `auto`, available backends are tried in
+order: ffip, projectile, then Emacs project.el. A backend returning no project
+name or a blank name is skipped; errors and `C-g` are propagated.
+
+`spdx-copyright-holder` set to `auto` prefers the project authors and falls back
+to the user name. Setting it explicitly to `project` requires a project;
+otherwise, generating a default copyright signals an error. Explicit copyright
+text bypasses this lookup.
 
 ## Other projects
 
@@ -173,6 +207,9 @@ insertion. However, the copyright `elisp-mode` has only one leading semicolon.
 
 ## Contribution
 
+CI runs strict byte compilation and the ERT suite on Emacs 29.1 and 30.1 for
+pushes and pull requests.
+
 Run the tests with:
 
 ```sh
@@ -188,14 +225,15 @@ without creating a commit. A change to the release date alone leaves the file
 untouched and does not create a commit. License list changes are detected even
 when the release date stays the same.
 
-If you found the `spdx-spdx-identifiers` is out of date, don't hesitate to raise a PR.
+If `spdx-data-license-identifiers` is out of date, don't hesitate to raise a PR.
 
 ## FAQ
 
 1. `spdx-insert-spdx-copyright` failed to work in `text-mode`.
 
    Now, it works. Even though `text-mode` hasn't defined comment syntax, `spdx.el` will ask
-   user to define it.
+   the user to define it. Calls with non-nil `no-prompt` instead signal an error;
+   configure comment syntax first or use a command that inserts without comments.
 
 [lice-el]: https://github.com/buzztaiki/lice-el
 [tempo]: https://www.emacswiki.org/emacs/TempoMode

@@ -67,6 +67,7 @@
 
 ;; - `spdx-copyright-holder'
 ;; - `spdx-copyright-sign'
+;; - `spdx-copyright-prefix'
 ;; - `spdx-project-detection'
 ;; - `spdx-ignore-deprecated'
 
@@ -87,7 +88,8 @@
 (defcustom spdx-copyright-holder 'auto
   "The copyright holder.
 
-The priority of auto is `project' > `user'."
+The priority of auto is `project' > `user'.
+When explicitly set to project, signal an error if no project is found."
   :type '(choice (const auto)
                  (const user)
                  (const project))
@@ -217,7 +219,8 @@ Only consult the sources needed by `spdx-copyright-holder'."
            (concat proj " Authors")
          (spdx--guess-user-name))))
     ('user (spdx--guess-user-name))
-    ('project (spdx--guess-project-name))
+    ('project (or (spdx--guess-project-name)
+                  (user-error "No project found for the copyright holder")))
     (_ (error "Unknown spdx-copyright-holder: %S"
               spdx-copyright-holder))))
 
@@ -233,14 +236,31 @@ Only consult the sources needed by `spdx-copyright-holder'."
 Returns nil if no existing Copyright line is found."
   nil)
 
-(defun spdx-copyright-format ()
-  "Prompt for SPDX Copyright line, with a guess for the default line."
-  (let ((prefix spdx-copyright-prefix))
+(defun spdx--copyright-argument (copyright no-prompt)
+  "Validate COPYRIGHT without prompting, requiring it when NO-PROMPT is non-nil."
+  (cond
+   (copyright
+    (unless (and (stringp copyright)
+                 (not (string-blank-p copyright))
+                 (not (string-match-p "[\r\n]" copyright)))
+      (user-error "Copyright must be a non-empty single-line string")))
+   (no-prompt
+    (user-error "An explicit copyright is required when prompts are disabled")))
+  copyright)
+
+(defun spdx-copyright-format (&optional copyright no-prompt)
+  "Format COPYRIGHT with `spdx-copyright-prefix', or prompt if it is nil.
+COPYRIGHT is a non-blank single-line body without the prefix, such as
+\"(C) 2026 Alice\".  A non-nil value bypasses copyright inference.
+When NO-PROMPT is non-nil, require an explicit COPYRIGHT instead of prompting."
+  (let ((copyright (spdx--copyright-argument copyright no-prompt))
+        (prefix spdx-copyright-prefix))
     (concat prefix
-            (read-from-minibuffer
-             prefix
-             (or (spdx-get-existing-copyright)
-                 (spdx-make-default-copyright))))))
+            (or copyright
+                (read-from-minibuffer
+                 prefix
+                 (or (spdx-get-existing-copyright)
+                     (spdx-make-default-copyright)))))))
 
 (defun spdx--validate-license-identifier (license)
   "Return LICENSE if it is an allowed SPDX identifier, otherwise signal an error.
@@ -255,31 +275,45 @@ Deprecated identifiers are allowed unless `spdx-ignore-deprecated' is non-nil."
     (user-error "Unknown or excluded SPDX license identifier: %S" license))
   license)
 
-(defun spdx-identifier-only (&optional license)
+(defun spdx--license-argument (license no-prompt)
+  "Validate LICENSE without prompting, requiring it when NO-PROMPT is non-nil."
+  (if license
+      (spdx--validate-license-identifier license)
+    (when no-prompt
+      (user-error "An explicit license is required when prompts are disabled"))))
+
+(defun spdx-identifier-only (&optional license no-prompt)
   "Return LICENSE, or read a non-empty license identifier if it is nil.
 A non-nil LICENSE must be an SPDX identifier allowed by
-`spdx-ignore-deprecated' and is used without prompting."
+`spdx-ignore-deprecated' and is used without prompting.
+When NO-PROMPT is non-nil, require an explicit LICENSE instead of prompting."
   (let ((identifier
-         (if license
-             (spdx--validate-license-identifier license)
-           (completing-read
-            "License: "
-            (append spdx-data-license-identifiers
-                    (unless spdx-ignore-deprecated
-                      spdx-data-deprecated-license-identifiers))
-            nil t))))
+         (or (spdx--license-argument license no-prompt)
+             (completing-read
+              "License: "
+              (append spdx-data-license-identifiers
+                      (unless spdx-ignore-deprecated
+                        spdx-data-deprecated-license-identifiers))
+              nil t))))
     (when (string-empty-p identifier)
       (user-error "License identifier must not be empty"))
     identifier))
 
-(defun spdx-license-format (&optional license)
+(defun spdx-license-format (&optional license no-prompt)
   "Format a license header using LICENSE, or prompt if it is nil.
+When NO-PROMPT is non-nil, require an explicit LICENSE instead of prompting.
 See `spdx-identifier-only' for the allowed values of LICENSE."
-  (concat "SPDX-License-Identifier: " (spdx-identifier-only license)))
+  (concat "SPDX-License-Identifier: " (spdx-identifier-only license no-prompt)))
+
+(defvar spdx--no-prompt nil
+  "Non-nil while an insertion command must not prompt for missing input.")
 
 (defun spdx-comment-start ()
   "Construct a comment start with padding."
-  (comment-normalize-vars)
+  (comment-normalize-vars spdx--no-prompt)
+  (when (and spdx--no-prompt
+             (or (not comment-start) (string-blank-p comment-start)))
+    (user-error "No comment syntax defined; configure it before inserting"))
   (let ((add (comment-add nil)))
     (comment-padright comment-start add)))
 
@@ -296,30 +330,33 @@ See `spdx-identifier-only' for the allowed values of LICENSE."
   "License identifier dynamically bound while an insertion command runs.
 Nil means that the Tempo template should prompt for a license.")
 
+(defvar spdx--copyright-text nil
+  "Copyright body dynamically bound while an insertion command runs.")
+
 ;; Evaluate all prompts in one expression before Tempo inserts any text.
 (tempo-define-template "spdx"
   '((list 'l (spdx-comment-start)
-          (spdx-license-format spdx--license-identifier)
+          (spdx-license-format spdx--license-identifier spdx--no-prompt)
           (spdx-comment-end) '> 'n>))
   "spdx"
   "Insert a SPDX license header."
   'spdx-tempo-tags)
 
 (tempo-define-template "spdx-only"
-  '((spdx-license-format spdx--license-identifier) >)
+  '((spdx-license-format spdx--license-identifier spdx--no-prompt) >)
   "spdxo"
   "Insert a SPDX license header without comments."
   'spdx-tempo-tags)
 
 (tempo-define-template "spdx-identifier-only"
-  '((spdx-identifier-only spdx--license-identifier) >)
+  '((spdx-identifier-only spdx--license-identifier spdx--no-prompt) >)
   "spdxi"
   "Insert a SPDX identifier only."
   'spdx-tempo-tags)
 
 (tempo-define-template "spdx-copyright-only"
   '((list 'l (spdx-comment-start)
-          (spdx-copyright-format)
+          (spdx-copyright-format spdx--copyright-text spdx--no-prompt)
           (spdx-comment-end) '> 'n>))
   "cpy"
   "Insert a copyright header."
@@ -327,10 +364,10 @@ Nil means that the Tempo template should prompt for a license.")
 
 (tempo-define-template "spdx-copyright"
   '((list 'l (spdx-comment-start)
-          (spdx-copyright-format)
+          (spdx-copyright-format spdx--copyright-text spdx--no-prompt)
           (spdx-comment-end) '> 'n>
           (spdx-comment-start)
-          (spdx-license-format spdx--license-identifier)
+          (spdx-license-format spdx--license-identifier spdx--no-prompt)
           (spdx-comment-end) '> 'n>))
   "spdxcpy"
   "Insert a SPDX license and copyright header."
@@ -344,50 +381,67 @@ Nil means that the Tempo template should prompt for a license.")
 (declare-function tempo-template-spdx-copyright "spdx" (&optional arg))
 
 ;;;###autoload
-(defun spdx-insert-spdx (&optional license)
+(defun spdx-insert-spdx (&optional license no-prompt)
   "Insert a SPDX license header.
 If LICENSE is nil, prompt for a license.  Otherwise, use LICENSE,
-which must be an SPDX identifier allowed by `spdx-ignore-deprecated'."
+which must be an SPDX identifier allowed by `spdx-ignore-deprecated'.
+When NO-PROMPT is non-nil, require LICENSE and configured comment syntax;
+signal an error instead of prompting if either is missing."
   (interactive)
   (let ((spdx--license-identifier
-         (and license (spdx--validate-license-identifier license))))
+         (spdx--license-argument license no-prompt))
+        (spdx--no-prompt no-prompt))
     (tempo-template-spdx)))
 
 ;;;###autoload
-(defun spdx-insert-spdx-only (&optional license)
+(defun spdx-insert-spdx-only (&optional license no-prompt)
   "Insert a SPDX license without comments.
 If LICENSE is nil, prompt for a license.  Otherwise, use LICENSE,
-which must be an SPDX identifier allowed by `spdx-ignore-deprecated'."
+which must be an SPDX identifier allowed by `spdx-ignore-deprecated'.
+When NO-PROMPT is non-nil, require an explicit LICENSE instead of prompting."
   (interactive)
   (let ((spdx--license-identifier
-         (and license (spdx--validate-license-identifier license))))
+         (spdx--license-argument license no-prompt))
+        (spdx--no-prompt no-prompt))
     (tempo-template-spdx-only)))
 
 ;;;###autoload
-(defun spdx-insert-spdx-identifier-only (&optional license)
+(defun spdx-insert-spdx-identifier-only (&optional license no-prompt)
   "Insert a SPDX license identifier only.
 If LICENSE is nil, prompt for a license.  Otherwise, use LICENSE,
-which must be an SPDX identifier allowed by `spdx-ignore-deprecated'."
+which must be an SPDX identifier allowed by `spdx-ignore-deprecated'.
+When NO-PROMPT is non-nil, require an explicit LICENSE instead of prompting."
   (interactive)
   (let ((spdx--license-identifier
-         (and license (spdx--validate-license-identifier license))))
+         (spdx--license-argument license no-prompt))
+        (spdx--no-prompt no-prompt))
     (tempo-template-spdx-identifier-only)))
 
 ;;;###autoload
-(defun spdx-insert-copyright ()
-  "Insert a copyright header."
+(defun spdx-insert-copyright (&optional copyright no-prompt)
+  "Insert a copyright header using COPYRIGHT, or prompt if it is nil.
+COPYRIGHT is a non-blank single-line body without `spdx-copyright-prefix'.
+When NO-PROMPT is non-nil, require COPYRIGHT and configured comment syntax;
+signal an error instead of prompting if either is missing."
   (interactive)
-  (tempo-template-spdx-copyright-only))
+  (let ((spdx--copyright-text (spdx--copyright-argument copyright no-prompt))
+        (spdx--no-prompt no-prompt))
+    (tempo-template-spdx-copyright-only)))
 
 ;;;###autoload
-(defun spdx-insert-spdx-copyright (&optional license)
+(defun spdx-insert-spdx-copyright (&optional license copyright no-prompt)
   "Insert a SPDX license and copyright header.
 If LICENSE is nil, prompt for a license.  Otherwise, use LICENSE,
 which must be an SPDX identifier allowed by `spdx-ignore-deprecated'.
-Copyright information is still read interactively."
+COPYRIGHT is a non-blank single-line body without `spdx-copyright-prefix'.
+If it is nil, prompt for copyright information as usual.
+When NO-PROMPT is non-nil, require both arguments and configured comment
+syntax; signal an error instead of prompting if any is missing."
   (interactive)
   (let ((spdx--license-identifier
-         (and license (spdx--validate-license-identifier license))))
+         (spdx--license-argument license no-prompt))
+        (spdx--copyright-text (spdx--copyright-argument copyright no-prompt))
+        (spdx--no-prompt no-prompt))
     (tempo-template-spdx-copyright)))
 
 ;;;###autoload

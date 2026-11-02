@@ -44,7 +44,7 @@
       (cl-letf (((symbol-function 'completing-read)
                  (lambda (&rest _) (signal 'quit nil)))
                 ((symbol-function 'spdx-copyright-format)
-                 (lambda () "Copyright (C) 2026 Alice")))
+                 (lambda (&rest _) "Copyright (C) 2026 Alice")))
         (should (eq (condition-case nil (funcall command)
                       (quit 'cancelled))
                     'cancelled))
@@ -74,7 +74,7 @@
       (cl-letf (((symbol-function 'completing-read)
                  (lambda (&rest _) (signal 'quit nil)))
                 ((symbol-function 'spdx-copyright-format)
-                 (lambda ()
+                 (lambda (&rest _)
                    (if (equal tag "cpy")
                        (signal 'quit nil)
                      "Copyright (C) 2026 Alice"))))
@@ -96,7 +96,7 @@
         (cl-letf (((symbol-function 'completing-read)
                    (lambda (&rest _) "MIT"))
                   ((symbol-function 'spdx-copyright-format)
-                   (lambda () "Copyright (C) 2026 Alice")))
+                   (lambda (&rest _) "Copyright (C) 2026 Alice")))
           (funcall (car entry))
           (should (equal (buffer-string)
                          (mapconcat
@@ -123,7 +123,7 @@
                     ((symbol-function 'completing-read)
                      (lambda (&rest _) "MIT"))
                     ((symbol-function 'spdx-copyright-format)
-                     (lambda () "Copyright (C) 2026 Alice")))
+                     (lambda (&rest _) "Copyright (C) 2026 Alice")))
             (if expand
                 (progn
                   (spdx-tempo-setup)
@@ -155,7 +155,7 @@
       (cl-letf (((symbol-function 'completing-read)
                  (lambda (&rest _) ""))
                 ((symbol-function 'spdx-copyright-format)
-                 (lambda () "Copyright (C) 2026 Alice")))
+                 (lambda (&rest _) "Copyright (C) 2026 Alice")))
         (should-error (funcall command) :type 'user-error)
         (should (equal (buffer-string) "int value;\n"))))))
 
@@ -226,7 +226,7 @@
         (cl-letf (((symbol-function 'completing-read)
                    (lambda (&rest _) (cl-incf prompts) "Apache-2.0"))
                   ((symbol-function 'spdx-copyright-format)
-                   (lambda () "Copyright (C) 2026 Alice")))
+                   (lambda (&rest _) "Copyright (C) 2026 Alice")))
           (funcall (car entry) "MIT")
           (should (= prompts 0))
           ;; Expand through Tempo directly: a public command would rebind
@@ -304,7 +304,9 @@
                  (lambda () project))
                 ((symbol-function 'spdx--guess-user-name)
                  (lambda () (ert-fail "Unexpected user lookup"))))
-        (should (equal (spdx-get-default-copyright-holder) project))))))
+        (if project
+            (should (equal (spdx-get-default-copyright-holder) project))
+          (should-error (spdx-get-default-copyright-holder) :type 'user-error))))))
 
 (ert-deftest spdx-test-auto-copyright-prefers-project-without-user-lookup ()
   (let ((spdx-copyright-holder 'auto))
@@ -344,7 +346,7 @@
                                '("Before SPDX"))
                   (error "SPDX replaced another template"))
                 (tempo-define-template "copyright" '("After SPDX"))
-                (fset 'spdx-copyright-format (lambda () "Copyright Alice"))
+                (fset 'spdx-copyright-format (lambda (&rest _) "Copyright Alice"))
                 (with-temp-buffer
                   (emacs-lisp-mode)
                   (spdx-insert-copyright)
@@ -423,6 +425,147 @@
         (should (eq (condition-case err (spdx--guess-project-name)
                       ((error quit) (car err)))
                     condition))))))
+
+(defmacro spdx-test--without-prompts (&rest body)
+  "Run BODY with input and copyright inference forbidden."
+  (declare (indent 0) (debug t))
+  `(cl-letf (((symbol-function 'completing-read)
+              (lambda (&rest _) (ert-fail "Unexpected license prompt")))
+             ((symbol-function 'read-from-minibuffer)
+              (lambda (&rest _) (ert-fail "Unexpected copyright prompt")))
+             ((symbol-function 'read-string)
+              (lambda (&rest _) (ert-fail "Unexpected comment prompt")))
+             ((symbol-function 'spdx-make-default-copyright)
+              (lambda () (ert-fail "Unexpected copyright inference")))
+             ((symbol-function 'spdx-get-existing-copyright)
+              (lambda () (ert-fail "Unexpected copyright scan"))))
+     ,@body))
+
+(ert-deftest spdx-test-no-prompt-insertion ()
+  (dolist (entry '(((spdx-insert-spdx "MIT" t)
+                    . ";; SPDX-License-Identifier: MIT\n")
+                   ((spdx-insert-spdx-only "MIT" t)
+                    . "SPDX-License-Identifier: MIT")
+                   ((spdx-insert-spdx-identifier-only "MIT" t) . "MIT")
+                   ((spdx-insert-copyright "(C) 2026 Alice" t)
+                    . ";; Copyright (C) 2026 Alice\n")
+                   ((spdx-insert-spdx-copyright "MIT" "(C) 2026 Alice" t)
+                    . ";; Copyright (C) 2026 Alice\n;; SPDX-License-Identifier: MIT\n")))
+    (with-temp-buffer
+      (emacs-lisp-mode)
+      (spdx-test--without-prompts
+        (apply (caar entry) (cdar entry))
+        (should (equal (buffer-string) (cdr entry)))))))
+
+(ert-deftest spdx-test-explicit-copyright-skips-inference ()
+  (let ((spdx-copyright-prefix "SPDX-FileCopyrightText: "))
+    (with-temp-buffer
+      (emacs-lisp-mode)
+      (spdx-test--without-prompts
+        (should (equal (spdx-copyright-format "2020-2026 Alice")
+                       "SPDX-FileCopyrightText: 2020-2026 Alice"))
+        (spdx-insert-copyright "2020-2026 Alice")
+        (should (equal (buffer-string)
+                       ";; SPDX-FileCopyrightText: 2020-2026 Alice\n"))))))
+
+(ert-deftest spdx-test-no-prompt-requires-explicit-input ()
+  (dolist (call '((spdx-insert-spdx nil t)
+                  (spdx-insert-spdx-only nil t)
+                  (spdx-insert-spdx-identifier-only nil t)
+                  (spdx-insert-copyright nil t)
+                  (spdx-insert-spdx-copyright nil "2026 Alice" t)
+                  (spdx-insert-spdx-copyright "MIT" nil t)
+                  (spdx-insert-spdx-copyright nil nil t)))
+    (with-temp-buffer
+      (emacs-lisp-mode)
+      (insert ";; Existing text\n")
+      (spdx-test--without-prompts
+        (should-error (apply (car call) (cdr call)) :type 'user-error)
+        (should (equal (buffer-string) ";; Existing text\n"))))))
+
+(ert-deftest spdx-test-invalid-copyright-fails-before-any-prompt ()
+  (dolist (copyright '("" " \t " "2026 Alice\nBob" "2026 Alice\rBob" 42 Alice))
+    (dolist (command '(spdx-insert-copyright spdx-insert-spdx-copyright))
+      (with-temp-buffer
+        (text-mode)
+        (insert "Existing text\n")
+        (spdx-test--without-prompts
+          (should-error
+           (if (eq command 'spdx-insert-copyright)
+               (funcall command copyright)
+             (funcall command nil copyright))
+           :type 'user-error)
+          (should (equal (buffer-string) "Existing text\n")))))))
+
+(ert-deftest spdx-test-no-prompt-requires-comment-syntax-only-when-needed ()
+  (dolist (call '((spdx-insert-spdx "MIT" t)
+                  (spdx-insert-copyright "2026 Alice" t)
+                  (spdx-insert-spdx-copyright "MIT" "2026 Alice" t)))
+    (with-temp-buffer
+      (text-mode)
+      (insert "Existing text\n")
+      (spdx-test--without-prompts
+        (should-error (apply (car call) (cdr call)) :type 'user-error)
+        (should (equal (buffer-string) "Existing text\n")))))
+  (dolist (entry '((spdx-insert-spdx-only . "SPDX-License-Identifier: MIT")
+                   (spdx-insert-spdx-identifier-only . "MIT")))
+    (with-temp-buffer
+      (text-mode)
+      (spdx-test--without-prompts
+        (funcall (car entry) "MIT" t)
+        (should (equal (buffer-string) (cdr entry)))))))
+
+(ert-deftest spdx-test-no-prompt-format-helpers ()
+  (spdx-test--without-prompts
+    (should (equal (spdx-identifier-only "MIT" t) "MIT"))
+    (should (equal (spdx-license-format "MIT" t) "SPDX-License-Identifier: MIT"))
+    (should (equal (spdx-copyright-format "2026 Alice" t) "Copyright 2026 Alice"))
+    (dolist (function '(spdx-identifier-only spdx-license-format spdx-copyright-format))
+      (should-error (funcall function nil t) :type 'user-error))))
+
+(ert-deftest spdx-test-no-prompt-context-does-not-leak-into-tempo ()
+  (dolist (outcome '(normal error quit))
+    (with-temp-buffer
+      (emacs-lisp-mode)
+      (pcase outcome
+        ('normal
+         (spdx-test--without-prompts
+           (spdx-insert-spdx-copyright "MIT" "2026 Alice" t)))
+        ('error
+         (text-mode)
+         (spdx-test--without-prompts
+           (should-error (spdx-insert-spdx-copyright "MIT" "2026 Alice" t)
+                         :type 'user-error)))
+        ('quit
+         (cl-letf (((symbol-function 'completing-read)
+                    (lambda (&rest _) (signal 'quit nil))))
+           (should (eq (condition-case nil
+                           (spdx-insert-spdx-copyright nil "2026 Alice")
+                         (quit 'cancelled))
+                       'cancelled))
+           (should (equal (buffer-string) "")))))
+      (erase-buffer)
+      (text-mode)
+      (spdx-tempo-setup)
+      (insert "cpy")
+      (let ((comment-prompts 0) (copyright-prompts 0))
+        (cl-letf (((symbol-function 'read-string)
+                   (lambda (&rest _) (cl-incf comment-prompts) "# "))
+                  ((symbol-function 'read-from-minibuffer)
+                   (lambda (&rest _) (cl-incf copyright-prompts) "2026 Bob"))
+                  ((symbol-function 'spdx-make-default-copyright)
+                   (lambda () "2026 Default")))
+          (should (tempo-expand-if-complete))
+          (should (= comment-prompts 1))
+          (should (= copyright-prompts 1))
+          (should (equal (buffer-string) "# Copyright 2026 Bob\n")))))))
+
+(ert-deftest spdx-test-explicit-project-holder-requires-project ()
+  (let ((spdx-copyright-holder 'project))
+    (cl-letf (((symbol-function 'spdx--guess-project-name) (lambda () nil))
+              ((symbol-function 'spdx--guess-user-name)
+               (lambda () (ert-fail "Unexpected user fallback"))))
+      (should-error (spdx-get-default-copyright-holder) :type 'user-error))))
 
 (provide 'spdx-test)
 ;;; spdx-test.el ends here
