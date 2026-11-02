@@ -336,42 +336,56 @@ Nil means that the Tempo template should prompt for a license.")
 (defvar spdx--copyright-text nil
   "Copyright body dynamically bound while an insertion command runs.")
 
+(defun spdx--insert-template-elements (elements)
+  "Insert precomputed Tempo ELEMENTS atomically, returning nil.
+SPDX elements have no region fields; the outer Tempo template handles
+the initial insertion position.  Errors and quits roll back insertion."
+  (atomic-change-group
+    (tempo-insert elements nil))
+  ;; The outer template must not interpret the insertion's return value.
+  nil)
+
 ;; Evaluate all prompts in one expression before Tempo inserts any text.
 (tempo-define-template "spdx"
-  '((list 'l (spdx-comment-start)
-          (spdx-license-format spdx--license-identifier spdx--no-prompt)
-          (spdx-comment-end) '> 'n>))
+  '((spdx--insert-template-elements
+     (list 'l (spdx-comment-start)
+           (spdx-license-format spdx--license-identifier spdx--no-prompt)
+           (spdx-comment-end) '> 'n>)))
   "spdx"
   "Insert a SPDX license header."
   'spdx-tempo-tags)
 
 (tempo-define-template "spdx-only"
-  '((spdx-license-format spdx--license-identifier spdx--no-prompt) >)
+  '((spdx--insert-template-elements
+     (list 'l (spdx-license-format spdx--license-identifier spdx--no-prompt) '>)))
   "spdxo"
   "Insert a SPDX license header without comments."
   'spdx-tempo-tags)
 
 (tempo-define-template "spdx-identifier-only"
-  '((spdx-identifier-only spdx--license-identifier spdx--no-prompt) >)
+  '((spdx--insert-template-elements
+     (list 'l (spdx-identifier-only spdx--license-identifier spdx--no-prompt) '>)))
   "spdxi"
   "Insert a SPDX identifier only."
   'spdx-tempo-tags)
 
 (tempo-define-template "spdx-copyright-only"
-  '((list 'l (spdx-comment-start)
-          (spdx-copyright-format spdx--copyright-text spdx--no-prompt)
-          (spdx-comment-end) '> 'n>))
+  '((spdx--insert-template-elements
+     (list 'l (spdx-comment-start)
+           (spdx-copyright-format spdx--copyright-text spdx--no-prompt)
+           (spdx-comment-end) '> 'n>)))
   "cpy"
   "Insert a copyright header."
   'spdx-tempo-tags)
 
 (tempo-define-template "spdx-copyright"
-  '((list 'l (spdx-comment-start)
-          (spdx-copyright-format spdx--copyright-text spdx--no-prompt)
-          (spdx-comment-end) '> 'n>
-          (spdx-comment-start)
-          (spdx-license-format spdx--license-identifier spdx--no-prompt)
-          (spdx-comment-end) '> 'n>))
+  '((spdx--insert-template-elements
+     (list 'l (spdx-comment-start)
+           (spdx-copyright-format spdx--copyright-text spdx--no-prompt)
+           (spdx-comment-end) '> 'n>
+           (spdx-comment-start)
+           (spdx-license-format spdx--license-identifier spdx--no-prompt)
+           (spdx-comment-end) '> 'n>)))
   "spdxcpy"
   "Insert a SPDX license and copyright header."
   'spdx-tempo-tags)

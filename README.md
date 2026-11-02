@@ -60,6 +60,10 @@ Comments follow the current major mode. In C mode, the same license becomes:
 The commands insert at point. They do not find, replace, or deduplicate existing
 headers, or update years in existing copyright notices.
 
+If insertion or indentation fails, the text inserted by the template is rolled
+back. This also applies to Tempo expansion; Tempo's preceding removal of the
+typed tag keeps its usual behavior.
+
 ## Commands and Lisp API
 
 All five commands can be called interactively with `M-x` or from Lisp:

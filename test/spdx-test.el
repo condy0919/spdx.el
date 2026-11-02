@@ -597,5 +597,59 @@
     (should (equal (spdx-copyright-format)
                    (spdx-copyright-format "(C) 2020-2026 Alice" t)))))
 
+(ert-deftest spdx-test-insertion-rolls-back-on-indent-failure ()
+  (dolist (entry '((spdx-insert-spdx . "spdx")
+                   (spdx-insert-spdx-only . "spdxo")
+                   (spdx-insert-spdx-identifier-only . "spdxi")
+                   (spdx-insert-copyright . "cpy")
+                   (spdx-insert-spdx-copyright . "spdxcpy")))
+    (dolist (expand '(nil t))
+      (dolist (undo-enabled '(nil t))
+        (dolist (failure '(error quit))
+          (with-temp-buffer
+            (emacs-lisp-mode)
+            (spdx-tempo-setup)
+            (insert "Existing text\n" (if expand (cdr entry) ""))
+            (when undo-enabled (buffer-enable-undo))
+            (let ((indent-line-function
+                   (lambda ()
+                     (insert "Partial indentation")
+                     (signal failure '("Indentation failed")))))
+              (cl-letf (((symbol-function 'completing-read)
+                         (lambda (&rest _) "MIT"))
+                        ((symbol-function 'read-from-minibuffer)
+                         (lambda (&rest _) "2026 Alice"))
+                        ((symbol-function 'spdx-make-default-copyright)
+                         (lambda () "2026 Default")))
+                (should
+                 (eq (condition-case err
+                         (if expand (tempo-expand-if-complete) (funcall (car entry)))
+                       ((error quit) (car err)))
+                     failure))
+                ;; Tag deletion belongs to Tempo and precedes our transaction.
+                (should (equal (buffer-string) "Existing text\n"))
+                (should (eq (eq buffer-undo-list t) (not undo-enabled)))))))))))
+
+(ert-deftest spdx-test-combined-header-rolls-back-after-first-line ()
+  (dolist (failure-stage '(indent string-processing))
+    (with-temp-buffer
+      (emacs-lisp-mode)
+      (insert "Existing text\n")
+      (let* ((indentations 0)
+             (indent-line-function
+              (lambda ()
+                (when (and (eq failure-stage 'indent)
+                           (= (cl-incf indentations) 3))
+                  (error "Second line indentation failed"))))
+             (tempo-insert-string-functions
+              (when (eq failure-stage 'string-processing)
+                (list (lambda (string)
+                        (when (string-prefix-p "SPDX-License-Identifier:" string)
+                          (insert "Partial string processing")
+                          (error "String processing failed"))
+                        string)))))
+        (should-error (spdx-insert-spdx-copyright "MIT" "2026 Alice" t))
+        (should (equal (buffer-string) "Existing text\n"))))))
+
 (provide 'spdx-test)
 ;;; spdx-test.el ends here
