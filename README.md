@@ -176,8 +176,16 @@ insertion. However, the copyright `elisp-mode` has only one leading semicolon.
 Run the tests with:
 
 ```sh
-emacs -Q --batch -L . -l test/spdx-test.el -f ert-run-tests-batch-and-exit
+emacs -Q --batch -L . -L admin \
+  -l test/spdx-test.el -l test/spdx-update-test.el \
+  -f ert-run-tests-batch-and-exit
 ```
+
+Run `./admin/spdx-update.sh` to refresh the bundled license data. It downloads
+the upstream JSON once and validates it before replacing the database. Invalid
+data leaves the existing database untouched; unchanged data exits successfully
+without creating a commit. Changes are detected from the generated contents,
+including updates that keep the same release date.
 
 If you found the `spdx-spdx-identifiers` is out of date, don't hesitate to raise a PR.
 
