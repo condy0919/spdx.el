@@ -230,9 +230,10 @@ emacs -Q --batch -L . -L admin \
 ```
 
 The script downloads the JSON once, validates it, and replaces the database only
-if there is a change beyond the release date. Invalid data leaves the database
-untouched. Unchanged data, including a date-only update, exits successfully
-without modifying the file or creating a commit.
+if there is a change beyond the release date. Invalid data or a failed comparison
+leaves the database and Git index untouched. Unchanged data, including a date-only
+update, exits successfully without modifying the file or creating a commit, so it
+does not trigger a package update.
 
 **When the data changes, the script creates a local Git commit.** It does not
 push; the scheduled GitHub Actions workflow handles that separately. Set `EMACS`
