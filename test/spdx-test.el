@@ -106,5 +106,45 @@
                               (concat ";; " line "\n")))
                           (cdr entry) ""))))))))
 
+(ert-deftest spdx-test-text-mode-comment-initialization ()
+  (dolist (entry '(("spdx" spdx-insert-spdx
+                    "# SPDX-License-Identifier: MIT\n")
+                   ("cpy" spdx-insert-copyright
+                    "# Copyright (C) 2026 Alice\n")
+                   ("spdxcpy" spdx-insert-spdx-copyright
+                    "# Copyright (C) 2026 Alice\n# SPDX-License-Identifier: MIT\n")))
+    (dolist (expand '(nil t))
+      (with-temp-buffer
+        (text-mode)
+        (should-not comment-start)
+        (let ((prompts 0))
+          (cl-letf (((symbol-function 'read-string)
+                     (lambda (&rest _) (cl-incf prompts) "# "))
+                    ((symbol-function 'completing-read)
+                     (lambda (&rest _) "MIT"))
+                    ((symbol-function 'spdx-copyright-format)
+                     (lambda () "Copyright (C) 2026 Alice")))
+            (if expand
+                (progn
+                  (spdx-tempo-setup)
+                  (insert (nth 0 entry))
+                  (should (tempo-expand-if-complete)))
+              (funcall (nth 1 entry)))
+            (should (= prompts 1))
+            (should (equal (buffer-string) (nth 2 entry)))))))))
+
+(ert-deftest spdx-test-uncommented-insertion-needs-no-comment-syntax ()
+  (dolist (entry '((spdx-insert-spdx-only . "SPDX-License-Identifier: MIT")
+                   (spdx-insert-spdx-identifier-only . "MIT")))
+    (with-temp-buffer
+      (text-mode)
+      (cl-letf (((symbol-function 'read-string)
+                 (lambda (&rest _) (ert-fail "Unexpected comment prompt")))
+                ((symbol-function 'completing-read)
+                 (lambda (&rest _) "MIT")))
+        (funcall (car entry))
+        (should (equal (buffer-string) (cdr entry)))
+        (should-not comment-start)))))
+
 (provide 'spdx-test)
 ;;; spdx-test.el ends here

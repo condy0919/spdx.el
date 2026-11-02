@@ -245,6 +245,7 @@ Returns nil if no existing Copyright line is found."
 
 (defun spdx-comment-start ()
   "Construct a comment start with padding."
+  (comment-normalize-vars)
   (let ((add (comment-add nil)))
     (comment-padright comment-start add)))
 
@@ -308,7 +309,6 @@ Returns nil if no existing Copyright line is found."
 (defun spdx-insert-spdx ()
   "Insert a SPDX license header."
   (interactive)
-  (comment-normalize-vars)
   (tempo-template-spdx))
 
 ;;;###autoload
@@ -327,14 +327,12 @@ Returns nil if no existing Copyright line is found."
 (defun spdx-insert-copyright ()
   "Insert a copyright header."
   (interactive)
-  (comment-normalize-vars)
   (tempo-template-copyright))
 
 ;;;###autoload
 (defun spdx-insert-spdx-copyright ()
   "Insert a SPDX license and copyright header."
   (interactive)
-  (comment-normalize-vars)
   (tempo-template-spdx-copyright))
 
 ;;;###autoload
