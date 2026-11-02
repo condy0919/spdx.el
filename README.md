@@ -81,7 +81,30 @@ Let <kbd>M-/</kbd> rule the world.
 - `spdx-insert-spdx-only` inserts a SPDX license header without comments.
 - `spdx-insert-spdx-identifier-only` inserts a SPDX identifier only.
 - `spdx-insert-copyright` inserts a copyright header.
-- `spdx-insert-spdx-copyright`inserts a SPDX license and copyright header.
+- `spdx-insert-spdx-copyright` inserts a SPDX license and copyright header.
+
+`spdx-insert-spdx`, `spdx-insert-spdx-only`,
+`spdx-insert-spdx-identifier-only`, and `spdx-insert-spdx-copyright` accept an
+optional license identifier when called from Lisp. Supplying it skips the
+license prompt:
+
+```emacs-lisp
+(spdx-insert-spdx "MIT")
+(spdx-insert-spdx-only "Apache-2.0")
+(spdx-insert-spdx-identifier-only "MIT")
+(spdx-insert-spdx-copyright "MIT")
+```
+
+Omitting the argument or passing `nil` prompts for a license as usual.
+Interactive commands and Tempo snippets retain their existing prompts.
+
+The argument must be a non-empty string matching an available SPDX identifier.
+Deprecated identifiers are rejected when `spdx-ignore-deprecated` is non-nil.
+Invalid arguments signal an error before prompting or inserting text.
+
+`spdx-insert-spdx-copyright` still prompts for copyright information when a
+license is supplied. Commands that insert comments also ask for a comment
+syntax if the current mode has none, for example in `text-mode`.
 
 ## Available tempo snippets
 

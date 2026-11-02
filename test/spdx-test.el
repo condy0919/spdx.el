@@ -176,5 +176,118 @@
       (ert-info ((buffer-string))
         (should (eql status 0))))))
 
+(defconst spdx-test--license-commands
+  '((spdx-insert-spdx . ";; SPDX-License-Identifier: %s\n")
+    (spdx-insert-spdx-only . "SPDX-License-Identifier: %s")
+    (spdx-insert-spdx-identifier-only . "%s")
+    (spdx-insert-spdx-copyright
+     . ";; Copyright (C) 2026 Alice\n;; SPDX-License-Identifier: %s\n")))
+
+(ert-deftest spdx-test-explicit-license-skips-completion ()
+  (dolist (entry spdx-test--license-commands)
+    (with-temp-buffer
+      (emacs-lisp-mode)
+      (let ((copyright-prompts 0))
+        (cl-letf (((symbol-function 'completing-read)
+                   (lambda (&rest _) (ert-fail "Unexpected license prompt")))
+                  ((symbol-function 'read-from-minibuffer)
+                   (lambda (&rest _)
+                     (cl-incf copyright-prompts)
+                     "(C) 2026 Alice"))
+                  ((symbol-function 'spdx-make-default-copyright)
+                   (lambda () "(C) 2026 Alice")))
+          (funcall (car entry) "MIT")
+          (should (equal (buffer-string) (format (cdr entry) "MIT")))
+          (should (= copyright-prompts
+                     (if (eq (car entry) 'spdx-insert-spdx-copyright)
+                         1
+                       0))))))))
+
+(ert-deftest spdx-test-invalid-explicit-license-fails-before-prompts ()
+  (dolist (entry spdx-test--license-commands)
+    (dolist (license '("" "Not-A-License" MIT 42 ("MIT")))
+      (with-temp-buffer
+        (text-mode)
+        (insert "Existing text\n")
+        (cl-letf (((symbol-function 'completing-read)
+                   (lambda (&rest _) (ert-fail "Unexpected license prompt")))
+                  ((symbol-function 'read-string)
+                   (lambda (&rest _) (ert-fail "Unexpected comment prompt")))
+                  ((symbol-function 'read-from-minibuffer)
+                   (lambda (&rest _) (ert-fail "Unexpected copyright prompt"))))
+          (should-error (funcall (car entry) license) :type 'user-error)
+          (should (equal (buffer-string) "Existing text\n")))))))
+
+(ert-deftest spdx-test-explicit-license-does-not-affect-later-prompts ()
+  (dolist (entry spdx-test--license-commands)
+    (with-temp-buffer
+      (emacs-lisp-mode)
+      (let ((prompts 0))
+        (cl-letf (((symbol-function 'completing-read)
+                   (lambda (&rest _) (cl-incf prompts) "Apache-2.0"))
+                  ((symbol-function 'spdx-copyright-format)
+                   (lambda () "Copyright (C) 2026 Alice")))
+          (funcall (car entry) "MIT")
+          (should (= prompts 0))
+          ;; Expand through Tempo directly: a public command would rebind
+          ;; the license and could hide a value leaked by the previous call.
+          (erase-buffer)
+          (spdx-tempo-setup)
+          (insert "spdxi")
+          (should (tempo-expand-if-complete))
+          (should (equal (buffer-string) "Apache-2.0"))
+          (should (= prompts 1))
+          (dolist (args '(() (nil)))
+            (erase-buffer)
+            (apply (car entry) args)
+            (should (equal (buffer-string)
+                           (format (cdr entry) "Apache-2.0"))))
+          (should (= prompts 3)))))))
+
+(ert-deftest spdx-test-explicit-license-obeys-deprecated-filter ()
+  (with-temp-buffer
+    (cl-letf (((symbol-function 'completing-read)
+               (lambda (&rest _) (ert-fail "Unexpected license prompt"))))
+      (let ((spdx-ignore-deprecated nil))
+        (spdx-insert-spdx-identifier-only "GPL-2.0")
+        (should (equal (buffer-string) "GPL-2.0")))
+      (let ((spdx-ignore-deprecated t))
+        (should-error (spdx-insert-spdx-identifier-only "GPL-2.0")
+                      :type 'user-error)
+        (should (equal (buffer-string) "GPL-2.0"))))))
+
+(ert-deftest spdx-test-cancel-copyright-with-explicit-license ()
+  (with-temp-buffer
+    (c-mode)
+    (insert "int value;\n")
+    (cl-letf (((symbol-function 'completing-read)
+               (lambda (&rest _) (ert-fail "Unexpected license prompt")))
+              ((symbol-function 'read-from-minibuffer)
+               (lambda (&rest _) (signal 'quit nil)))
+              ((symbol-function 'spdx-make-default-copyright)
+               (lambda () "(C) 2026 Alice")))
+      (should (eq (condition-case nil
+                      (spdx-insert-spdx-copyright "MIT")
+                    (quit 'cancelled))
+                  'cancelled))
+      (should (equal (buffer-string) "int value;\n")))
+    ;; A cancelled call must also restore the dynamically bound license.
+    (let ((prompts 0))
+      (cl-letf (((symbol-function 'completing-read)
+                 (lambda (&rest _) (cl-incf prompts) "Apache-2.0")))
+        (spdx-tempo-setup)
+        (insert "spdxi")
+        (should (tempo-expand-if-complete))
+        (should (= prompts 1))
+        (should (equal (buffer-string) "int value;\nApache-2.0"))))))
+
+(ert-deftest spdx-test-format-explicit-license ()
+  (cl-letf (((symbol-function 'completing-read)
+             (lambda (&rest _) (ert-fail "Unexpected license prompt"))))
+    (should (equal (spdx-identifier-only "MIT") "MIT"))
+    (should (equal (spdx-license-format "MIT") "SPDX-License-Identifier: MIT"))
+    (should-error (spdx-identifier-only "") :type 'user-error)
+    (should-error (spdx-license-format "Not-A-License") :type 'user-error)))
+
 (provide 'spdx-test)
 ;;; spdx-test.el ends here

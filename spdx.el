@@ -232,19 +232,40 @@ Returns nil if no existing Copyright line is found."
              (or (spdx-get-existing-copyright)
                  (spdx-make-default-copyright))))))
 
-(defun spdx-identifier-only ()
-  "Read a non-empty license identifier."
-  (let* ((identifiers (append spdx-data-license-identifiers
-                              (when (not spdx-ignore-deprecated)
-                                spdx-data-deprecated-license-identifiers)))
-         (identifier (completing-read "License: " identifiers nil t)))
+(defun spdx--validate-license-identifier (license)
+  "Return LICENSE if it is an allowed SPDX identifier, otherwise signal an error.
+Deprecated identifiers are allowed unless `spdx-ignore-deprecated' is non-nil."
+  (unless (stringp license)
+    (user-error "License identifier must be a string"))
+  (when (string-empty-p license)
+    (user-error "License identifier must not be empty"))
+  (unless (or (member license spdx-data-license-identifiers)
+              (and (not spdx-ignore-deprecated)
+                   (member license spdx-data-deprecated-license-identifiers)))
+    (user-error "Unknown or excluded SPDX license identifier: %S" license))
+  license)
+
+(defun spdx-identifier-only (&optional license)
+  "Return LICENSE, or read a non-empty license identifier if it is nil.
+A non-nil LICENSE must be an SPDX identifier allowed by
+`spdx-ignore-deprecated' and is used without prompting."
+  (let ((identifier
+         (if license
+             (spdx--validate-license-identifier license)
+           (completing-read
+            "License: "
+            (append spdx-data-license-identifiers
+                    (unless spdx-ignore-deprecated
+                      spdx-data-deprecated-license-identifiers))
+            nil t))))
     (when (string-empty-p identifier)
       (user-error "License identifier must not be empty"))
     identifier))
 
-(defun spdx-license-format ()
-  "License format."
-  (concat "SPDX-License-Identifier: " (spdx-identifier-only)))
+(defun spdx-license-format (&optional license)
+  "Format a license header using LICENSE, or prompt if it is nil.
+See `spdx-identifier-only' for the allowed values of LICENSE."
+  (concat "SPDX-License-Identifier: " (spdx-identifier-only license)))
 
 (defun spdx-comment-start ()
   "Construct a comment start with padding."
@@ -261,23 +282,27 @@ Returns nil if no existing Copyright line is found."
 (defvar spdx-tempo-tags nil
   "Tempo tags for SPDX license.")
 
+(defvar spdx--license-identifier nil
+  "License identifier dynamically bound while an insertion command runs.
+Nil means that the Tempo template should prompt for a license.")
+
 ;; Evaluate all prompts in one expression before Tempo inserts any text.
 (tempo-define-template "spdx"
   '((list 'l (spdx-comment-start)
-          (spdx-license-format)
+          (spdx-license-format spdx--license-identifier)
           (spdx-comment-end) '> 'n>))
   "spdx"
   "Insert a SPDX license header."
   'spdx-tempo-tags)
 
 (tempo-define-template "spdx-only"
-  '((spdx-license-format) >)
+  '((spdx-license-format spdx--license-identifier) >)
   "spdxo"
-  "Insert a SPDX license header with comments."
+  "Insert a SPDX license header without comments."
   'spdx-tempo-tags)
 
 (tempo-define-template "spdx-identifier-only"
-  '((spdx-identifier-only) >)
+  '((spdx-identifier-only spdx--license-identifier) >)
   "spdxi"
   "Insert a SPDX identifier only."
   'spdx-tempo-tags)
@@ -295,7 +320,7 @@ Returns nil if no existing Copyright line is found."
           (spdx-copyright-format)
           (spdx-comment-end) '> 'n>
           (spdx-comment-start)
-          (spdx-license-format)
+          (spdx-license-format spdx--license-identifier)
           (spdx-comment-end) '> 'n>))
   "spdxcpy"
   "Insert a SPDX license and copyright header."
@@ -309,22 +334,34 @@ Returns nil if no existing Copyright line is found."
 (declare-function tempo-template-spdx-copyright "spdx" (&optional arg))
 
 ;;;###autoload
-(defun spdx-insert-spdx ()
-  "Insert a SPDX license header."
+(defun spdx-insert-spdx (&optional license)
+  "Insert a SPDX license header.
+If LICENSE is nil, prompt for a license.  Otherwise, use LICENSE,
+which must be an SPDX identifier allowed by `spdx-ignore-deprecated'."
   (interactive)
-  (tempo-template-spdx))
+  (let ((spdx--license-identifier
+         (and license (spdx--validate-license-identifier license))))
+    (tempo-template-spdx)))
 
 ;;;###autoload
-(defun spdx-insert-spdx-only ()
-  "Insert a SPDX license without comments."
+(defun spdx-insert-spdx-only (&optional license)
+  "Insert a SPDX license without comments.
+If LICENSE is nil, prompt for a license.  Otherwise, use LICENSE,
+which must be an SPDX identifier allowed by `spdx-ignore-deprecated'."
   (interactive)
-  (tempo-template-spdx-only))
+  (let ((spdx--license-identifier
+         (and license (spdx--validate-license-identifier license))))
+    (tempo-template-spdx-only)))
 
 ;;;###autoload
-(defun spdx-insert-spdx-identifier-only ()
-  "Insert a SPDX license identifier only."
+(defun spdx-insert-spdx-identifier-only (&optional license)
+  "Insert a SPDX license identifier only.
+If LICENSE is nil, prompt for a license.  Otherwise, use LICENSE,
+which must be an SPDX identifier allowed by `spdx-ignore-deprecated'."
   (interactive)
-  (tempo-template-spdx-identifier-only))
+  (let ((spdx--license-identifier
+         (and license (spdx--validate-license-identifier license))))
+    (tempo-template-spdx-identifier-only)))
 
 ;;;###autoload
 (defun spdx-insert-copyright ()
@@ -333,10 +370,15 @@ Returns nil if no existing Copyright line is found."
   (tempo-template-copyright))
 
 ;;;###autoload
-(defun spdx-insert-spdx-copyright ()
-  "Insert a SPDX license and copyright header."
+(defun spdx-insert-spdx-copyright (&optional license)
+  "Insert a SPDX license and copyright header.
+If LICENSE is nil, prompt for a license.  Otherwise, use LICENSE,
+which must be an SPDX identifier allowed by `spdx-ignore-deprecated'.
+Copyright information is still read interactively."
   (interactive)
-  (tempo-template-spdx-copyright))
+  (let ((spdx--license-identifier
+         (and license (spdx--validate-license-identifier license))))
+    (tempo-template-spdx-copyright)))
 
 ;;;###autoload
 (defun spdx-tempo-setup ()
