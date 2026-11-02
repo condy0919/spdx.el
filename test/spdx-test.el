@@ -51,7 +51,7 @@
         (should (equal (buffer-string) "int value;\n"))))))
 
 (ert-deftest spdx-test-cancel-copyright-inserts-nothing ()
-  (dolist (command '(spdx-insert-copyright tempo-template-copyright
+  (dolist (command '(spdx-insert-copyright tempo-template-spdx-copyright-only
                     spdx-insert-spdx-copyright tempo-template-spdx-copyright))
     (with-temp-buffer
       (c-mode)
@@ -326,6 +326,42 @@
       (cl-letf (((symbol-function 'ffip-get-project-root-directory)
                  (lambda () root)))
         (should (equal (spdx--guess-project-name) (and root "example")))))))
+
+(ert-deftest spdx-test-copyright-template-does-not-collide ()
+  "Other copyright templates can be defined before or after loading SPDX."
+  (with-temp-buffer
+    (let ((status
+           (call-process
+            (expand-file-name invocation-name invocation-directory)
+            nil t nil "-Q" "--batch" "-L" spdx-test--source-directory
+            "--eval"
+            (prin1-to-string
+             '(progn
+                (require 'tempo)
+                (tempo-define-template "copyright" '("Before SPDX"))
+                (require 'spdx)
+                (unless (equal (symbol-value 'tempo-template-copyright)
+                               '("Before SPDX"))
+                  (error "SPDX replaced another template"))
+                (tempo-define-template "copyright" '("After SPDX"))
+                (fset 'spdx-copyright-format (lambda () "Copyright Alice"))
+                (with-temp-buffer
+                  (emacs-lisp-mode)
+                  (spdx-insert-copyright)
+                  (unless (equal (buffer-string) ";; Copyright Alice\n")
+                    (error "Copyright command used the wrong template"))
+                  (erase-buffer)
+                  (spdx-tempo-setup)
+                  (insert "cpy")
+                  (tempo-expand-if-complete)
+                  (unless (equal (buffer-string) ";; Copyright Alice\n")
+                    (error "Copyright tag used the wrong template"))
+                  (erase-buffer)
+                  (tempo-template-copyright)
+                  (unless (equal (buffer-string) "After SPDX")
+                    (error "Other template was modified"))))))))
+      (ert-info ((buffer-string))
+        (should (eql status 0))))))
 
 (provide 'spdx-test)
 ;;; spdx-test.el ends here

@@ -311,7 +311,7 @@ Nil means that the Tempo template should prompt for a license.")
   "Insert a SPDX identifier only."
   'spdx-tempo-tags)
 
-(tempo-define-template "copyright"
+(tempo-define-template "spdx-copyright-only"
   '((list 'l (spdx-comment-start)
           (spdx-copyright-format)
           (spdx-comment-end) '> 'n>))
@@ -334,7 +334,7 @@ Nil means that the Tempo template should prompt for a license.")
 (declare-function tempo-template-spdx "spdx" (&optional arg))
 (declare-function tempo-template-spdx-only "spdx" (&optional arg))
 (declare-function tempo-template-spdx-identifier-only "spdx" (&optional arg))
-(declare-function tempo-template-copyright "spdx" (&optional arg))
+(declare-function tempo-template-spdx-copyright-only "spdx" (&optional arg))
 (declare-function tempo-template-spdx-copyright "spdx" (&optional arg))
 
 ;;;###autoload
@@ -371,7 +371,7 @@ which must be an SPDX identifier allowed by `spdx-ignore-deprecated'."
 (defun spdx-insert-copyright ()
   "Insert a copyright header."
   (interactive)
-  (tempo-template-copyright))
+  (tempo-template-spdx-copyright-only))
 
 ;;;###autoload
 (defun spdx-insert-spdx-copyright (&optional license)
