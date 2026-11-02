@@ -233,11 +233,14 @@ Returns nil if no existing Copyright line is found."
                  (spdx-make-default-copyright))))))
 
 (defun spdx-identifier-only ()
-  "License identifier."
-  (let ((identifiers (append spdx-data-license-identifiers
-                             (when (not spdx-ignore-deprecated)
-                               spdx-data-deprecated-license-identifiers))))
-    (completing-read "License: " identifiers nil t)))
+  "Read a non-empty license identifier."
+  (let* ((identifiers (append spdx-data-license-identifiers
+                              (when (not spdx-ignore-deprecated)
+                                spdx-data-deprecated-license-identifiers)))
+         (identifier (completing-read "License: " identifiers nil t)))
+    (when (string-empty-p identifier)
+      (user-error "License identifier must not be empty"))
+    identifier))
 
 (defun spdx-license-format ()
   "License format."

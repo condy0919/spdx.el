@@ -146,5 +146,35 @@
         (should (equal (buffer-string) (cdr entry)))
         (should-not comment-start)))))
 
+(ert-deftest spdx-test-empty-license-inserts-nothing ()
+  (dolist (command '(spdx-insert-spdx spdx-insert-spdx-only
+                    spdx-insert-spdx-identifier-only spdx-insert-spdx-copyright))
+    (with-temp-buffer
+      (c-mode)
+      (insert "int value;\n")
+      (cl-letf (((symbol-function 'completing-read)
+                 (lambda (&rest _) ""))
+                ((symbol-function 'spdx-copyright-format)
+                 (lambda () "Copyright (C) 2026 Alice")))
+        (should-error (funcall command) :type 'user-error)
+        (should (equal (buffer-string) "int value;\n"))))))
+
+(ert-deftest spdx-test-real-completion-rejects-empty-input ()
+  "Exercise completing-read itself with an empty line on standard input."
+  (with-temp-buffer
+    (insert "\n")
+    (let ((status
+           (call-process-region
+            (point-min) (point-max)
+            (expand-file-name invocation-name invocation-directory)
+            t t nil "-Q" "--batch" "-L" spdx-test--source-directory
+            "-l" "spdx" "--eval"
+            (prin1-to-string
+             '(condition-case nil
+                  (progn (spdx-identifier-only) (kill-emacs 1))
+                (user-error (kill-emacs 0)))))))
+      (ert-info ((buffer-string))
+        (should (eql status 0))))))
+
 (provide 'spdx-test)
 ;;; spdx-test.el ends here
