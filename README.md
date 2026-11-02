@@ -1,246 +1,253 @@
 # spdx.el
 
-![Latest](https://github.com/condy0919/spdx.el/workflows/Check%20for%20license%20list%20version/badge.svg)
-[![](https://melpa.org/packages/spdx-badge.svg)](https://melpa.org/#/spdx)
+[![Tests](https://github.com/condy0919/spdx.el/actions/workflows/test.yml/badge.svg)](https://github.com/condy0919/spdx.el/actions/workflows/test.yml)
+[![License data update](https://github.com/condy0919/spdx.el/actions/workflows/update.yml/badge.svg)](https://github.com/condy0919/spdx.el/actions/workflows/update.yml)
+[![MELPA](https://melpa.org/packages/spdx-badge.svg)](https://melpa.org/#/spdx)
 
-`spdx.el` provides SPDX license header and copyright insertion.
+Insert SPDX license identifiers and copyright notices in Emacs, using the
+current major mode's comment syntax. For example, in Emacs Lisp:
+
+```emacs-lisp
+;; Copyright (C) 2026 Alice
+;; SPDX-License-Identifier: MIT
+```
+
+Choose a license with `completing-read`, expand a Tempo snippet, or supply the
+values directly from Lisp. License identifiers are bundled with the package;
+normal insertion does not require a network connection.
 
 ## Installation
 
-Requires Emacs 29.1 or later.
+Requires **Emacs 29.1 or later**. Runtime dependencies are built into Emacs.
 
-Please install `spdx` from [melpa](https://melpa.org/#/spdx).
+### MELPA
 
-Put `spdx.el` in your Emacs system. Add the following to your `.emacs`:
+With [MELPA](https://melpa.org/#/getting-started) configured, run
+`M-x package-install RET spdx RET`. Then add a binding to your init file:
 
-```elisp
+```emacs-lisp
 (require 'spdx)
 (define-key prog-mode-map (kbd "C-c i l") #'spdx-insert-spdx)
 ```
 
-Or use [use-package][use-package] with [straight.el][straight.el]:
+Alternatively, use `use-package`:
 
-``` emacs-lisp
+```emacs-lisp
 (use-package spdx
   :ensure t
-  :straight (:host github :repo "condy0919/spdx.el")
   :bind (:map prog-mode-map
-         ("C-c i l" . spdx-insert-spdx))
-  :custom
-  (spdx-copyright-holder 'auto)
-  (spdx-project-detection 'auto))
+         ("C-c i l" . spdx-insert-spdx)))
 ```
 
-## Usage
+## Quick start
 
-you can press `C-c i l` to trigger `spdx-insert-spdx`
+Move point to the insertion location and run `M-x spdx-insert-spdx`, or press
+`C-c i l` with the binding above. Choose a license such as `MIT` to insert:
 
-Or manually run <kbd>M-x spdx-insert-spdx</kbd>
-
-Then, `spdx.el` will ask you to select a license. It's done by `completing-read`.
-
-After that, the license header will be written. An example follows.
-
-``` emacs-lisp
+```emacs-lisp
 ;; SPDX-License-Identifier: MIT
 ```
 
-If you use [tempo][tempo], add `spdx-tempo-setup` to the mode specific hook.
-Type `spdx` then <kbd>M-x</kbd>` tempo-expand-if-complete`, you will get the
-same result as above.
+Run `M-x spdx-insert-spdx-copyright` to insert both lines. It first asks for
+copyright text, offering a generated default, then asks for a license.
 
-It's recommanded to combine `tempo-expand-if-complete` with `hippie-expand`:
+Comments follow the current major mode. In C mode, the same license becomes:
 
-``` emacs-lisp
-(use-package hippie-exp
-  :ensure nil
-  :bind ([remap dabbrev-expand] . hippie-expand)
-  :config
-  (defun try-expand-tempo (_old)
-    (require 'tempo)
-    (tempo-expand-if-complete))
-  :custom
-  (hippie-expand-try-functions-list '(try-expand-tempo
-                                      try-expand-dabbrev
-                                      try-expand-dabbrev-all-buffers
-                                      try-expand-dabbrev-from-kill
-                                      try-complete-file-name-partially
-                                      try-complete-file-name
-                                      try-expand-all-abbrevs
-                                      try-expand-list
-                                      try-expand-line
-                                      try-complete-lisp-symbol-partially
-                                      try-complete-lisp-symbol)))
+```c
+/* SPDX-License-Identifier: MIT */
 ```
 
-Let <kbd>M-/</kbd> rule the world.
+The commands insert at point. They do not find, replace, or deduplicate existing
+headers, or update years in existing copyright notices.
 
-## Available functions
+## Commands and Lisp API
 
-- `spdx-insert-spdx` inserts a SPDX license header.
-- `spdx-insert-spdx-only` inserts a SPDX license header without comments.
-- `spdx-insert-spdx-identifier-only` inserts a SPDX identifier only.
-- `spdx-insert-copyright` inserts a copyright header.
-- `spdx-insert-spdx-copyright` inserts a SPDX license and copyright header.
+All five commands can be called interactively with `M-x` or from Lisp:
 
-When called from Lisp, these commands accept optional arguments in this order:
+| Command | Inserts | Optional Lisp arguments |
+| --- | --- | --- |
+| `spdx-insert-spdx` | A license header with comments | `license`, `no-prompt` |
+| `spdx-insert-spdx-only` | A license header without comments | `license`, `no-prompt` |
+| `spdx-insert-spdx-identifier-only` | The license ID alone | `license`, `no-prompt` |
+| `spdx-insert-copyright` | A copyright notice with comments | `copyright`, `no-prompt` |
+| `spdx-insert-spdx-copyright` | Copyright and license headers with comments | `license`, `copyright`, `no-prompt` |
 
-| Command                            | Optional arguments                  |
-|------------------------------------|-------------------------------------|
-| `spdx-insert-spdx`                 | `license`, `no-prompt`              |
-| `spdx-insert-spdx-only`            | `license`, `no-prompt`              |
-| `spdx-insert-spdx-identifier-only` | `license`, `no-prompt`              |
-| `spdx-insert-copyright`            | `copyright`, `no-prompt`            |
-| `spdx-insert-spdx-copyright`       | `license`, `copyright`, `no-prompt` |
-
-Supplying a license skips the license prompt. Supplying copyright text skips
-the copyright prompt and default-value lookup:
+Supplying a value skips its prompt. Omitting it or passing `nil` retains the
+prompt unless `no-prompt` is non-nil:
 
 ```emacs-lisp
 (spdx-insert-spdx "MIT")
 (spdx-insert-copyright "(C) 2026 Alice")
 (spdx-insert-spdx-copyright "MIT" "(C) 2026 Alice")
+(spdx-insert-spdx-copyright "MIT") ; Still asks for copyright text.
 ```
 
-A license must be a non-empty string matching an available SPDX identifier.
-Deprecated identifiers are rejected when `spdx-ignore-deprecated` is non-nil.
-Copyright text must be a non-blank, single-line string without the prefix;
-`spdx-copyright-prefix` is added automatically. Invalid arguments signal an
-error before prompting or inserting text.
+A license must match a single ID in the bundled database. Deprecated IDs are
+excluded when `spdx-ignore-deprecated` is non-nil. Compound expressions such as
+`MIT OR Apache-2.0` and custom IDs are not currently supported.
 
-Omitting an argument or passing `nil` retains the corresponding prompt unless
-`no-prompt` is non-nil. For example, `(spdx-insert-spdx-copyright "MIT")` still
-asks for copyright information. Interactive commands and Tempo snippets retain
-their existing prompts, including asking for comment syntax when the mode has
-none.
+Copyright text must be a non-blank, single-line string. Supply the body only,
+including any desired year and copyright sign: `spdx-copyright-prefix` is added
+automatically. Explicit text bypasses the generated copyright defaults.
+Invalid explicit arguments signal an error before prompting or inserting text.
 
-Pass non-nil `no-prompt` to prohibit prompts:
+### Calls without prompts
+
+Pass a non-nil final `no-prompt` argument to prohibit prompts:
 
 ```emacs-lisp
 (spdx-insert-spdx-copyright "MIT" "(C) 2026 Alice" t)
 (spdx-insert-spdx-only "MIT" t)
 ```
 
-In this mode, every required license or copyright argument must be supplied.
-Commands that insert comments also require an existing comment syntax. Missing
-inputs or comment syntax signal an error before insertion; defaults are not
-chosen automatically.
+Every required license or copyright argument must be supplied. Commands that
+insert comments also require comment syntax to be configured in the current
+buffer. Missing inputs or comment syntax signal an error before insertion;
+no defaults are chosen automatically.
 
-`spdx-identifier-only`, `spdx-license-format`, and `spdx-copyright-format`
-accept the corresponding optional value and `no-prompt`, and return strings
-without inserting them.
+### Formatting strings for snippets
 
-## Available tempo snippets
+For a snippet engine or other Lisp code that expects a string, use the formatting
+functions instead of an insertion command. They accept an optional value and
+`no-prompt`, and return text without modifying the buffer:
 
-The following tempo snippets can be expanded via <kbd>M-x tempo-expand-if-complete</kbd>. Make sure `spdx-tempo-setup` is called to access these tempo snippets.
+```emacs-lisp
+(spdx-identifier-only "MIT" t)
+;; => "MIT"
 
-- `spdx` expands to a SPDX license header.
-- `spdxo` expands to a SPDX license header without comments.
-- `spdxi` expands to a SPDX identifier only.
-- `cpy` expands to a copyright header.
-- `spdxcpy` expands to a SPDX license and copyright header.
+(spdx-license-format "MIT" t)
+;; => "SPDX-License-Identifier: MIT"
+
+(spdx-copyright-format "(C) 2026 Alice" t)
+;; => "Copyright (C) 2026 Alice" with the default copyright prefix
+```
+
+## Tempo snippets
+
+Enable the bundled templates in programming buffers:
+
+```emacs-lisp
+(add-hook 'prog-mode-hook #'spdx-tempo-setup)
+```
+
+For an existing buffer, run `M-x spdx-tempo-setup` once. Type a tag and run
+`M-x tempo-expand-if-complete`:
+
+| Tag | Expansion |
+| --- | --- |
+| `spdx` | License header with comments |
+| `spdxo` | License header without comments |
+| `spdxi` | License ID only |
+| `cpy` | Copyright notice with comments |
+| `spdxcpy` | Copyright and license headers with comments |
+
+To include Tempo in `hippie-expand` without replacing its other expansion
+functions:
+
+```emacs-lisp
+(defun my-try-expand-tempo (_old)
+  (require 'tempo)
+  (tempo-expand-if-complete))
+
+(with-eval-after-load 'hippie-exp
+  (add-to-list 'hippie-expand-try-functions-list #'my-try-expand-tempo))
+
+(global-set-key (kbd "M-/") #'hippie-expand)
+```
 
 ## Customization
 
-- `spdx-copyright-holder` (`'auto` by default)
-- `spdx-copyright-sign` (`'ascii` by default)
-- `spdx-copyright-prefix` (`"Copyright "` by default)
-- `spdx-project-detection` (`'auto` by default)
-- `spdx-ignore-deprecated` (`nil` by default)
+Use `M-x customize-group RET spdx RET`, or set these options in your init file:
 
+| Option | Default | Values and behavior |
+| --- | --- | --- |
+| `spdx-copyright-holder` | `'auto` | `auto`: project name plus ` Authors`, falling back to the user name; `user`: user name only; `project`: project name only, with an error if none is found |
+| `spdx-copyright-sign` | `'ascii` | `ascii`: `(C)`; `unicode`: `©`; `none`: no sign |
+| `spdx-copyright-prefix` | `"Copyright "` | Text prepended to the copyright body |
+| `spdx-project-detection` | `'auto` | `auto`, `ffip`, `projectile`, `project`, or `nil` to disable project detection |
+| `spdx-ignore-deprecated` | `nil` | Non-nil excludes deprecated IDs from completion and explicit arguments |
+
+Generated copyright defaults use the current year. The user name comes from
+Git's `user.name` configuration when available, falling back to `user-full-name`.
 With `spdx-project-detection` set to `auto`, available backends are tried in
-order: ffip, projectile, then Emacs project.el. A backend returning no project
-name or a blank name is skipped; errors and `C-g` are propagated.
+order: ffip, projectile, then Emacs project.el. An empty result falls through to
+the next backend; errors and `C-g` propagate to the caller.
 
-`spdx-copyright-holder` set to `auto` prefers the project authors and falls back
-to the user name. Setting it explicitly to `project` requires a project;
-otherwise, generating a default copyright signals an error. Explicit copyright
-text bypasses this lookup.
+For a personal copyright notice with an SPDX-style prefix:
 
-## Other projects
-
-### lice-el
-
-[lice-el][lice-el] provides license template management and file header insertion.
-
-The content of license is inserted while `spdx.el` only inserts two lines.
-
-``` emacs-lisp
-;; Copyright (C)  spdx.el Authors
-;; SPDX-License-Identifier: MIT
+```emacs-lisp
+(setq spdx-copyright-holder 'user
+      spdx-copyright-prefix "SPDX-FileCopyrightText: "
+      spdx-copyright-sign 'none
+      spdx-ignore-deprecated t)
 ```
 
-If you use `lice-el`, you may also need to hide the massive headers. Take a look
-at the builtin [elide-head][elide-head] package.
+The generated copyright default then produces a line such as:
 
-### license-snippets
-
-[license-snippets][license-snippets] is a license snippet collection of
-[yasnippet][yasnippet].
-
-`spdx.el` uses the builtin completion system [tempo][tempo] without dependencies
-of third party libraries.
-
-### license-template
-
-[license-template][license-template] creates LICENSE file using GitHub API. It's
-NOT used to insert license header.
-
-### copyright
-
-Emacs has a builtin [copyright][copyright] package providing copyright header
-insertion. However, the copyright `elisp-mode` has only one leading semicolon.
-
-``` emacs-lisp
-;Copyright (C) 2020 by Me
-
-;; M-x copyright
+```emacs-lisp
+;; SPDX-FileCopyrightText: 2026 Alice
 ```
 
-`spdx.el` inserts with `;;` with one space following.
+## Troubleshooting
 
-``` emacs-lisp
-;; Copyright (C) 2020  spdx.el Authors
+- **No comment syntax in `text-mode`:** interactive insertion asks for a comment
+  prefix. With `no-prompt`, configure `comment-start` and `comment-end` for the
+  buffer first, or use a command that inserts without comments.
+- **No project found for the copyright holder:** `spdx-copyright-holder` is set
+  to `project`. Use `auto` or `user`, configure project detection, or supply
+  explicit copyright text.
+- **A license is rejected:** check that the ID exists in the bundled database
+  and is not excluded by `spdx-ignore-deprecated`. Empty IDs are not accepted.
+- **A Tempo tag does not expand:** run `spdx-tempo-setup` in the buffer and make
+  sure point is immediately after a complete tag.
 
-;; M-x spdx-insert-copyright
-```
+## Development
 
-## Contribution
-
-CI runs strict byte compilation and the ERT suite on Emacs 29.1 and 30.1 for
-pushes and pull requests.
-
-Run the tests with:
+CI runs strict byte compilation and ERT on Emacs 29.1 and 30.1 for pushes and
+pull requests. Run the same checks locally from the repository root:
 
 ```sh
+emacs -Q --batch -L . -L admin \
+  --eval '(setq byte-compile-error-on-warn t)' \
+  -f batch-byte-compile spdx-data.el spdx.el admin/spdx-update.el
+
 emacs -Q --batch -L . -L admin \
   -l test/spdx-test.el -l test/spdx-update-test.el \
   -f ert-run-tests-batch-and-exit
 ```
 
-Run `./admin/spdx-update.sh` to refresh the bundled license data. It downloads
-the upstream JSON once and validates it before replacing the database. Invalid
-data leaves the existing database untouched; unchanged data exits successfully
-without creating a commit. A change to the release date alone leaves the file
-untouched and does not create a commit. License list changes are detected even
-when the release date stays the same.
+### Updating the license database
 
-If `spdx-data-license-identifiers` is out of date, don't hesitate to raise a PR.
+`spdx-data.el` is generated from the upstream SPDX license list. To refresh it:
 
-## FAQ
+```sh
+./admin/spdx-update.sh
+```
 
-1. `spdx-insert-spdx-copyright` failed to work in `text-mode`.
+The script downloads the JSON once, validates it, and replaces the database only
+if there is a change beyond the release date. Invalid data leaves the database
+untouched. Unchanged data, including a date-only update, exits successfully
+without modifying the file or creating a commit.
 
-   Now, it works. Even though `text-mode` hasn't defined comment syntax, `spdx.el` will ask
-   the user to define it. Calls with non-nil `no-prompt` instead signal an error;
-   configure comment syntax first or use a command that inserts without comments.
+**When the data changes, the script creates a local Git commit.** It does not
+push; the scheduled GitHub Actions workflow handles that separately. Set `EMACS`
+to use a different Emacs executable. Please use the update script rather than
+editing the generated license lists by hand.
+
+## Related projects
+
+- [lice-el][lice-el]
+- [license-snippets][license-snippets] for [YASnippet][yasnippet]
+- [license-templates][license-template]
+- Emacs's built-in [copyright][copyright] library
+
+## License
+
+The package is licensed under [GPL-3.0-or-later](LICENSE). The generated
+`spdx-data.el` database is marked MIT; see its file header.
 
 [lice-el]: https://github.com/buzztaiki/lice-el
-[tempo]: https://www.emacswiki.org/emacs/TempoMode
 [yasnippet]: https://github.com/joaotavora/yasnippet
-[straight.el]: https://github.com/raxod502/straight.el
-[use-package]: https://github.com/jwiegley/use-package
 [license-snippets]: https://github.com/sei40kr/license-snippets
 [license-template]: https://github.com/jcs-elpa/license-templates
-[elide-head]: https://github.com/emacs-mirror/emacs/blob/master/lisp/elide-head.el
 [copyright]: https://github.com/emacs-mirror/emacs/blob/master/lisp/emacs-lisp/copyright.el
