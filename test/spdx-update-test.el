@@ -4,8 +4,7 @@
 
 (require 'ert)
 (require 'cl-lib)
-(load (expand-file-name "../admin/spdx-update.el"
-                        (file-name-directory load-file-name)) nil t)
+(require 'spdx-update)
 
 (defconst spdx-update-test--source-directory
   (file-name-directory (directory-file-name
