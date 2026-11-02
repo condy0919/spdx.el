@@ -168,7 +168,7 @@ nil if we can't detect any of those."
              (error "Unknown method: spdx-project-detection method %S not loaded"
                     spdx-project-detection))))))
 
-(declare-function ffip-project-root "ext:find-file-in-project" ())
+(declare-function ffip-get-project-root-directory "ext:find-file-in-project" ())
 (declare-function projectile-project-name "ext:projectile" ())
 (declare-function project-name "project" (project))
 
@@ -178,7 +178,9 @@ nil if we can't detect any of those."
 Returns a string, or nil if we can't make a good guess."
   (pcase (spdx--detect-project-type)
     ('ffip
-     (directory-file-name (ffip-project-root)))
+     (let ((root (ffip-get-project-root-directory)))
+       (when root
+         (file-name-nondirectory (directory-file-name root)))))
     ('projectile
      (projectile-project-name))
     ('project
@@ -200,16 +202,18 @@ ASCII, Unicode, or none."
   (format-time-string "%Y"))
 
 (defun spdx-get-default-copyright-holder ()
-  "Get the copyright holder for the current buffer."
-  (let* ((user (spdx--guess-user-name))
-         (proj (spdx--guess-project-name))
-         (proj-authors (when proj (concat proj " Authors"))))
-    (pcase spdx-copyright-holder
-      ('auto (or proj-authors user))
-      ('user user)
-      ('project proj)
-      (_ (error "Unknown spdx-copyright-holder: %S"
-                spdx-copyright-holder)))))
+  "Get the copyright holder for the current buffer.
+Only consult the sources needed by `spdx-copyright-holder'."
+  (pcase spdx-copyright-holder
+    ('auto
+     (let ((proj (spdx--guess-project-name)))
+       (if proj
+           (concat proj " Authors")
+         (spdx--guess-user-name))))
+    ('user (spdx--guess-user-name))
+    ('project (spdx--guess-project-name))
+    (_ (error "Unknown spdx-copyright-holder: %S"
+              spdx-copyright-holder))))
 
 (defun spdx-make-default-copyright ()
   "Build a default SPDX Copyright line that can be edited by the user."

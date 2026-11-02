@@ -289,5 +289,43 @@
     (should-error (spdx-identifier-only "") :type 'user-error)
     (should-error (spdx-license-format "Not-A-License") :type 'user-error)))
 
+(ert-deftest spdx-test-user-copyright-does-not-detect-project ()
+  (let ((spdx-copyright-holder 'user))
+    (cl-letf (((symbol-function 'spdx--guess-project-name)
+               (lambda () (ert-fail "Unexpected project detection")))
+              ((symbol-function 'spdx--guess-user-name)
+               (lambda () "Alice")))
+      (should (equal (spdx-get-default-copyright-holder) "Alice")))))
+
+(ert-deftest spdx-test-project-copyright-does-not-look-up-user ()
+  (let ((spdx-copyright-holder 'project))
+    (dolist (project '("Example" nil))
+      (cl-letf (((symbol-function 'spdx--guess-project-name)
+                 (lambda () project))
+                ((symbol-function 'spdx--guess-user-name)
+                 (lambda () (ert-fail "Unexpected user lookup"))))
+        (should (equal (spdx-get-default-copyright-holder) project))))))
+
+(ert-deftest spdx-test-auto-copyright-prefers-project-without-user-lookup ()
+  (let ((spdx-copyright-holder 'auto))
+    (cl-letf (((symbol-function 'spdx--guess-project-name)
+               (lambda () "Example"))
+              ((symbol-function 'spdx--guess-user-name)
+               (lambda () (ert-fail "Unexpected user lookup"))))
+      (should (equal (spdx-get-default-copyright-holder) "Example Authors")))))
+
+(ert-deftest spdx-test-auto-copyright-falls-back-to-user ()
+  (let ((spdx-copyright-holder 'auto))
+    (cl-letf (((symbol-function 'spdx--guess-project-name) (lambda () nil))
+              ((symbol-function 'spdx--guess-user-name) (lambda () "Alice")))
+      (should (equal (spdx-get-default-copyright-holder) "Alice")))))
+
+(ert-deftest spdx-test-ffip-project-name-is-directory-basename ()
+  (let ((spdx-project-detection 'ffip))
+    (dolist (root '("/tmp/example/" "/tmp/example" nil))
+      (cl-letf (((symbol-function 'ffip-get-project-root-directory)
+                 (lambda () root)))
+        (should (equal (spdx--guess-project-name) (and root "example")))))))
+
 (provide 'spdx-test)
 ;;; spdx-test.el ends here
