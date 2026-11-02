@@ -7,6 +7,8 @@
 
 ## Installation
 
+Requires Emacs 29.1 or later.
+
 Please install `spdx` from [melpa](https://melpa.org/#/spdx).
 
 Put `spdx.el` in your Emacs system. Add the following to your `.emacs`:
@@ -147,6 +149,12 @@ insertion. However, the copyright `elisp-mode` has only one leading semicolon.
 ```
 
 ## Contribution
+
+Run the tests with:
+
+```sh
+emacs -Q --batch -L . -l test/spdx-test.el -f ert-run-tests-batch-and-exit
+```
 
 If you found the `spdx-spdx-identifiers` is out of date, don't hesitate to raise a PR.
 

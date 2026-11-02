@@ -6,7 +6,7 @@
 ;; Keywords: license, tools
 ;; URL: https://github.com/condy0919/spdx.el
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "29.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -168,19 +168,22 @@ nil if we can't detect any of those."
              (error "Unknown method: spdx-project-detection method %S not loaded"
                     spdx-project-detection))))))
 
+(declare-function ffip-project-root "ext:find-file-in-project" ())
+(declare-function projectile-project-name "ext:projectile" ())
+(declare-function project-name "project" (project))
+
 (defun spdx--guess-project-name ()
   "Guess a project name for the current buffer.
 
 Returns a string, or nil if we can't make a good guess."
   (pcase (spdx--detect-project-type)
     ('ffip
-     (directory-file-name (funcall (symbol-function 'ffip-project-root))))
+     (directory-file-name (ffip-project-root)))
     ('projectile
-     (funcall (symbol-function 'projectile-project-name)))
+     (projectile-project-name))
     ('project
-     (let ((proj (funcall (symbol-function 'project-current))))
-       (and proj (funcall (symbol-function 'project-name)
-                          proj))))
+     (let ((proj (project-current)))
+       (and proj (project-name proj))))
     (_ nil)))
 
 (defun spdx-get-default-copyright-sign ()
