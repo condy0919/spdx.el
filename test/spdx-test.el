@@ -567,5 +567,35 @@
                (lambda () (ert-fail "Unexpected user fallback"))))
       (should-error (spdx-get-default-copyright-holder) :type 'user-error))))
 
+(ert-deftest spdx-test-invalid-interactive-copyright-inserts-nothing ()
+  (dolist (input '("" " \t " "2026 Alice\nBob" "2026 Alice\rBob"))
+    (dolist (entry '((spdx-insert-copyright)
+                     (spdx-insert-spdx-copyright)
+                     (tempo-template-spdx-copyright-only)
+                     (tempo-template-spdx-copyright)
+                     (tempo-expand-if-complete . "cpy")
+                     (tempo-expand-if-complete . "spdxcpy")))
+      (with-temp-buffer
+        (emacs-lisp-mode)
+        (spdx-tempo-setup)
+        (insert "Existing text\n" (or (cdr entry) ""))
+        (cl-letf (((symbol-function 'read-from-minibuffer)
+                   (lambda (&rest _) input))
+                  ((symbol-function 'spdx-make-default-copyright)
+                   (lambda () "2026 Alice"))
+                  ((symbol-function 'completing-read)
+                   (lambda (&rest _) (ert-fail "Unexpected license prompt"))))
+          (should-error (funcall (car entry)) :type 'user-error)
+          ;; Tempo removes its tag before invoking the template.
+          (should (equal (buffer-string) "Existing text\n")))))))
+
+(ert-deftest spdx-test-valid-interactive-copyright-matches-explicit-input ()
+  (cl-letf (((symbol-function 'read-from-minibuffer)
+             (lambda (&rest _) "(C) 2020-2026 Alice"))
+            ((symbol-function 'spdx-make-default-copyright)
+             (lambda () "2026 Default")))
+    (should (equal (spdx-copyright-format)
+                   (spdx-copyright-format "(C) 2020-2026 Alice" t)))))
+
 (provide 'spdx-test)
 ;;; spdx-test.el ends here

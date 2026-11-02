@@ -252,15 +252,18 @@ Returns nil if no existing Copyright line is found."
   "Format COPYRIGHT with `spdx-copyright-prefix', or prompt if it is nil.
 COPYRIGHT is a non-blank single-line body without the prefix, such as
 \"(C) 2026 Alice\".  A non-nil value bypasses copyright inference.
+Text read from the minibuffer must satisfy the same validation rules.
 When NO-PROMPT is non-nil, require an explicit COPYRIGHT instead of prompting."
   (let ((copyright (spdx--copyright-argument copyright no-prompt))
         (prefix spdx-copyright-prefix))
     (concat prefix
             (or copyright
-                (read-from-minibuffer
-                 prefix
-                 (or (spdx-get-existing-copyright)
-                     (spdx-make-default-copyright)))))))
+                (spdx--copyright-argument
+                 (read-from-minibuffer
+                  prefix
+                  (or (spdx-get-existing-copyright)
+                      (spdx-make-default-copyright)))
+                 t)))))
 
 (defun spdx--validate-license-identifier (license)
   "Return LICENSE if it is an allowed SPDX identifier, otherwise signal an error.

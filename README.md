@@ -89,6 +89,7 @@ excluded when `spdx-ignore-deprecated` is non-nil. Compound expressions such as
 Copyright text must be a non-blank, single-line string. Supply the body only,
 including any desired year and copyright sign: `spdx-copyright-prefix` is added
 automatically. Explicit text bypasses the generated copyright defaults.
+Copyright text entered at a prompt follows the same validation rules.
 Invalid explicit arguments signal an error before prompting or inserting text.
 
 ### Calls without prompts
