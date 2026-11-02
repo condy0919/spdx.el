@@ -184,8 +184,9 @@ emacs -Q --batch -L . -L admin \
 Run `./admin/spdx-update.sh` to refresh the bundled license data. It downloads
 the upstream JSON once and validates it before replacing the database. Invalid
 data leaves the existing database untouched; unchanged data exits successfully
-without creating a commit. Changes are detected from the generated contents,
-including updates that keep the same release date.
+without creating a commit. A change to the release date alone leaves the file
+untouched and does not create a commit. License list changes are detected even
+when the release date stays the same.
 
 If you found the `spdx-spdx-identifiers` is out of date, don't hesitate to raise a PR.
 

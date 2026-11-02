@@ -128,6 +128,19 @@
             (spdx-update-test--command "sh" "admin/spdx-update.sh")
             (should (equal initial-head
                            (spdx-update-test--command "git" "rev-parse" "HEAD")))
+            ;; A date-only update must not create a commit or dirty the file.
+            (let ((initial-data (with-temp-buffer
+                                  (insert-file-contents output)
+                                  (buffer-string))))
+              (write-region (string-replace "2026-10-28" "2026-10-29"
+                                            spdx-update-test--valid-json)
+                            nil json-file nil 'silent)
+              (spdx-update-test--command "sh" "admin/spdx-update.sh")
+              (should (equal initial-head
+                             (spdx-update-test--command "git" "rev-parse" "HEAD")))
+              (with-temp-buffer
+                (insert-file-contents output)
+                (should (equal (buffer-string) initial-data))))
             ;; The release date is unchanged; only license content changes.
             (write-region (string-replace "MIT" "Apache-2.0"
                                           spdx-update-test--valid-json)
@@ -149,7 +162,7 @@
                 (should (equal (buffer-string) updated-data)))))
           (with-temp-buffer
             (insert-file-contents "fetches")
-            (should (equal (buffer-string) "fetch\nfetch\nfetch\n")))
+            (should (equal (buffer-string) "fetch\nfetch\nfetch\nfetch\n")))
           (should-not (directory-files directory nil "\\`\\.spdx-data\\.")))
       (delete-directory directory t))))
 
