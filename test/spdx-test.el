@@ -34,5 +34,77 @@
       (ert-info ((buffer-string))
         (should (eql status 0))))))
 
+(ert-deftest spdx-test-cancel-license-inserts-nothing ()
+  (dolist (command '(spdx-insert-spdx tempo-template-spdx
+                    spdx-insert-spdx-only spdx-insert-spdx-identifier-only
+                    spdx-insert-spdx-copyright tempo-template-spdx-copyright))
+    (with-temp-buffer
+      (c-mode)
+      (insert "int value;\n")
+      (cl-letf (((symbol-function 'completing-read)
+                 (lambda (&rest _) (signal 'quit nil)))
+                ((symbol-function 'spdx-copyright-format)
+                 (lambda () "Copyright (C) 2026 Alice")))
+        (should (eq (condition-case nil (funcall command)
+                      (quit 'cancelled))
+                    'cancelled))
+        (should (equal (buffer-string) "int value;\n"))))))
+
+(ert-deftest spdx-test-cancel-copyright-inserts-nothing ()
+  (dolist (command '(spdx-insert-copyright tempo-template-copyright
+                    spdx-insert-spdx-copyright tempo-template-spdx-copyright))
+    (with-temp-buffer
+      (c-mode)
+      (insert "int value;\n")
+      (cl-letf (((symbol-function 'read-from-minibuffer)
+                 (lambda (&rest _) (signal 'quit nil)))
+                ((symbol-function 'spdx-make-default-copyright)
+                 (lambda () "(C) 2026 Alice")))
+        (should (eq (condition-case nil (funcall command)
+                      (quit 'cancelled))
+                    'cancelled))
+        (should (equal (buffer-string) "int value;\n"))))))
+
+(ert-deftest spdx-test-cancel-tempo-expansion-inserts-no-header ()
+  (dolist (tag '("spdx" "cpy" "spdxcpy"))
+    (with-temp-buffer
+      (c-mode)
+      (spdx-tempo-setup)
+      (insert "int value;\n" tag)
+      (cl-letf (((symbol-function 'completing-read)
+                 (lambda (&rest _) (signal 'quit nil)))
+                ((symbol-function 'spdx-copyright-format)
+                 (lambda ()
+                   (if (equal tag "cpy")
+                       (signal 'quit nil)
+                     "Copyright (C) 2026 Alice"))))
+        (should (eq (condition-case nil (tempo-expand-if-complete)
+                      (quit 'cancelled))
+                    'cancelled))
+        ;; Tempo removes its tag before evaluating our template.
+        (should (equal (buffer-string) "int value;\n"))))))
+
+(ert-deftest spdx-test-successful-commented-insertion ()
+  (dolist (mode '(emacs-lisp-mode c-mode))
+    (dolist (entry '((spdx-insert-spdx . ("SPDX-License-Identifier: MIT"))
+                     (spdx-insert-copyright . ("Copyright (C) 2026 Alice"))
+                     (spdx-insert-spdx-copyright
+                      . ("Copyright (C) 2026 Alice"
+                         "SPDX-License-Identifier: MIT"))))
+      (with-temp-buffer
+        (funcall mode)
+        (cl-letf (((symbol-function 'completing-read)
+                   (lambda (&rest _) "MIT"))
+                  ((symbol-function 'spdx-copyright-format)
+                   (lambda () "Copyright (C) 2026 Alice")))
+          (funcall (car entry))
+          (should (equal (buffer-string)
+                         (mapconcat
+                          (lambda (line)
+                            (if (eq mode 'c-mode)
+                                (concat "/* " line " */\n")
+                              (concat ";; " line "\n")))
+                          (cdr entry) ""))))))))
+
 (provide 'spdx-test)
 ;;; spdx-test.el ends here

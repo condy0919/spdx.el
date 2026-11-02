@@ -257,10 +257,11 @@ Returns nil if no existing Copyright line is found."
 (defvar spdx-tempo-tags nil
   "Tempo tags for SPDX license.")
 
+;; Evaluate all prompts in one expression before Tempo inserts any text.
 (tempo-define-template "spdx"
-  '((spdx-comment-start)
-    (spdx-license-format)
-    (spdx-comment-end) > n>)
+  '((list 'l (spdx-comment-start)
+          (spdx-license-format)
+          (spdx-comment-end) '> 'n>))
   "spdx"
   "Insert a SPDX license header."
   'spdx-tempo-tags)
@@ -278,20 +279,20 @@ Returns nil if no existing Copyright line is found."
   'spdx-tempo-tags)
 
 (tempo-define-template "copyright"
-  '((spdx-comment-start)
-    (spdx-copyright-format)
-    (spdx-comment-end) > n>)
+  '((list 'l (spdx-comment-start)
+          (spdx-copyright-format)
+          (spdx-comment-end) '> 'n>))
   "cpy"
   "Insert a copyright header."
   'spdx-tempo-tags)
 
 (tempo-define-template "spdx-copyright"
-  '((spdx-comment-start)
-    (spdx-copyright-format)
-    (spdx-comment-end) > n>
-    (spdx-comment-start)
-    (spdx-license-format)
-    (spdx-comment-end) > n>)
+  '((list 'l (spdx-comment-start)
+          (spdx-copyright-format)
+          (spdx-comment-end) '> 'n>
+          (spdx-comment-start)
+          (spdx-license-format)
+          (spdx-comment-end) '> 'n>))
   "spdxcpy"
   "Insert a SPDX license and copyright header."
   'spdx-tempo-tags)
