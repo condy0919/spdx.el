@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2026-10-28T00:00:00Z")
+(defconst spdx-data-release-date "2026-11-18T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -67,6 +67,7 @@
     "atc-game"
     "Baekmuk"
     "Bahyph"
+    "BaKoMa"
     "Barr"
     "bcrypt-Solar-Designer"
     "Beerware"
@@ -364,6 +365,7 @@
     "HPND-SMC"
     "HPND-UC"
     "HPND-UC-export-US"
+    "HPND-X11"
     "HTMLTIDY"
     "hyphen-bulgarian"
     "IBM-pibs"
@@ -454,6 +456,7 @@
     "MIT-enna"
     "MIT-feh"
     "MIT-Festival"
+    "MIT-kdevelop-ideal"
     "MIT-Khronos-old"
     "MIT-Modern-Variant"
     "MIT-open-group"
