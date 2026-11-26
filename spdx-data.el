@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(defconst spdx-data-release-date "2026-11-18T00:00:00Z")
+(defconst spdx-data-release-date "2026-11-25T00:00:00Z")
 
 (defconst spdx-data-license-identifiers
   '(
@@ -106,6 +106,7 @@
     "BSD-3-Clause-No-Nuclear-Warranty"
     "BSD-3-Clause-Open-MPI"
     "BSD-3-Clause-OpenWebUI"
+    "BSD-3-Clause-pos-unchanged"
     "BSD-3-Clause-Sun"
     "BSD-3-Clause-Tso"
     "BSD-4-Clause"
@@ -573,6 +574,7 @@
     "Parity-6.0.0"
     "Parity-7.0.0"
     "PDDL-1.0"
+    "PDL-Japan-1.0"
     "PHP-3.0"
     "PHP-3.01"
     "Pixar"
